@@ -3,13 +3,14 @@ package group.su.view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Vector;
 
 import group.su.map.Obstacle;
-import group.su.util.LifeControl;
+import group.su.util.DrawFactory;
 
-import static group.Constant.gameRun;
-import static group.su.map.MapData.Map_1;
+import static group.Constant.*;
+import static group.su.map.MapData.obstacleMap;
 
 public class MainPanel extends JPanel implements Runnable {
 
@@ -17,9 +18,9 @@ public class MainPanel extends JPanel implements Runnable {
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.black);
-        g.fillRect(0, 0, 1080, 720);
+        g.fillRect(0, 0, WINDOW_LENGTH, WINDOW_WIDTH);
 
-        drawMap(g, Map_1);
+        drawMap(g, obstacleMap);
     }
 
     @Override
@@ -38,17 +39,20 @@ public class MainPanel extends JPanel implements Runnable {
         }
     }
 
-    public void drawMap(Graphics g, List<int[][]> map) {
-        for (int i = 0; i < map.size(); i++
-        ) {
-            for (Obstacle.ObstacleKind o:Obstacle.ObstacleKind.values()
+    public void drawMap(Graphics g, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap) {
+
+        for (Obstacle.ObstacleKind obstacleKind:obstacleMap.keySet()
+             ) {
+            for (Obstacle obs:obstacleMap.get(obstacleKind)
                  ) {
-                int[][] array = map.get(o.ordinal());
-                for (int[] ints:array
-                     ) {
-                    LifeControl.initialize(o,ints[0],ints[1],g);
-                }
+                DrawFactory.drawObject(obs,g);
             }
         }
+
+        updateMap(obstacleMap);
+    }
+
+    private void updateMap(Map<Obstacle.ObstacleKind,Vector<Obstacle>> obstacleMap) {
+
     }
 }

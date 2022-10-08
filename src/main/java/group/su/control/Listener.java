@@ -1,9 +1,11 @@
 package group.su.control;
 
+import group.su.map.Obstacle;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static group.Constant.gameRun;
+import static group.su.map.MapData.obstacleMap;
 
 public class Listener implements KeyListener {
     @Override
@@ -29,7 +31,7 @@ public class Listener implements KeyListener {
 
         } else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
-            gameRun = false;
+            obstacleMap.get(Obstacle.ObstacleKind.BRICK).remove(0);
             System.out.println("get");
         }
     }

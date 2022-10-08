@@ -2,7 +2,7 @@ package group;
 
 import javax.swing.*;
 
-import static group.su.control.gameControl.*;
+import static group.su.control.GameControl.*;
 
 public class Application extends JFrame {
 

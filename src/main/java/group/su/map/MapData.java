@@ -1,12 +1,9 @@
 package group.su.map;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
-import group.Constant;
-
-import static group.Constant.*;
 
 public class MapData {
 
@@ -21,18 +18,30 @@ public class MapData {
     static Image imageTree = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Tree.png"));
     static Image imageWall = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Wall.png"));
 
-    public static List<int[][]> Map_1;
-    static List<int[][]> Map_2;
+    public static Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap;
 
-    static int lengthPos = WINDOW_LENGTH / OBJECT_SIZE;
-    static int widthPos = WINDOW_WIDTH / OBJECT_SIZE;
+    public static List<List<int[]>> map_1;
 
     static {
-        Map_1 = new ArrayList<>();
-        // BRICK, RIVER, WALL, TREE
-        Map_1.add(new int[][]{{1, 0}, {1, 1}});
-        Map_1.add(new int[][]{{3, 2}, {3, 3}});
-        Map_1.add(new int[][]{{5, 4}, {5, 5}});
-        Map_1.add(new int[][]{{7, 6}, {7, 7}});
+        // RIVER, WALL, TREE, BRICK
+        // 将 map 设置为 List 是因为便于遍历
+        // 从初始化时使用 二维数组 是因为好写
+
+        map_1 = new ArrayList<>();
+
+        map_1.add(new ArrayList<>(Arrays.asList(
+                new int[][]{{1, 0}, {1, 1}}
+        )));
+        map_1.add(new ArrayList<>(Arrays.asList(
+                new int[][]{{3, 2}, {3, 3}}
+        )));
+        map_1.add(new ArrayList<>(Arrays.asList(
+                new int[][]{{5, 4}, {5, 5}}
+        )));
+        map_1.add(new ArrayList<>(Arrays.asList(
+                new int[][]{{7, 6}, {7, 7}}
+        )));
     }
+
+    public static List<List<int[]>> map_2;
 }

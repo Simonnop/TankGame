@@ -1,28 +1,23 @@
 package group.su.map;
 
-import group.Constant;
-
 import java.awt.*;
 
 import static group.Constant.REFRESH_TIME;
+import static group.Constant.gameRun;
 
-public class Obstacle implements Runnable{
+public class Obstacle implements GetPos{
 
     /*
-    * TODO
+    *
     *  建立地图上的障碍物
-    *  砖,河,墙,树
+    *  河,墙,树,砖
     *  根据不同的类型附上不同的属性
     * */
+
     ObstacleKind obstacleKind;
 
     public enum ObstacleKind {
-        BRICK {
-            @Override
-            public Obstacle returnObject(int x, int y) {
-                return new Brick(x, y);
-            }
-        }, RIVER {
+         RIVER {
             @Override
             public Obstacle returnObject(int x, int y) {
                 return new River(x, y);
@@ -37,8 +32,12 @@ public class Obstacle implements Runnable{
             public Obstacle returnObject(int x, int y) {
                 return new Tree(x, y);
             }
+        },BRICK {
+            @Override
+            public Obstacle returnObject(int x, int y) {
+                return new Brick(x, y);
+            }
         };
-
         /*, MyTank {
             @Override
             public Object returnObject(int x, int y) {
@@ -55,7 +54,6 @@ public class Obstacle implements Runnable{
                 return new Bullet(x, y, 0);
             }
         }*/
-
         public Obstacle returnObject(int x, int y) {
             return null;
         }
@@ -126,14 +124,4 @@ public class Obstacle implements Runnable{
         return y;
     }
 
-    @Override
-    public void run() {
-        while(true){
-            try {
-                Thread.sleep(REFRESH_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
