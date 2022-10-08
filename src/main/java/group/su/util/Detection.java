@@ -4,7 +4,6 @@ import com.sun.glass.ui.Screen;
 import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.Tank;
-import group.li.util.Constant;
 import group.su.map.Brick;
 import group.su.map.GetPos;
 import group.su.map.Obstacle;

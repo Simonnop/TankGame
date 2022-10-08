@@ -82,7 +82,7 @@ public class GameControl {
             Thread.sleep(REFRESH_TIME);
             mainPanel.repaint();
 
-            destoryDetection(null,null);
+            // destoryDetection(null,null);
         }
         System.out.println("out");
     }
