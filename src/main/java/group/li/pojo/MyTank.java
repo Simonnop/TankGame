@@ -19,4 +19,5 @@ public class MyTank extends Tank{
     public void setBullets(Vector<Bullet> bullets) {
         this.bullets = bullets;
     }
+
 }

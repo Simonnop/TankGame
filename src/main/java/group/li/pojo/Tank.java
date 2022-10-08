@@ -1,6 +1,6 @@
 package group.li.pojo;
 
-import group.li.util.Constant;
+import group.Constant;
 
 public class Tank {
     private int x;  //横坐标
@@ -63,13 +63,13 @@ public class Tank {
         }
     }
     public void moveRight(){
-        if(x+ Constant.TankLength <Constant.mapWidth){
+        if(x+ Constant.OBJECT_SIZE <Constant.WINDOW_WIDTH){
             x+=speed;
         }
     }
 
     public void moveDown(){
-        if(y+Constant.TankLength <Constant.mapHeight){
+        if(y+Constant.OBJECT_SIZE <Constant.WINDOW_LENGTH){
             y+=speed;
         }
     }

@@ -1,40 +1,43 @@
 package group.li.util;
 
+import group.Constant;
 import group.li.pojo.EnemyTank;
 
 //敌方坦克随机移动的方法
+//后面有待修改
 public class RandomMove {
 
     public static void randomMove(EnemyTank tank){
         //根据当前坦克的方向来继续移动
-        for (int i = 0; i < 30; i++) {
+        //朝某个方向移动20*Constant.REFRESH_TIME ms 之后再改变方向
+        for (int i = 0; i < 20; i++) {
             switch (tank.getDirection()) {
                 case 0://向上
                     if (tank.getY() > 0 && !tank.isTouchEnemyTank()){
                         tank.moveUp();
                     }
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(Constant.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 1://向右
-                    if (tank.getX() + 60 < 1000  && !tank.isTouchEnemyTank()){
+                    if (tank.getX() + Constant.OBJECT_SIZE < Constant.WINDOW_WIDTH  && !tank.isTouchEnemyTank()){
                         tank.moveRight();
                     }
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(Constant.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 2://向下
-                    if (tank.getY() + 60 < 722  && !tank.isTouchEnemyTank()){
+                    if (tank.getY() + Constant.OBJECT_SIZE < Constant.WINDOW_LENGTH  && !tank.isTouchEnemyTank()){
                         tank.moveDown();
                     }
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(Constant.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -44,18 +47,13 @@ public class RandomMove {
                         tank.moveLeft();
                     }
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(Constant.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
             }
-        }
-        //每次移动后，休眠0.05s 这个设定可以改
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
         }
 
         //然后随机的改变方向
