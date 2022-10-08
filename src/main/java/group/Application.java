@@ -1,17 +1,15 @@
-package group.su;
+package group;
 
 import javax.swing.*;
-import java.awt.*;
 
-import static group.su.gameControl.*;
+import static group.su.control.gameControl.*;
 
 public class Application extends JFrame {
 
-
     /*
-    * TODO
-    *  主程序流程
-    * */
+     * TODO
+     *  主程序流程
+     * */
 
     public static void main(String[] args) throws InterruptedException {
 

@@ -1,7 +1,9 @@
-package group.su;
+package group.su.control;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import static group.Constant.gameRun;
 
 public class Listener implements KeyListener {
     @Override
@@ -13,25 +15,21 @@ public class Listener implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         /*
-        * TODO
-        *  控制坦克移动
-        * */
+         * TODO
+         *  控制坦克移动
+         * */
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
 
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_A) {
+        } else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
-            gameControl.gameRun = false;
+            gameRun = false;
             System.out.println("get");
         }
     }
