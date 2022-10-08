@@ -1,4 +1,4 @@
-##gameControl
+## gameControl
 
 boolean gameRun 
 -- 游戏进行的布尔值
