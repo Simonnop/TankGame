@@ -2,12 +2,15 @@ package group.li.pojo;
 
 import group.Constant;
 
+import java.awt.*;
+
 public class Tank {
     private int x;  //横坐标
     private int y;  //纵坐标
     private int direction; //坦克的方向 0-上  1-右 2-下 3-左
     private int speed =1; //默认速度
     private boolean isLive=true; // 判断是否存活
+    private Image image;
 
     public Tank(int x, int y) {
         this.x = x;
@@ -55,6 +58,13 @@ public class Tank {
         isLive = live;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
     // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面
     public void moveUp(){

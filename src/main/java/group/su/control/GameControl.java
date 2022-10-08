@@ -31,17 +31,23 @@ public class GameControl {
     public static MyTank myTank;
     public static Vector<EnemyTank> enemyTanksList;
 
+    public static EnemyTank enemyTank;
+
     public static void gameInitial() {
 
         application = new Application();
         mainPanel = new MainPanel();
         mainPanelThread = new Thread(mainPanel);
 
+        enemyTanksList = new Vector<>();
+
         application.setSize(WINDOW_LENGTH, WINDOW_WIDTH);
         application.setVisible(true);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         application.add(mainPanel);
+
+
 
         initialMap(map_1);
     }
@@ -60,7 +66,8 @@ public class GameControl {
             int[][] array = map.get(obstacleKind.ordinal()).toArray(new int[0][]);
             for (int[] ints : array
             ) {
-                obstacleMap.get(obstacleKind).add(obstacleKind.returnObject(ints[0], ints[1]));
+                obstacleMap.get(obstacleKind).add(
+                        obstacleKind.returnObject(ints[0] * OBJECT_SIZE, ints[1] * OBJECT_SIZE));
             }
         }
 
@@ -70,6 +77,12 @@ public class GameControl {
 
         System.out.println("start");
         mainPanelThread.start();
+
+        enemyTank=new EnemyTank(400,0);
+        new Thread(enemyTank).start();
+
+        myTank = new MyTank(400,400);
+        new Thread(myTank).start();
 
         keyListener = new Listener();
         application.addKeyListener(keyListener);

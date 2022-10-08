@@ -1,5 +1,6 @@
 package group.su.util;
 
+import group.li.pojo.Tank;
 import group.su.map.Brick;
 import group.su.map.Obstacle;
 
@@ -21,14 +22,15 @@ public class DrawFactory {
     public static void drawObject(Obstacle obstacle, Graphics g) {
 
         g.drawImage(obstacle.getImage(),
-                obstacle.getX() * OBJECT_SIZE, obstacle.getY() * OBJECT_SIZE,
+                obstacle.getX(), obstacle.getY(),
                 OBJECT_SIZE, OBJECT_SIZE,
                 mainPanel);
     }
 
-    public static void drawObject(Object obj, int x, int y, Graphics g) {
-        // 重载,以便接其他类型
+    public static void drawObject(Tank tank, Graphics g) {
+        g.drawImage(tank.getImage(),
+                tank.getX(), tank.getY(),
+                OBJECT_SIZE, OBJECT_SIZE,
+                mainPanel);
     }
-
-
 }

@@ -3,7 +3,10 @@ package group.li.pojo;
 import group.li.util.CollisionDetection;
 import group.li.util.RandomMove;
 
+import java.awt.*;
 import java.util.Vector;
+
+import static group.su.control.GameControl.enemyTanksList;
 
 //每个敌方坦克也是一个线程
 public class EnemyTank extends Tank implements Runnable{
@@ -18,11 +21,14 @@ public class EnemyTank extends Tank implements Runnable{
 
     public EnemyTank(int x, int y) {
         super(x, y);
+        setImage(Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png")));
+        enemyTanksList.add(this);
     }
 
     public Vector<Bullet> getBullets() {
         return Bullets;
     }
+
 
     public void setBullets(Vector<Bullet> bullets) {
         Bullets = bullets;
@@ -45,6 +51,7 @@ public class EnemyTank extends Tank implements Runnable{
     public void run() {
 
         while (true){
+            System.out.println("run");
             //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程

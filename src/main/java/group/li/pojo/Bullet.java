@@ -2,6 +2,8 @@ package group.li.pojo;
 
 import group.Constant;
 
+import java.awt.*;
+
 //每个子弹都是一个线程 所以实现Runnable接口
 public class Bullet implements Runnable{
     private int x;//子弹x坐标
@@ -10,6 +12,7 @@ public class Bullet implements Runnable{
     private int speed = 5;//子弹默认速度
     private boolean isLive = true; //子弹是否还存活
 
+    private Image image;
 
     public Bullet(int x, int y, int direction) {
         this.x = x;
@@ -55,6 +58,14 @@ public class Bullet implements Runnable{
 
     public void setLive(boolean live) {
         isLive = live;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override
