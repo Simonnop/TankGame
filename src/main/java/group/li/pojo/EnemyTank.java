@@ -45,6 +45,7 @@ public class EnemyTank extends Tank implements Runnable{
     public void run() {
 
         while (true){
+            //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程
             if(!isLive()){

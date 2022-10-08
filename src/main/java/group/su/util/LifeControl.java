@@ -4,6 +4,7 @@ import group.Constant;
 import group.su.map.Obstacle;
 
 import java.awt.*;
+import java.util.Stack;
 
 import static group.Constant.OBJECT_SIZE;
 import static group.su.control.gameControl.mainPanel;
@@ -29,6 +30,13 @@ public class LifeControl {
         thread.start();
 
     }
+
+    /*
+    重载initialize方法 ,tank Bullet的初始化
+    public static void initialize(Object o,int x, int y, Graphics g){
+    }
+    */
+
 
     /*
      * TODO
