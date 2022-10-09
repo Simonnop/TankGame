@@ -6,14 +6,16 @@ import group.li.util.RandomMove;
 import java.awt.*;
 import java.util.Vector;
 
-import static group.su.control.GameControl.enemyTanksList;
+import static group.Attributes.enemyTanksList;
+
 
 //每个敌方坦克也是一个线程
 public class EnemyTank extends Tank implements Runnable{
 
-    //每个坦克都有子弹
-    //使用Vector的原因是 保证线程安全
-    private Vector<Bullet> Bullets =new Vector<>();
+    static Image enemyTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_up.png"));
+    static Image enemyTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png"));
+    static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
+    static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
     //让每个敌方坦克都拥有敌方坦克集  可以随时遍历检测是否碰撞
     //可以在初始化坦克的时候 给每个敌方坦克加上敌方坦克集
@@ -21,17 +23,8 @@ public class EnemyTank extends Tank implements Runnable{
 
     public EnemyTank(int x, int y) {
         super(x, y);
-        setImage(Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png")));
+        setImage(enemyTank_down);
         enemyTanksList.add(this);
-    }
-
-    public Vector<Bullet> getBullets() {
-        return Bullets;
-    }
-
-
-    public void setBullets(Vector<Bullet> bullets) {
-        Bullets = bullets;
     }
 
     public Vector<EnemyTank> getEnemyTanks() {
@@ -51,7 +44,6 @@ public class EnemyTank extends Tank implements Runnable{
     public void run() {
 
         while (true){
-            System.out.println("run");
             //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程

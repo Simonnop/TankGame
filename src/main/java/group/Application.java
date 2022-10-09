@@ -1,8 +1,8 @@
 package group;
 
-import javax.swing.*;
+import group.su.control.GameControl;
 
-import static group.su.control.GameControl.*;
+import javax.swing.*;
 
 public class Application extends JFrame {
 
@@ -13,17 +13,20 @@ public class Application extends JFrame {
 
     public static void main(String[] args) throws InterruptedException {
 
+        // 创建程序控制托管对象
+        GameControl gameControl = new GameControl();
+
         // 创建地图对象等
-        gameInitial();
+        gameControl.gameInitial();
 
         // 敌方坦克动起来,加入监听器
-        gameStart();
+        gameControl.gameStart();
 
         // 更新判断等
-        gameUpdate();
+        gameControl.gameUpdate();
 
         // 游戏结束与结算
-        gameOver();
+        gameControl.gameOver();
 
     }
 }

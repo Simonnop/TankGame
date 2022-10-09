@@ -1,6 +1,6 @@
 package group.li.util;
 
-import group.Constant;
+import group.Attributes;
 import group.li.pojo.EnemyTank;
 
 import java.util.Vector;
@@ -18,23 +18,23 @@ public class CollisionDetection {
                     //不和自己比较
                     if (thisTank != enemyTank){
                             //当前坦克的左上角坐标【thisTank.getX(),thisTank.getY()】
-                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX() <= enemyTank.getX() + Constant.OBJECT_SIZE &&
-                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Constant.OBJECT_SIZE){
+                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX() <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
+                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Attributes.OBJECT_SIZE){
                                 return true;
                             }
                             //当前坦克的右上角坐标【thisTank.getX() + Constant.OBJECT_SIZE,thisTank.getY()】
-                            if (thisTank.getX() + Constant.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX()  + Constant.OBJECT_SIZE <= enemyTank.getX() + Constant.OBJECT_SIZE &&
-                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Constant.OBJECT_SIZE){
+                            if (thisTank.getX() + Attributes.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX() + Attributes.OBJECT_SIZE <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
+                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Attributes.OBJECT_SIZE){
                                 return true;
                             }
                             //当前坦克的左下角坐标【thisTank.getX(),thisTank.getY()+ Constant.OBJECT_SIZE】
-                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX()  <= enemyTank.getX() + Constant.OBJECT_SIZE &&
-                                    thisTank.getY()+ Constant.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY()+ Constant.OBJECT_SIZE <= enemyTank.getY() + Constant.OBJECT_SIZE){
+                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX()  <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
+                                thisTank.getY() + Attributes.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY() + Attributes.OBJECT_SIZE <= enemyTank.getY() + Attributes.OBJECT_SIZE){
                                 return true;
                             }
                             //当前坦克的右下角坐标【thisTank.getX()+ Constant.OBJECT_SIZE,thisTank.getY()+ Constant.OBJECT_SIZE】
-                            if (thisTank.getX()+ Constant.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX()+ Constant.OBJECT_SIZE  <= enemyTank.getX() + Constant.OBJECT_SIZE &&
-                                    thisTank.getY()+ Constant.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY()+ Constant.OBJECT_SIZE <= enemyTank.getY() + Constant.OBJECT_SIZE){
+                            if (thisTank.getX() + Attributes.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX() + Attributes.OBJECT_SIZE <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
+                                thisTank.getY() + Attributes.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY() + Attributes.OBJECT_SIZE <= enemyTank.getY() + Attributes.OBJECT_SIZE){
                                 return true;
                             }
                     }

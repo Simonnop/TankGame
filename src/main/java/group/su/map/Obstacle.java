@@ -2,10 +2,7 @@ package group.su.map;
 
 import java.awt.*;
 
-import static group.Constant.REFRESH_TIME;
-import static group.Constant.gameRun;
-
-public class Obstacle implements GetPos{
+public class Obstacle implements GetInfo {
 
     /*
     *

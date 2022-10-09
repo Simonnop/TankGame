@@ -5,8 +5,9 @@ import group.su.map.Obstacle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static group.su.control.GameControl.myTank;
-import static group.su.map.MapData.obstacleMap;
+import static group.Attributes.myTank;
+import static group.Attributes.obstacleMap;
+import static group.su.util.Factory.bulletOut;
 
 public class Listener implements KeyListener {
     @Override
@@ -30,7 +31,9 @@ public class Listener implements KeyListener {
             myTank.moveRight();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             myTank.moveLeft();
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+            bulletOut(myTank);
+        }else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
             obstacleMap.get(Obstacle.ObstacleKind.BRICK).remove(0);
             System.out.println("get");

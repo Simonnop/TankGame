@@ -13,12 +13,14 @@ public class MapData {
      *  二位数组列表存储地图
      * */
 
-    static Image imageRiver = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/River.png"));
-    static Image imageBrick = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Brick.png"));
-    static Image imageTree = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Tree.png"));
-    static Image imageWall = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Wall.png"));
-
-    public static Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap;
+    static Image imageRiver = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/River.png"));
+    static Image imageBrick = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/Brick.png"));
+    static Image imageTree = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/Tree.png"));
+    static Image imageWall = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/Wall.png"));
 
     public static List<List<int[]>> map_1;
 

@@ -3,62 +3,56 @@ package group.su.control;
 import group.Application;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
-import group.li.pojo.Tank;
 import group.su.map.Obstacle;
-import group.su.util.DrawFactory;
 import group.su.view.MainPanel;
 
 import javax.swing.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
-import static group.Constant.*;
-import static group.Constant.WINDOW_WIDTH;
+import static group.Attributes.*;
+import static group.Attributes.WINDOW_WIDTH;
 import static group.su.map.MapData.map_1;
-import static group.su.map.MapData.obstacleMap;
-import static group.su.util.Detection.destoryDetection;
 
 public class GameControl {
 
-    // 因为这些量都不能缺少,所以设置为 static
-    public static Application application;
-    public static MainPanel mainPanel;
-    public static Thread mainPanelThread;
-    public static Listener keyListener;
+    public void gameInitial() {
 
-    public static MyTank myTank;
-    public static Vector<EnemyTank> enemyTanksList;
-
-    public static EnemyTank enemyTank;
-
-    public static void gameInitial() {
-
+        // 创建主程序面板框
         application = new Application();
+        // 创建主面板
         mainPanel = new MainPanel();
-        mainPanelThread = new Thread(mainPanel);
 
-        enemyTanksList = new Vector<>();
-
+        // 设置主程序面板框属性
         application.setSize(WINDOW_LENGTH, WINDOW_WIDTH);
         application.setVisible(true);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // 将主面板添加至主程序面板框
         application.add(mainPanel);
 
+        // 根据地图中的点阵实例化障碍物,存储在Map中
+        obstacleMap = initialMap(map_1);
 
+        // 实例化坦克
+        enemyTanksList = new Vector<>();
+        enemyTanksList.add(new EnemyTank(270,0));
+        enemyTanksList.add(new EnemyTank(540,0));
+        enemyTanksList.add(new EnemyTank(810,0));
 
-        initialMap(map_1);
+        myTank = new MyTank(520,600);
     }
 
-    private static void initialMap(List<List<int[]>> map) {
+    private Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(List<List<int[]>> map) {
 
-        obstacleMap = new HashMap<>();
+        Map<Obstacle.ObstacleKind, Vector<Obstacle>> newMap = new HashMap<>();
 
         for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
         ) {
-            obstacleMap.put(obstacleKind, new Vector<>());
+            newMap.put(obstacleKind, new Vector<>());
         }
 
         for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
@@ -66,33 +60,38 @@ public class GameControl {
             int[][] array = map.get(obstacleKind.ordinal()).toArray(new int[0][]);
             for (int[] ints : array
             ) {
-                obstacleMap.get(obstacleKind).add(
+                // 工厂化创建对象
+                newMap.get(obstacleKind).add(
                         obstacleKind.returnObject(ints[0] * OBJECT_SIZE, ints[1] * OBJECT_SIZE));
             }
         }
-
+        return newMap;
     }
 
-    public static void gameStart() {
+    public void gameStart() {
 
-        System.out.println("start");
-        mainPanelThread.start();
-
-        enemyTank=new EnemyTank(400,0);
-        new Thread(enemyTank).start();
-
-        myTank = new MyTank(400,400);
+        // 开启坦克线程,开始移动
+        for (EnemyTank enemyTank:enemyTanksList
+             ) {
+            new Thread(enemyTank).start();
+        }
         new Thread(myTank).start();
 
-        keyListener = new Listener();
-        application.addKeyListener(keyListener);
+        // 加入监听器
+        application.addKeyListener(new Listener());
+
+        // 开启主面板线程
+        new Thread(mainPanel).start();
+        System.out.println("start");
     }
 
-    public static void gameUpdate() throws InterruptedException {
+    public void gameUpdate() throws InterruptedException {
 
         // 加入各种遍历与判断
         while (gameRun) {
+            // 主线程休息,控制刷新率与负载
             Thread.sleep(REFRESH_TIME);
+            // 重绘主面板
             mainPanel.repaint();
 
             // destoryDetection(null,null);
@@ -100,7 +99,7 @@ public class GameControl {
         System.out.println("out");
     }
 
-    public static void gameOver() {
+    public void gameOver() {
         System.out.println("over");
     }
 }

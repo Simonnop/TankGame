@@ -1,6 +1,6 @@
 package group.li.util;
 
-import group.Constant;
+import group.Attributes;
 import group.li.pojo.EnemyTank;
 
 //敌方坦克随机移动的方法
@@ -17,27 +17,27 @@ public class RandomMove {
                         tank.moveUp();
                     }
                     try {
-                        Thread.sleep(Constant.REFRESH_TIME);
+                        Thread.sleep(Attributes.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 1://向右
-                    if (tank.getX() + Constant.OBJECT_SIZE < Constant.WINDOW_WIDTH  && !tank.isTouchEnemyTank()){
+                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !tank.isTouchEnemyTank()){
                         tank.moveRight();
                     }
                     try {
-                        Thread.sleep(Constant.REFRESH_TIME);
+                        Thread.sleep(Attributes.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 2://向下
-                    if (tank.getY() + Constant.OBJECT_SIZE < Constant.WINDOW_LENGTH  && !tank.isTouchEnemyTank()){
+                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !tank.isTouchEnemyTank()){
                         tank.moveDown();
                     }
                     try {
-                        Thread.sleep(Constant.REFRESH_TIME);
+                        Thread.sleep(Attributes.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -47,7 +47,7 @@ public class RandomMove {
                         tank.moveLeft();
                     }
                     try {
-                        Thread.sleep(Constant.REFRESH_TIME);
+                        Thread.sleep(Attributes.REFRESH_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

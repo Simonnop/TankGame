@@ -1,6 +1,6 @@
 package group.su.map;
 
-import static group.Constant.REFRESH_TIME;
+import static group.Attributes.REFRESH_TIME;
 import static group.su.map.MapData.imageBrick;
 
 public class Brick extends Obstacle implements Runnable{

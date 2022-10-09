@@ -2,21 +2,17 @@ package group.su.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
-import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
 import group.su.map.Obstacle;
-import group.su.util.DrawFactory;
 
-import static group.Constant.*;
-import static group.su.control.GameControl.enemyTank;
-import static group.su.control.GameControl.myTank;
-import static group.su.map.MapData.obstacleMap;
-import static group.su.util.DrawFactory.drawObject;
+import static group.Attributes.*;
+import static group.su.util.Factory.drawBullet;
+import static group.su.util.Factory.drawObject;
 
 public class MainPanel extends JPanel implements Runnable {
 
@@ -26,24 +22,32 @@ public class MainPanel extends JPanel implements Runnable {
         g.setColor(Color.black);
         g.fillRect(0, 0, WINDOW_LENGTH, WINDOW_WIDTH);
 
-        drawObject(enemyTank, g);
-        drawObject(myTank, g);
+
+        // 绘制坦克与其子弹
+        for (EnemyTank enemyTank : enemyTanksList
+        ) {
+            drawTankAndBullets(g, enemyTank);
+        }
+        drawTankAndBullets(g, myTank);
+        // 绘制地图
         drawMap(g, obstacleMap);
     }
 
     @Override
     public void run() {
 
+        int time = 0;
+
         while (gameRun) {
 
-            System.out.println("test~~");
+            System.out.println("test~~ "+time+"s");
 
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            time++;
         }
     }
 
@@ -56,11 +60,13 @@ public class MainPanel extends JPanel implements Runnable {
                 drawObject(obs, g);
             }
         }
-
-        updateMap(obstacleMap);
     }
 
-    private void updateMap(Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap) {
-
+    public void drawTankAndBullets(Graphics g, Tank tank) {
+        drawObject(tank, g);
+        for (Bullet b : tank.getBullets()
+        ) {
+            drawBullet(b, g);
+        }
     }
 }

@@ -1,16 +1,11 @@
 package group.su.util;
 
-import com.sun.glass.ui.Screen;
 import group.li.pojo.Bullet;
-import group.li.pojo.EnemyTank;
-import group.li.pojo.Tank;
-import group.su.map.Brick;
-import group.su.map.GetPos;
-import group.su.map.Obstacle;
+import group.su.map.GetInfo;
 
 import java.util.Vector;
 
-import static group.Constant.OBJECT_SIZE;
+import static group.Attributes.OBJECT_SIZE;
 
 public class Detection {
     /*
@@ -18,19 +13,22 @@ public class Detection {
      *  物体销毁函数(对象)
      * */
 
-    public static void destoryDetection(Vector<Bullet> bulletList, Vector<Brick> brickList) {
-        for (Obstacle brick : brickList
+    // 子弹攻击检测
+    // 第二个参数可接 障碍物 或 坦克 列表
+    public static <T extends GetInfo> void destoryDetection(Vector<Bullet> bulletList, Vector<T> list) {
+        for (T elem : list
         ) {
             for (Bullet bullet : bulletList
             ) {
-                if (IsHit(bullet,brick)){
-                    brickList.removeElement(brick);
+                if (IsHit(bullet,elem)){
+                    list.removeElement(elem);
+                    bulletList.remove(bullet);
                 }
             }
         }
     }
 
-    public static <T extends GetPos> boolean IsHit(Bullet bullet, T t) {
+    public static <T extends GetInfo> boolean IsHit(Bullet bullet, T t) {
         if (bullet.getX() >= t.getX() &&
             bullet.getX() <= t.getX() + OBJECT_SIZE &&
             bullet.getY() >= t.getY() &&
@@ -40,8 +38,8 @@ public class Detection {
         return false;
     }
 
-
-    public static <T extends GetPos> boolean IsCollision(T t1, T t2) {
+    // 碰撞检测, 参数可接障碍物与坦克
+    public static <T extends GetInfo> boolean IsCollision(T t1, T t2) {
 
         //当前坦克的左上角坐标【bullet.getX(),bullet.getY()】
 

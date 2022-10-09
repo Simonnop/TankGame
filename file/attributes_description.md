@@ -3,6 +3,22 @@
 boolean gameRun 
 -- 游戏进行的布尔值
 
+MyTank myTank 
+-- 玩家坦克对象
+
+Vector<EnemyTank> enemyTanksList
+-- 敌方坦克对象列表
+
+Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap
+-- 障碍物图
+
+MainPanel mainPanel
+-- 游戏主面板
+
+Application application
+-- 游戏主面板框及主程序
+
+
 ## 常量说明
 
 final int REFRESH_TIME 
