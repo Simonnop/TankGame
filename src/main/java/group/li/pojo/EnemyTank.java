@@ -13,10 +13,10 @@ import static group.su.util.Factory.bulletOut;
 //每个敌方坦克也是一个线程
 public class EnemyTank extends Tank implements Runnable{
 
-    static Image enemyTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_up.png"));
-    static Image enemyTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png"));
-    static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
-    static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
+    public static Image enemyTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_up.png"));
+    public static Image enemyTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png"));
+    public static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
+    public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
     //让每个敌方坦克都拥有敌方坦克集  可以随时遍历检测是否碰撞
     //可以在初始化坦克的时候 给每个敌方坦克加上敌方坦克集
@@ -45,6 +45,13 @@ public class EnemyTank extends Tank implements Runnable{
     public void run() {
 
         while (true){
+
+
+            //根据坦克方向，创建子弹，并使子弹线程开启
+
+
+
+
             //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程

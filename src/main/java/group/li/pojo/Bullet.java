@@ -1,7 +1,10 @@
 package group.li.pojo;
 
+import com.sun.javafx.scene.traversal.Direction;
 import group.Attributes;
 import group.GetInfo;
+import group.li.util.CollisionDetection;
+import group.su.util.Detection;
 
 import java.awt.*;
 
@@ -13,7 +16,7 @@ public class Bullet implements Runnable, GetInfo {
     private int x;//子弹x坐标
     private int y;//子弹x坐标
     private int direction = 0;//子弹方向
-    private int speed = 5;//子弹默认速度
+    private int speed = 10;//子弹默认速度
     private boolean isLive = true; //子弹是否还存活
 
     public static Image enemyTankBullet = Toolkit.getDefaultToolkit().getImage(
@@ -77,35 +80,34 @@ public class Bullet implements Runnable, GetInfo {
         this.image = image;
     }
 
+    public void move(int direction){
+        switch (direction){
+            case 0: //向上
+                y -= speed;
+                break;
+            case 1: //向右
+                x += speed;
+                break;
+            case 2://向下
+                y += speed;
+                break;
+            case 3://向左
+                x -= speed;
+                break;
+        }
+    }
     @Override
     public void run() {
         //子弹一旦开始创建 ，线程便开始无限循环
         while (true){
 
-            try {
-                Thread.sleep(REFRESH_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             //每次循环都要判断子弹的方向 根据方向从而不停移动
-            switch (direction){
-                case 0: //向上
-                    y -= speed;
-                    break;
-                case 1: //向右
-                    x += speed;
-                    break;
-                case 2://向下
-                    y += speed;
-                    break;
-                case 3://向左
-                    x -= speed;
-                    break;
-            }
-            //当子弹碰到敌人坦克时，线程结束
-            //当子弹移动到面板的边界时，销毁子弹 线程结束
-            if (!(x >= 0 && x <= Attributes.WINDOW_WIDTH && y >= 0 && y <= Attributes.WINDOW_LENGTH && isLive)){
+            move(direction);
+
+            //当子弹碰到敌人坦克，某些障碍物，地图边缘时，线程结束
+            //TODO 还需要加上障碍物的判断  敌方坦克的判断
+            if (!(x >= 0 && x <= Attributes.WINDOW_WIDTH && y >= 0 && y <= Attributes.WINDOW_LENGTH && isLive
+                     )){
                 //设置子弹销毁
                 isLive = false;
                 break;

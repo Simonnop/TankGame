@@ -10,10 +10,10 @@ import static group.Attributes.gameRun;
 //我方坦克
 public class MyTank extends Tank implements Runnable{
 
-    static Image myTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_up.png"));
-    static Image myTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_down.png"));
-    static Image myTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_left.png"));
-    static Image myTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_right.png"));
+    public static Image myTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_up.png"));
+    public static Image myTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_down.png"));
+    public static Image myTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_left.png"));
+    public static Image myTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_right.png"));
 
     //可以发射多颗子弹
     private Vector<Bullet> bullets = new Vector<>();
@@ -36,7 +36,7 @@ public class MyTank extends Tank implements Runnable{
     @Override
     public void run() {
         while (true){
-            //开始随机移动
+
             //被子弹打中了，结束线程
             if(!isLive()){
                 gameRun = false;

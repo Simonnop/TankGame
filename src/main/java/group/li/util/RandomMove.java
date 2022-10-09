@@ -9,8 +9,8 @@ public class RandomMove {
 
     public static void randomMove(EnemyTank tank){
         //根据当前坦克的方向来继续移动
-        //朝某个方向移动20*Constant.REFRESH_TIME ms 之后再改变方向
-        for (int i = 0; i < 20; i++) {
+        //朝某个方向移动40*Constant.REFRESH_TIME ms 之后再改变方向
+        for (int i = 0; i < 40; i++) {
             switch (tank.getDirection()) {
                 case 0://向上
                     if (tank.getY() > 0 && !tank.isTouchEnemyTank()){
@@ -58,7 +58,9 @@ public class RandomMove {
 
         //然后随机的改变方向
         int direction = (int) (Math.random() * 4);
+        //改变方向，根据换image
         tank.setDirection(direction);
+        DirectionUtil.ChangeImageAccordingDirection(tank);
 
     }
 }
