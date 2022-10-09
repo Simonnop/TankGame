@@ -1,7 +1,10 @@
 package group.su.util;
 
 import group.li.pojo.Bullet;
-import group.su.map.GetInfo;
+import group.li.pojo.EnemyTank;
+import group.li.pojo.MyTank;
+import group.li.pojo.Tank;
+import group.GetInfo;
 
 import java.util.Vector;
 
@@ -14,17 +17,52 @@ public class Detection {
      * */
 
     // 子弹攻击检测
-    // 第二个参数可接 障碍物 或 坦克 列表
-    public static <T extends GetInfo> void destoryDetection(Vector<Bullet> bulletList, Vector<T> list) {
+    /* 重载可选:
+         1. 坦克, 障碍物/坦克列表
+         2. 敌方坦克列表, 我方坦克
+         3. 敌方坦克列表, 障碍物/坦克列表
+
+     */
+
+    public static <T extends GetInfo> void destoryDetection(Tank tank, Vector<T> list) {
+
+        // 为避免线程内冲突,创建一个list来记录要删除的对象,后统一删除
+        Vector<Bullet> removeBulletList = new Vector<>();
+        Vector<T> removeList = new Vector<>();
+
         for (T elem : list
         ) {
-            for (Bullet bullet : bulletList
+            for (Bullet bullet : tank.getBullets()
             ) {
-                if (IsHit(bullet,elem)){
-                    list.removeElement(elem);
-                    bulletList.remove(bullet);
+                if (IsHit(bullet, elem)) {
+                    elem.setLive(false);
+                    bullet.setLive(false);
+                }
+
+                if (!bullet.isLive()) {
+                    removeBulletList.add(bullet);
                 }
             }
+
+            if (!elem.isLive()) {
+                removeList.add(elem);
+            }
+        }
+
+        list.removeAll(removeList);
+        tank.getBullets().removeAll(removeBulletList);
+    }
+
+    public static void destoryDetection(Vector<EnemyTank> tankList, MyTank myTank) {
+        Vector<Tank> oneTankList = new Vector<>();
+        oneTankList.add(myTank);
+        destoryDetection(tankList,oneTankList);
+    }
+
+    public static <T extends GetInfo> void destoryDetection(Vector<EnemyTank> tankList, Vector<T> list) {
+        for (Tank tank:tankList
+             ) {
+            destoryDetection(tank,list);
         }
     }
 

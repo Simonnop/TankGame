@@ -4,7 +4,7 @@ import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
-import group.su.map.GetInfo;
+import group.GetInfo;
 
 import java.awt.*;
 
@@ -37,16 +37,18 @@ public class Factory {
                 mainPanel);
     }
 
-    public static void bulletOut(Tank tank){
+    public static void bulletOut(Tank tank) {
 
         Bullet bullet = new Bullet(tank.getX(), tank.getY(), tank.getDirection());
+
         if (tank instanceof MyTank) {
             bullet.setImage(myTankBullet);
-        }else if (tank instanceof EnemyTank) {
+        } else if (tank instanceof EnemyTank) {
             bullet.setImage(enemyTankBullet);
         }
+
         new Thread(bullet).start();
-        System.out.println("bullet out");
+
         tank.getBullets().add(bullet);
     }
 }

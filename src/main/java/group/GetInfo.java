@@ -1,4 +1,4 @@
-package group.su.map;
+package group;
 
 import java.awt.*;
 
@@ -10,4 +10,7 @@ public interface GetInfo {
     int getY();
 
     Image getImage();
+
+    void setLive(boolean live);
+    boolean isLive();
 }

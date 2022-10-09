@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Vector;
 
 import static group.Attributes.enemyTanksList;
+import static group.su.util.Factory.bulletOut;
 
 
 //每个敌方坦克也是一个线程
@@ -50,6 +51,7 @@ public class EnemyTank extends Tank implements Runnable{
             if(!isLive()){
                 break;
             }
+            bulletOut(this);
         }
     }
 }

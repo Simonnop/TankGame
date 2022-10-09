@@ -1,5 +1,6 @@
 package group;
 
+import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.su.map.Obstacle;
@@ -23,6 +24,10 @@ public class Attributes {
     public static MainPanel mainPanel;
 
     public static Application application;
+
+    public static Vector<Bullet> removeBulletList;
+
+    public static Vector<? extends GetInfo> removeList;
 
 
 

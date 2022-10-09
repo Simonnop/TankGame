@@ -2,6 +2,7 @@ package group.su.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -18,10 +19,10 @@ public class MainPanel extends JPanel implements Runnable {
 
     @Override
     public void paint(Graphics g) {
+
         super.paint(g);
         g.setColor(Color.black);
         g.fillRect(0, 0, WINDOW_LENGTH, WINDOW_WIDTH);
-
 
         // 绘制坦克与其子弹
         for (EnemyTank enemyTank : enemyTanksList
@@ -40,7 +41,7 @@ public class MainPanel extends JPanel implements Runnable {
 
         while (gameRun) {
 
-            System.out.println("test~~ "+time+"s");
+            System.out.println("test~~ " + time + "s");
 
             try {
                 Thread.sleep(1000);
@@ -64,9 +65,15 @@ public class MainPanel extends JPanel implements Runnable {
 
     public void drawTankAndBullets(Graphics g, Tank tank) {
         drawObject(tank, g);
+
         for (Bullet b : tank.getBullets()
         ) {
-            drawBullet(b, g);
+            if (b.isLive()) {
+                drawBullet(b, g);
+            }else {
+                tank.getBullets().remove(b);
+                System.out.println("recycle");
+            }
         }
     }
 }

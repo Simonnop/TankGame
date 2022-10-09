@@ -5,6 +5,8 @@ import group.li.util.RandomMove;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.Attributes.gameRun;
+
 //我方坦克
 public class MyTank extends Tank implements Runnable{
 
@@ -37,7 +39,9 @@ public class MyTank extends Tank implements Runnable{
             //开始随机移动
             //被子弹打中了，结束线程
             if(!isLive()){
+                gameRun = false;
                 break;
+
             }
         }
     }

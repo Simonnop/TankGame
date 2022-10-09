@@ -1,5 +1,7 @@
 package group.su.map;
 
+import group.GetInfo;
+
 import java.awt.*;
 
 public class Obstacle implements GetInfo {

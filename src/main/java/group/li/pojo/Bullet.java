@@ -1,7 +1,7 @@
 package group.li.pojo;
 
 import group.Attributes;
-import group.su.map.GetInfo;
+import group.GetInfo;
 
 import java.awt.*;
 
@@ -108,8 +108,6 @@ public class Bullet implements Runnable, GetInfo {
                 isLive = false;
                 break;
             }
-
-
         }
     }
 

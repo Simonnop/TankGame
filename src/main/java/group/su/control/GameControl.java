@@ -16,6 +16,7 @@ import java.util.Vector;
 import static group.Attributes.*;
 import static group.Attributes.WINDOW_WIDTH;
 import static group.su.map.MapData.map_1;
+import static group.su.util.Detection.destoryDetection;
 
 public class GameControl {
 
@@ -91,10 +92,16 @@ public class GameControl {
         while (gameRun) {
             // 主线程休息,控制刷新率与负载
             Thread.sleep(REFRESH_TIME);
+            // 我方坦克子弹打砖
+            destoryDetection(myTank,obstacleMap.get(Obstacle.ObstacleKind.BRICK));
+            // 我方坦克子弹打敌方坦克
+            destoryDetection(myTank,enemyTanksList);
+            // 敌方坦克打砖
+            destoryDetection(enemyTanksList,obstacleMap.get(Obstacle.ObstacleKind.BRICK));
+            // 敌方坦克打我方坦克
+            destoryDetection(enemyTanksList,myTank);
             // 重绘主面板
             mainPanel.repaint();
-
-            // destoryDetection(null,null);
         }
         System.out.println("out");
     }

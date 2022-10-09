@@ -3,7 +3,7 @@ package group.su.map;
 import static group.Attributes.REFRESH_TIME;
 import static group.su.map.MapData.imageBrick;
 
-public class Brick extends Obstacle implements Runnable{
+public class Brick extends Obstacle{
 
     private boolean isLive = true;
 
@@ -26,14 +26,4 @@ public class Brick extends Obstacle implements Runnable{
         isLive = live;
     }
 
-    @Override
-    public void run() {
-        while (isLive) {
-            try {
-                Thread.sleep(REFRESH_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
