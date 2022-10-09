@@ -5,16 +5,16 @@ import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
 import group.GetInfo;
+import group.su.map.Obstacle;
+import group.su.map.Wall;
 
+import java.util.Map;
 import java.util.Vector;
 
 import static group.Attributes.OBJECT_SIZE;
 
 public class Detection {
-    /*
-     * TODO
-     *  物体销毁函数(对象)
-     * */
+
 
     // 子弹攻击检测
     /* 重载可选:
@@ -27,7 +27,6 @@ public class Detection {
     public static <T extends GetInfo> void destoryDetection(Tank tank, Vector<T> list) {
 
         // 为避免线程内冲突,创建一个list来记录要删除的对象,后统一删除
-        Vector<Bullet> removeBulletList = new Vector<>();
         Vector<T> removeList = new Vector<>();
 
         for (T elem : list
@@ -35,22 +34,18 @@ public class Detection {
             for (Bullet bullet : tank.getBullets()
             ) {
                 if (IsHit(bullet, elem)) {
-                    elem.setLive(false);
+                    if (!(elem instanceof Wall)) {
+                        elem.setLive(false);
+                    }
                     bullet.setLive(false);
                 }
-
-                if (!bullet.isLive()) {
-                    removeBulletList.add(bullet);
-                }
             }
-
             if (!elem.isLive()) {
                 removeList.add(elem);
             }
         }
 
         list.removeAll(removeList);
-        tank.getBullets().removeAll(removeBulletList);
     }
 
     public static void destoryDetection(Vector<EnemyTank> tankList, MyTank myTank) {

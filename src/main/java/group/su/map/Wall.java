@@ -6,8 +6,6 @@ public class Wall extends Obstacle {
     public Wall(int x, int y) {
         super(x, y);
         setObstacleKind(ObstacleKind.WALL);
-        setBulletPass(false);
-        setTankPass(false);
         setImage(imageWall);
     }
 }

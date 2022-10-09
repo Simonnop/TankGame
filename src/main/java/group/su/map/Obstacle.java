@@ -63,9 +63,6 @@ public class Obstacle implements GetInfo {
     final int x;
     final int y;
 
-    boolean tankPass;
-    boolean bulletPass;
-
     Image image;
 
     public Obstacle(int x, int y) {
@@ -83,28 +80,12 @@ public class Obstacle implements GetInfo {
         this.obstacleKind = obstacleKind;
     }
 
-    public boolean isTankPass() {
-        return tankPass;
-    }
-
     public Image getImage() {
         return image;
     }
 
     public void setImage(Image image) {
         this.image = image;
-    }
-
-    public boolean isBulletPass() {
-        return bulletPass;
-    }
-
-    public void setTankPass(boolean tankPass) {
-        this.tankPass = tankPass;
-    }
-
-    public void setBulletPass(boolean bulletPass) {
-        this.bulletPass = bulletPass;
     }
 
     public boolean isLive() {

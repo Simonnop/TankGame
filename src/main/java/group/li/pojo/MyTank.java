@@ -41,7 +41,6 @@ public class MyTank extends Tank implements Runnable{
             if(!isLive()){
                 gameRun = false;
                 break;
-
             }
         }
     }

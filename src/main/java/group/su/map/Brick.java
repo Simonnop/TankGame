@@ -10,8 +10,6 @@ public class Brick extends Obstacle{
     public Brick(int x, int y) {
         super(x, y);
         setObstacleKind(ObstacleKind.BRICK);
-        setBulletPass(false);
-        setTankPass(false);
         setImage(imageBrick);
         isLive = true;
     }

@@ -6,6 +6,7 @@ import group.GetInfo;
 import java.awt.*;
 
 import static group.Attributes.REFRESH_TIME;
+import static group.Attributes.mainPanelThread;
 
 //每个子弹都是一个线程 所以实现Runnable接口
 public class Bullet implements Runnable, GetInfo {
@@ -80,6 +81,7 @@ public class Bullet implements Runnable, GetInfo {
     public void run() {
         //子弹一旦开始创建 ，线程便开始无限循环
         while (true){
+
             try {
                 Thread.sleep(REFRESH_TIME);
             } catch (InterruptedException e) {

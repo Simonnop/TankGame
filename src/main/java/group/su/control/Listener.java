@@ -19,8 +19,8 @@ public class Listener implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         /*
-         * TODO
-         *  控制坦克移动
+         *
+         *  控制坦克移动,与攻击
          * */
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {

@@ -23,6 +23,8 @@ public class Attributes {
 
     public static MainPanel mainPanel;
 
+    public static Thread mainPanelThread;
+
     public static Application application;
 
     public static Vector<Bullet> removeBulletList;

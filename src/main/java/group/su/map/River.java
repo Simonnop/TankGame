@@ -8,8 +8,6 @@ public class River extends Obstacle {
 
         super(x, y);
         setObstacleKind(ObstacleKind.RIVER);
-        setBulletPass(true);
-        setTankPass(false);
         setImage(imageRiver);
     }
 }
