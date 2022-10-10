@@ -23,7 +23,7 @@ public class RandomMove {
                     }
                     break;
                 case 1://向右
-                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !tank.isTouchEnemyTank()){
+                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !tank.isTouchEnemyTank()){
                         tank.moveRight();
                     }
                     try {
@@ -33,7 +33,7 @@ public class RandomMove {
                     }
                     break;
                 case 2://向下
-                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !tank.isTouchEnemyTank()){
+                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !tank.isTouchEnemyTank()){
                         tank.moveDown();
                     }
                     try {

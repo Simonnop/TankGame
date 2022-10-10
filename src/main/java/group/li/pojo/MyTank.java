@@ -8,12 +8,22 @@ import java.util.Vector;
 import static group.Attributes.gameRun;
 
 //我方坦克
-public class MyTank extends Tank implements Runnable{
+public class MyTank extends Tank implements Runnable {
 
     public static Image myTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_up.png"));
     public static Image myTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_down.png"));
     public static Image myTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_left.png"));
     public static Image myTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_right.png"));
+
+    private int hp;
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 
     //可以发射多颗子弹
     private Vector<Bullet> bullets = new Vector<>();
@@ -22,7 +32,9 @@ public class MyTank extends Tank implements Runnable{
         super(x, y);
         setImage(myTank_up);
         System.out.println("tank init");
+        setHp(5);
     }
+
 
     public Vector<Bullet> getBullets() {
         return bullets;
@@ -35,12 +47,16 @@ public class MyTank extends Tank implements Runnable{
 
     @Override
     public void run() {
-        while (true){
+        while (gameRun) {
 
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             //被子弹打中了，结束线程
-            if(!isLive()){
+            if (hp <= 0) {
                 gameRun = false;
-                break;
             }
         }
     }

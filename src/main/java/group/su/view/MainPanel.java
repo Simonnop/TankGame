@@ -27,12 +27,15 @@ public class MainPanel extends JPanel implements Runnable {
         // 先画底层的水
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.RIVER));
 
-        // 绘制坦克与其子弹
+        // 绘制坦克
         for (EnemyTank enemyTank : enemyTanksList
         ) {
-            drawTankAndBullets(g, enemyTank);
+            drawObject(enemyTank, g);
         }
-        drawTankAndBullets(g, myTank);
+        drawObject(myTank, g);
+
+        // 绘制子弹
+        drawBullets(g,allBulletList);
 
         // 绘制地图其他障碍物
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.WALL));
@@ -47,7 +50,7 @@ public class MainPanel extends JPanel implements Runnable {
 
         while (gameRun) {
 
-            System.out.println("test~~ " + time + "s");
+            System.out.println("test~~ mainPanel run  " + time + "s");
 
             try {
                 Thread.sleep(1000);
@@ -66,20 +69,16 @@ public class MainPanel extends JPanel implements Runnable {
         }
     }
 
-    public void drawTankAndBullets(Graphics g, Tank tank) {
+    public void drawBullets(Graphics g, Vector<Bullet> bullets) {
 
-        drawObject(tank, g);
-
-        // 这里不使用 for each 循环,因为 for each 底层调用的是 Iterator, 使用 remove 是不安全的
-        // 吧
-        for (int i = 0; i < tank.getBullets().size(); i++) {
-            Bullet b = tank.getBullets().get(i);
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet b = bullets.get(i);
             // 根据子弹的 isLive 值判断是否绘出
             // 如果 isLive 为 false 则移除该对象
             if (b.isLive()) {
                 drawBullet(b, g);
             } else {
-                tank.getBullets().remove(b);
+                bullets.remove(b);
                 // 这里的 remove 之后会将遍历的指针前移,所以需要 i--
                 i--;
             }

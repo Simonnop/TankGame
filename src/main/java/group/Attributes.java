@@ -27,9 +27,7 @@ public class Attributes {
 
     public static Application application;
 
-    public static Vector<Bullet> removeBulletList;
-
-    public static Vector<? extends GetInfo> removeList;
+    public static Vector<Bullet> allBulletList;
 
 
 

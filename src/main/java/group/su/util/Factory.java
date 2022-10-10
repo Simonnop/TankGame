@@ -43,7 +43,37 @@ public class Factory {
 
     public static void bulletOut(Tank tank) {
 
-        Bullet bullet = new Bullet(tank.getX(), tank.getY(), tank.getDirection());
+        Bullet bullet;
+
+        switch (tank.getDirection()) {
+            case 0:  // 上
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case 1:  // 右
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case 2:  // 下
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case 3:  // 左
+                bullet = new Bullet(
+                        tank.getX() - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            default:
+                bullet = new Bullet(tank.getX(), tank.getY(), tank.getDirection());
+        }
+
 
         if (tank instanceof MyTank) {
             bullet.setImage(myTankBullet);
@@ -51,9 +81,11 @@ public class Factory {
             bullet.setImage(enemyTankBullet);
         }
 
+        //System.out.println("bullet out");
+
         new Thread(bullet).start();
 
-        tank.getBullets().add(bullet);
+        allBulletList.add(bullet);
     }
 
     public static Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(List<List<int[]>> map) {

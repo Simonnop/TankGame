@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Vector;
 
 import static group.Attributes.enemyTanksList;
+import static group.Attributes.gameRun;
 import static group.su.util.Factory.bulletOut;
 
 
@@ -44,19 +45,18 @@ public class EnemyTank extends Tank implements Runnable{
     @Override
     public void run() {
 
-        while (true){
-
-
-            //根据坦克方向，创建子弹，并使子弹线程开启
-
-
-
+        while (gameRun){
 
             //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程
             if(!isLive()){
                 break;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
             bulletOut(this);
         }

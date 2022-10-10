@@ -8,10 +8,13 @@ import group.GetInfo;
 import group.su.map.Obstacle;
 import group.su.map.Wall;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Vector;
 
 import static group.Attributes.OBJECT_SIZE;
+import static group.Attributes.gameRun;
+import static group.su.util.Factory.drawBullet;
 
 public class Detection {
 
@@ -24,48 +27,40 @@ public class Detection {
 
      */
 
-    public static <T extends GetInfo> void destoryDetection(Tank tank, Vector<T> list) {
+    public static <T extends GetInfo> void destoryDetection(Bullet bullet, Vector<T> list) {
 
-        // 为避免线程内冲突,创建一个list来记录要删除的对象,后统一删除
-        Vector<T> removeList = new Vector<>();
 
-        for (T elem : list
-        ) {
-            for (Bullet bullet : tank.getBullets()
-            ) {
-                if (IsHit(bullet, elem)) {
-                    if (!(elem instanceof Wall)) {
-                        elem.setLive(false);
-                    }
-                    bullet.setLive(false);
+        for (int i = 0; i < list.size(); i++) {
+            T elem = list.get(i);
+            if (IsHit(bullet, elem)) {
+                if (!(elem instanceof Wall) && !(elem instanceof MyTank)) {
+                    elem.setLive(false);
+                }
+                bullet.setLive(false);
+                if (elem instanceof MyTank) {
+                    ((MyTank) elem).setHp(((MyTank) elem).getHp() - 1);
+                    System.out.println("hit!!  " + ((MyTank) elem).getHp() + " hp left!");
                 }
             }
             if (!elem.isLive()) {
-                removeList.add(elem);
+                list.remove(elem);
+                // 这里的 remove 之后会将遍历的指针前移,所以需要 i--
+                i--;
             }
         }
-
-        list.removeAll(removeList);
     }
 
-    public static void destoryDetection(Vector<EnemyTank> tankList, MyTank myTank) {
+    public static void destoryDetection(Bullet bullet, MyTank myTank) {
         Vector<Tank> oneTankList = new Vector<>();
         oneTankList.add(myTank);
-        destoryDetection(tankList,oneTankList);
-    }
-
-    public static <T extends GetInfo> void destoryDetection(Vector<EnemyTank> tankList, Vector<T> list) {
-        for (Tank tank:tankList
-             ) {
-            destoryDetection(tank,list);
-        }
+        destoryDetection(bullet, oneTankList);
     }
 
     public static <T extends GetInfo> boolean IsHit(Bullet bullet, T t) {
         if (bullet.getX() >= t.getX() &&
-            bullet.getX() <= t.getX() + OBJECT_SIZE &&
-            bullet.getY() >= t.getY() &&
-            bullet.getY() <= t.getY() + OBJECT_SIZE) {
+                bullet.getX() <= t.getX() + OBJECT_SIZE &&
+                bullet.getY() >= t.getY() &&
+                bullet.getY() <= t.getY() + OBJECT_SIZE) {
             return true;
         }
         return false;
@@ -77,30 +72,30 @@ public class Detection {
         //当前坦克的左上角坐标【bullet.getX(),bullet.getY()】
 
         if (t1.getX() >= t2.getX() &&
-            t1.getX() <= t2.getX() + OBJECT_SIZE &&
-            t1.getY() >= t2.getY() &&
-            t1.getY() <= t2.getY() + OBJECT_SIZE) {
+                t1.getX() <= t2.getX() + OBJECT_SIZE &&
+                t1.getY() >= t2.getY() &&
+                t1.getY() <= t2.getY() + OBJECT_SIZE) {
             return true;
         }
         //当前坦克的右上角坐标【bullet.getX() + Constant.TankLength,bullet.getY()】
         if (t1.getX() + OBJECT_SIZE >= t2.getX() &&
-            t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
-            t1.getY() >= t2.getY() &&
-            t1.getY() <= t2.getY() + OBJECT_SIZE) {
+                t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
+                t1.getY() >= t2.getY() &&
+                t1.getY() <= t2.getY() + OBJECT_SIZE) {
             return true;
         }
         //当前坦克的左下角坐标【bullet.getX(),bullet.getY()+ Constant.TankLength】
         if (t1.getX() >= t2.getX() &&
-            t1.getX() <= t2.getX() + OBJECT_SIZE &&
-            t1.getY() + OBJECT_SIZE >= t2.getY() &&
-            t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
+                t1.getX() <= t2.getX() + OBJECT_SIZE &&
+                t1.getY() + OBJECT_SIZE >= t2.getY() &&
+                t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
             return true;
         }
         //当前坦克的右下角坐标【bullet.getX()+ Constant.TankLength,bullet.getY()+ Constant.TankLength】
         if (t1.getX() + OBJECT_SIZE >= t2.getX() &&
-            t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
-            t1.getY() + OBJECT_SIZE >= t2.getY() &&
-            t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
+                t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
+                t1.getY() + OBJECT_SIZE >= t2.getY() &&
+                t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
             return true;
         }
 

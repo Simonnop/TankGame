@@ -25,6 +25,8 @@ public class GameControl {
         application = new Application();
         // 创建主面板
         mainPanel = new MainPanel();
+        // 创建子弹列表
+        allBulletList = new Vector<>();
 
         // 设置主程序面板框属性
         application.setSize(WINDOW_LENGTH, WINDOW_WIDTH);
@@ -69,16 +71,7 @@ public class GameControl {
         while (gameRun) {
             // 主线程休息,控制刷新率与负载
             Thread.sleep(REFRESH_TIME);
-            // 我方坦克子弹打砖与墙
-            destoryDetection(myTank,obstacleMap.get(Obstacle.ObstacleKind.BRICK));
-            destoryDetection(myTank,obstacleMap.get(Obstacle.ObstacleKind.WALL));
-            // 我方坦克子弹打敌方坦克
-            destoryDetection(myTank,enemyTanksList);
-            // 敌方坦克打砖与墙
-            destoryDetection(enemyTanksList,obstacleMap.get(Obstacle.ObstacleKind.BRICK));
-            destoryDetection(enemyTanksList,obstacleMap.get(Obstacle.ObstacleKind.WALL));
-            // 敌方坦克打我方坦克
-            destoryDetection(enemyTanksList,myTank);
+
             // 重绘主面板
             mainPanel.repaint();
         }
