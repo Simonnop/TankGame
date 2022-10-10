@@ -4,7 +4,8 @@ import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.su.map.Obstacle;
-import group.su.view.MainPanel;
+import group.su.view.GamePanel;
+import group.su.view.MainFrame;
 
 import java.util.Map;
 import java.util.Vector;
@@ -21,11 +22,11 @@ public class Attributes {
 
     public static Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap;
 
-    public static MainPanel mainPanel;
+    public static GamePanel gamePanel;
 
     public static Thread mainPanelThread;
 
-    public static Application application;
+    public static MainFrame mainFrame;
 
     public static Vector<Bullet> allBulletList;
 

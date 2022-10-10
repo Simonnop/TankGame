@@ -4,10 +4,9 @@ import group.su.control.GameControl;
 
 import javax.swing.*;
 
-public class Application extends JFrame {
+public class Application {
 
     /*
-     *
      *  主程序流程
      * */
 

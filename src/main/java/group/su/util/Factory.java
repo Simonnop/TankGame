@@ -29,7 +29,7 @@ public class Factory {
         g.drawImage(t.getImage(),
                 t.getX(), t.getY(),
                 OBJECT_SIZE, OBJECT_SIZE,
-                mainPanel);
+                gamePanel);
     }
 
     public static void drawBullet(Bullet bullet, Graphics g) {
@@ -38,7 +38,7 @@ public class Factory {
         g.drawImage(bullet.getImage(),
                 bullet.getX(), bullet.getY(),
                 BULLET_SIZE, BULLET_SIZE,
-                mainPanel);
+                gamePanel);
     }
 
     public static void bulletOut(Tank tank) {

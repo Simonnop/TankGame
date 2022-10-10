@@ -12,10 +12,10 @@ Vector<EnemyTank> enemyTanksList
 Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap
 -- 障碍物图
 
-MainPanel mainPanel
+GamePanel gamePanel
 -- 游戏主面板
 
-Application application
+MainFrame mainFrame
 -- 游戏主面板框及主程序
 
 

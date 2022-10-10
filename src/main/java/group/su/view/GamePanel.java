@@ -2,20 +2,17 @@ package group.su.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Vector;
 
 import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
-import group.li.pojo.Tank;
 import group.su.map.Obstacle;
 
 import static group.Attributes.*;
 import static group.su.util.Factory.drawBullet;
 import static group.su.util.Factory.drawObject;
 
-public class MainPanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void paint(Graphics g) {
