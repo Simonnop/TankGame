@@ -43,17 +43,15 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        int time = 0;
+        int time = 1;
 
         while (gameRun) {
-
-            System.out.println("test~~ mainPanel run  " + time + "s");
-
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("test~~  " + time + "s");
             time++;
         }
     }
