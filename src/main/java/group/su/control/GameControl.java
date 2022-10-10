@@ -45,18 +45,23 @@ public class GameControl {
         // 加入监听器
         mainFrame.addKeyListener(new Listener());
 
-        if (checkResource()) {
+        while (true) {
+            // 等待静态资源准备完毕
+            if (checkResource()) {
+                // 开启游戏主面板线程
+                new Thread(gamePanel).start();
+                // 开启坦克线程,开始移动
+                for (EnemyTank enemyTank:enemyTanksList
+                ) {
+                    new Thread(enemyTank).start();
+                }
+                new Thread(myTank).start();
 
-            // 开启游戏主面板线程
-            new Thread(gamePanel).start();
-            // 开启坦克线程,开始移动
-            for (EnemyTank enemyTank:enemyTanksList
-            ) {
-                new Thread(enemyTank).start();
+                System.out.println("start");
+
+                break;
             }
-            new Thread(myTank).start();
-
-            System.out.println("start");
+            System.out.println("hold on");
         }
     }
 
