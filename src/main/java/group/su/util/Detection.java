@@ -1,20 +1,14 @@
 package group.su.util;
 
 import group.li.pojo.Bullet;
-import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
 import group.GetInfo;
 import group.su.map.Obstacle;
-import group.su.map.Wall;
 
-import java.awt.*;
-import java.util.Map;
 import java.util.Vector;
 
 import static group.Attributes.OBJECT_SIZE;
-import static group.Attributes.gameRun;
-import static group.su.util.Factory.drawBullet;
 
 public class Detection {
 
@@ -33,7 +27,8 @@ public class Detection {
         for (int i = 0; i < list.size(); i++) {
             T elem = list.get(i);
             if (IsHit(bullet, elem)) {
-                if (!(elem instanceof Wall) && !(elem instanceof MyTank)) {
+                if (!(elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.WALL)) &&
+                        !(elem instanceof MyTank)) {
                     elem.setLive(false);
                 }
                 bullet.setLive(false);

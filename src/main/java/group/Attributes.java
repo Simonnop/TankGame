@@ -37,9 +37,9 @@ public class Attributes {
 
     public static final int BULLET_SIZE = 6;
 
-    public static final int WINDOW_LENGTH = 1080;
+    public static final int WINDOW_LENGTH = 600;
 
-    public static final int WINDOW_WIDTH = 720;
+    public static final int WINDOW_WIDTH = 600;
 
 
 }

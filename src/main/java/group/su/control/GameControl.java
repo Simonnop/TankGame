@@ -41,14 +41,15 @@ public class GameControl {
 
         // 实例化坦克
         enemyTanksList = new Vector<>();
-        enemyTanksList.add(new EnemyTank(270,0));
-        enemyTanksList.add(new EnemyTank(540,0));
-        enemyTanksList.add(new EnemyTank(810,0));
+        enemyTanksList.add(new EnemyTank(0,0));
+        enemyTanksList.add(new EnemyTank(80,0));
+        enemyTanksList.add(new EnemyTank(240,0));
+        enemyTanksList.add(new EnemyTank(400,0));
 
-        myTank = new MyTank(520,600);
+        myTank = new MyTank(240,480);
     }
 
-    public void gameStart() {
+    public void gameStart() throws InterruptedException {
 
         // 开启坦克线程,开始移动
         for (EnemyTank enemyTank:enemyTanksList
@@ -59,6 +60,9 @@ public class GameControl {
 
         // 加入监听器
         application.addKeyListener(new Listener());
+
+        // 等待实例化
+        Thread.sleep(1000);
 
         // 开启主面板线程
         new Thread(mainPanel).start();

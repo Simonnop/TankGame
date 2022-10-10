@@ -114,7 +114,7 @@ public class Bullet implements Runnable, GetInfo {
             // 子弹击中检测
             destoryDetection(this,obstacleMap.get(Obstacle.ObstacleKind.BRICK));
             destoryDetection(this,obstacleMap.get(Obstacle.ObstacleKind.WALL));
-            //destoryDetection(this,enemyTanksList);
+            destoryDetection(this,enemyTanksList);
             destoryDetection(this,myTank);
 
             //当子弹碰到地图边缘时，线程结束

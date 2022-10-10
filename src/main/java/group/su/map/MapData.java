@@ -27,21 +27,27 @@ public class MapData {
     static {
         // RIVER, WALL, TREE, BRICK
         // 将 map 设置为 List 是因为便于遍历
-        // 从初始化时使用 二维数组 是因为好写
+        // 从初始化时使用 二维数组 是因为好写, 可以直接用 python 输出复制过来
 
         map_1 = new ArrayList<>();
 
-        map_1.add(new ArrayList<>(Arrays.asList(
-                new int[][]{{1, 0}, {1, 1}}
+        map_1.add(new ArrayList<>(Arrays.asList( // River
+                new int[][]{}
         )));
-        map_1.add(new ArrayList<>(Arrays.asList(
-                new int[][]{{3, 2}, {3, 3}}
+        map_1.add(new ArrayList<>(Arrays.asList( // Wall
+                new int[][]{{3,0},{3,1},{3,7},{3,8},{0,8},{6,4},{7,6},{8,5},
+                        {9,3},{10,2},{12,4},{10,9}}
         )));
-        map_1.add(new ArrayList<>(Arrays.asList(
-                new int[][]{{5, 4}, {5, 5}}
+        map_1.add(new ArrayList<>(Arrays.asList( // Tree
+                new int[][]{{0,4},{0,5},{1,5},{4,6},{4,7},{5,6},{6,6},{10,4},{10,5},{10,6}}
         )));
-        map_1.add(new ArrayList<>(Arrays.asList(
-                new int[][]{{7, 6}, {7, 7}}
+        map_1.add(new ArrayList<>(Arrays.asList( // Brick
+                new int[][]{{1,1},{1,2},{3,3},{3,4},{6,2},{7,1},{7,2},{5,5},{9,1},
+                        {9,2},{9,4},{11,1},{11,2},{11,4},{1,6},{2,6},{3,6},{11,6},
+                        {1,8},{1,9},{1,10},{1,11},{1,12},{3,9},{3,10},{3,12},{5,7},
+                        {5,8},{5,9},{5,10},{6,9},{6,10},{7,7},{7,8},{7,9},{7,10},
+                        {9,7},{9,9},{9,11},{9,12},{10,12},{11,6},{11,7},{11,8},
+                        {11,9},{11,11},{11,12}}
         )));
     }
 

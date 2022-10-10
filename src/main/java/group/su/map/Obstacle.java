@@ -4,39 +4,42 @@ import group.GetInfo;
 
 import java.awt.*;
 
+import static group.su.map.MapData.*;
+
 public class Obstacle implements GetInfo {
 
     /*
-    *
-    *  建立地图上的障碍物
-    *  河,墙,树,砖
-    *  根据不同的类型附上不同的属性
-    * */
+     *
+     *  建立地图上的障碍物
+     *  河,墙,树,砖
+     *  根据不同的类型附上不同的属性
+     * */
 
     ObstacleKind obstacleKind;
 
     public enum ObstacleKind {
-         RIVER {
+        RIVER {
             @Override
             public Obstacle returnObject(int x, int y) {
-                return new River(x, y);
+                return new Obstacle(x, y, imageRiver, RIVER);
             }
         }, WALL {
             @Override
             public Obstacle returnObject(int x, int y) {
-                return new Wall(x, y);
+                return new Obstacle(x, y, imageWall, WALL);
             }
         }, TREE {
             @Override
             public Obstacle returnObject(int x, int y) {
-                return new Tree(x, y);
+                return new Obstacle(x, y, imageTree, TREE);
             }
-        },BRICK {
+        }, BRICK {
             @Override
             public Obstacle returnObject(int x, int y) {
-                return new Brick(x, y);
+                return new Obstacle(x, y, imageBrick, BRICK);
             }
         };
+
         /*, MyTank {
             @Override
             public Object returnObject(int x, int y) {
@@ -65,14 +68,15 @@ public class Obstacle implements GetInfo {
 
     Image image;
 
-    public Obstacle(int x, int y) {
-
-        this.isLive = true;
+    public Obstacle(int x, int y, Image image, ObstacleKind obstacleKind) {
+        this.obstacleKind = obstacleKind;
         this.x = x;
         this.y = y;
+        this.image = image;
+        this.isLive = true;
     }
 
-    public ObstacleKind getObstacleKind() {
+    public ObstacleKind getKind() {
         return obstacleKind;
     }
 
