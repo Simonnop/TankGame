@@ -58,7 +58,7 @@ public class EnemyTank extends Tank implements Runnable{
             randomTime--;
             //产生一个随机时间，敌方坦克每一个随机时间发射一颗子弹
             if(randomTime==0){
-                bulletOut(this);
+               // bulletOut(this);
                randomTime= (int) (Math.random() * 4+2); //2-6的随机数
             }
 

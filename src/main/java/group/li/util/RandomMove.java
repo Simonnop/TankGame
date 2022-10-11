@@ -10,7 +10,7 @@ public class RandomMove {
     public static void randomMove(EnemyTank tank){
         //根据当前坦克的方向来继续移动
         //朝某个方向移动40*Constant.REFRESH_TIME ms 之后再改变方向
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 30; i++) {
             switch (tank.getDirection()) {
                 case 0://向上
                     if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
