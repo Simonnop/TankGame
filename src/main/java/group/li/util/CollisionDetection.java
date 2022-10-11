@@ -1,45 +1,77 @@
 package group.li.util;
 
-import group.Attributes;
 import group.li.pojo.EnemyTank;
+import group.li.pojo.MyTank;
+import group.li.pojo.Tank;
+import group.su.map.Obstacle;
+import group.su.util.Detection;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
+
+import static group.Attributes.*;
 
 //碰撞检测的方法
 public class CollisionDetection {
 
-    //判断敌方坦克相互之间是否发生了碰撞  ,是则返回true
-    //判断机制是：每个坦克的四个顶点都不能在敌方坦克的模型范围内
-    public static boolean  IsTouchEnemyTank(EnemyTank thisTank, Vector<EnemyTank> enemyTanks){
-                //让当前的thisTank 敌人坦克 和 其他所有的敌人坦克比较
-                for (int i = 0;i< enemyTanks.size();i++){
-                    //从vector中取出一辆敌人的坦克
-                    EnemyTank enemyTank = enemyTanks.get(i);
-                    //不和自己比较
-                    if (thisTank != enemyTank){
-                            //当前坦克的左上角坐标【thisTank.getX(),thisTank.getY()】
-                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX() <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
-                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Attributes.OBJECT_SIZE){
-                                return true;
-                            }
-                            //当前坦克的右上角坐标【thisTank.getX() + Constant.OBJECT_SIZE,thisTank.getY()】
-                            if (thisTank.getX() + Attributes.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX() + Attributes.OBJECT_SIZE <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
-                                    thisTank.getY() >= enemyTank.getY() && thisTank.getY() <= enemyTank.getY() + Attributes.OBJECT_SIZE){
-                                return true;
-                            }
-                            //当前坦克的左下角坐标【thisTank.getX(),thisTank.getY()+ Constant.OBJECT_SIZE】
-                            if (thisTank.getX() >= enemyTank.getX() && thisTank.getX()  <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
-                                thisTank.getY() + Attributes.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY() + Attributes.OBJECT_SIZE <= enemyTank.getY() + Attributes.OBJECT_SIZE){
-                                return true;
-                            }
-                            //当前坦克的右下角坐标【thisTank.getX()+ Constant.OBJECT_SIZE,thisTank.getY()+ Constant.OBJECT_SIZE】
-                            if (thisTank.getX() + Attributes.OBJECT_SIZE >= enemyTank.getX() && thisTank.getX() + Attributes.OBJECT_SIZE <= enemyTank.getX() + Attributes.OBJECT_SIZE &&
-                                thisTank.getY() + Attributes.OBJECT_SIZE >= enemyTank.getY() && thisTank.getY() + Attributes.OBJECT_SIZE <= enemyTank.getY() + Attributes.OBJECT_SIZE){
-                                return true;
-                            }
+
+    public static boolean  IsTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks){
+        for (int i = 0;i< enemyTanks.size();i++){
+            //从vector中取出一辆敌人的坦克
+            EnemyTank enemyTank = enemyTanks.get(i);
+            if(Detection.IsCollision(tank,enemyTank)==true){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public static  boolean IsTouchMyTank(EnemyTank thisTank, MyTank tank) {
+        return Detection.IsCollision(thisTank,tank);
+    }
+    public static boolean  IsTouchObstacles(Tank tank, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap){
+
+        Iterator<Obstacle.ObstacleKind> iterator=obstacleMap.keySet().iterator();
+        while (iterator.hasNext()){
+            Obstacle.ObstacleKind key=iterator.next();
+            if(key== Obstacle.ObstacleKind.RIVER ||key== Obstacle.ObstacleKind.WALL ||key== Obstacle.ObstacleKind.BRICK){
+                Vector<Obstacle> obstacles = obstacleMap.get(key);
+                for (int i=0;i<obstacles.size();i++){
+                    if(Detection.IsCollision(tank,obstacles.get(i))==true){
+                        return true;
                     }
                 }
+            }
 
+        }
+        return false;
+    }
+
+    //为myTank准备的检测方法集成
+    public static boolean  IsTouchForMyTank(){
+        if(IsTouchObstacles(myTank,obstacleMap)==true){
+            return true;
+        }
+        if(IsTouchEnemyTanks(myTank,enemyTanksList)==true){
+            return true;
+        }
+        return false;
+    }
+    //为enemyTank准备的检测方法集成
+    public static boolean  IsTouchForEnemyTank(EnemyTank tank){
+
+        if(IsTouchObstacles(tank,obstacleMap)==true){
+            return true;
+        }
+        if(IsTouchEnemyTanks(tank,enemyTanksList)==true){
+            return true;
+        }
+        if(IsTouchMyTank(tank,myTank)==true){
+            return true;
+        }
         return false;
 
     }

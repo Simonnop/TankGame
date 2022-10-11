@@ -2,12 +2,12 @@ package group.li.pojo;
 
 import group.li.util.CollisionDetection;
 import group.li.util.RandomMove;
+import group.su.util.Detection;
 
 import java.awt.*;
 import java.util.Vector;
 
-import static group.Attributes.enemyTanksList;
-import static group.Attributes.gameRun;
+import static group.Attributes.*;
 import static group.su.util.Factory.bulletOut;
 
 
@@ -37,16 +37,12 @@ public class EnemyTank extends Tank implements Runnable{
         this.enemyTanks = enemyTanks;
     }
 
-    //使用工具类里的碰撞检测  敌方坦克是否碰到其他敌方坦克
-    public boolean isTouchEnemyTank(){
-        return CollisionDetection.IsTouchEnemyTank(this,enemyTanks);
-    }
 
     @Override
     public void run() {
-
+        //产生一个随机时间，敌方坦克每一个随机时间发射一颗子弹
+        int randomTime = (int) (Math.random() * 4+2);
         while (gameRun){
-
             //开始随机移动
             RandomMove.randomMove(this);
             //被子弹打中了，结束线程
@@ -58,7 +54,14 @@ public class EnemyTank extends Tank implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            bulletOut(this);
+
+            randomTime--;
+            //产生一个随机时间，敌方坦克每一个随机时间发射一颗子弹
+            if(randomTime==0){
+                bulletOut(this);
+               randomTime= (int) (Math.random() * 4+2); //2-6的随机数
+            }
+
         }
     }
 }
