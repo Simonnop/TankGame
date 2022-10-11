@@ -17,13 +17,11 @@ public class CollisionDetection {
 
 
     public static boolean  IsTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks){
-        //让当前的thisTank 敌人坦克 和 其他所有的敌人坦克比较
         for (int i = 0;i< enemyTanks.size();i++){
             //从vector中取出一辆敌人的坦克
             EnemyTank enemyTank = enemyTanks.get(i);
-            //不和自己比较
-            if (tank != enemyTank){
-                Detection.IsCollision(tank,enemyTank);
+            if(Detection.IsCollision(tank,enemyTank)==true){
+                return true;
             }
         }
         return false;
