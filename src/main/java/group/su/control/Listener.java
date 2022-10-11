@@ -33,8 +33,10 @@ public class Listener implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             myTank.setDirection(2);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if(CollisionDetection.IsTouchForMyTank()==false){
+            if (CollisionDetection.IsTouchForMyTank() == false) {
                 myTank.moveDown(v);
+            } else {
+                myTank.moveUp(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             myTank.setDirection(0);
@@ -42,19 +44,24 @@ public class Listener implements KeyListener {
 
             if(CollisionDetection.IsTouchForMyTank()==false){
                 myTank.moveUp(v);
+            }else{
+                myTank.moveDown(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             myTank.setDirection(1);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if(CollisionDetection.IsTouchForMyTank()==false){
+            if (CollisionDetection.IsTouchForMyTank() == false) {
                 myTank.moveRight(v);
+            } else {
+                myTank.moveLeft(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             myTank.setDirection(3);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if(CollisionDetection.IsTouchForMyTank()==false){
+            if (CollisionDetection.IsTouchForMyTank() == false) {
                 myTank.moveLeft(v);
-
+            } else {
+                myTank.moveRight(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             bulletOut(myTank);

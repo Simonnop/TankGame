@@ -24,6 +24,7 @@ public class GameControl {
         gamePanel = new GamePanel();
         // 创建主程序面板框
         mainFrame = new MainFrame();
+
         // 创建子弹列表
         allBulletList = new Vector<>();
 

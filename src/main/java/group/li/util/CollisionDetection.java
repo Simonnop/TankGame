@@ -16,11 +16,11 @@ import static group.Attributes.*;
 public class CollisionDetection {
 
 
-    public static boolean  IsTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks){
-        for (int i = 0;i< enemyTanks.size();i++){
+    public static boolean IsTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks) {
+        for (int i = 0; i < enemyTanks.size(); i++) {
             //从vector中取出一辆敌人的坦克
             EnemyTank enemyTank = enemyTanks.get(i);
-            if(Detection.IsCollision(tank,enemyTank)==true){
+            if (Detection.IsCollision(tank, enemyTank) == true) {
                 return true;
             }
         }
@@ -28,48 +28,50 @@ public class CollisionDetection {
     }
 
 
-
-    public static  boolean IsTouchMyTank(EnemyTank thisTank, MyTank tank) {
-        return Detection.IsCollision(thisTank,tank);
+    public static boolean IsTouchMyTank(EnemyTank thisTank, MyTank tank) {
+        return Detection.IsCollision(thisTank, tank);
     }
-    public static boolean  IsTouchObstacles(Tank tank, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap){
 
-        Iterator<Obstacle.ObstacleKind> iterator=obstacleMap.keySet().iterator();
-        while (iterator.hasNext()){
-            Obstacle.ObstacleKind key=iterator.next();
-            if(key== Obstacle.ObstacleKind.RIVER ||key== Obstacle.ObstacleKind.WALL ||key== Obstacle.ObstacleKind.BRICK){
+    public static boolean IsTouchObstacles(Tank tank, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap) {
+
+        Iterator<Obstacle.ObstacleKind> iterator = obstacleMap.keySet().iterator();
+        while (iterator.hasNext()) {
+            Obstacle.ObstacleKind key = iterator.next();
+            if (key == Obstacle.ObstacleKind.RIVER ||
+                key == Obstacle.ObstacleKind.WALL ||
+                key == Obstacle.ObstacleKind.BRICK) {
                 Vector<Obstacle> obstacles = obstacleMap.get(key);
-                for (int i=0;i<obstacles.size();i++){
-                    if(Detection.IsCollision(tank,obstacles.get(i))==true){
+                for (int i = 0; i < obstacles.size(); i++) {
+                    if (Detection.IsCollision(tank, obstacles.get(i)) == true) {
                         return true;
                     }
                 }
             }
-
         }
         return false;
     }
 
     //为myTank准备的检测方法集成
-    public static boolean  IsTouchForMyTank(){
-        if(IsTouchObstacles(myTank,obstacleMap)==true){
+    public static boolean IsTouchForMyTank() {
+        if (IsTouchObstacles(myTank, obstacleMap) == true) {
             return true;
         }
-        if(IsTouchEnemyTanks(myTank,enemyTanksList)==true){
+        if (IsTouchEnemyTanks(myTank, enemyTanksList) == true) {
             return true;
         }
         return false;
     }
-    //为enemyTank准备的检测方法集成
-    public static boolean  IsTouchForEnemyTank(EnemyTank tank){
 
-        if(IsTouchObstacles(tank,obstacleMap)==true){
+    //为enemyTank准备的检测方法集成
+    public static boolean IsTouchForEnemyTank(EnemyTank tank) {
+
+        if (IsTouchObstacles(tank, obstacleMap) == true) {
             return true;
         }
-        if(IsTouchEnemyTanks(tank,enemyTanksList)==true){
+        if (IsTouchEnemyTanks(tank, enemyTanksList) == true) {
             return true;
         }
-        if(IsTouchMyTank(tank,myTank)==true){
+        if (IsTouchMyTank(tank, myTank) == true) {
             return true;
         }
         return false;

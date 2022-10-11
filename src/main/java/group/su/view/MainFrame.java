@@ -5,13 +5,17 @@ import javax.swing.*;
 import static group.Attributes.*;
 
 public class MainFrame  extends JFrame {
+
     public MainFrame(){
-        // 设置主程序面板框属性
-        setSize(WINDOW_LENGTH, WINDOW_WIDTH);
+        // 设置主程序面板框属性\
+        setSize(800, 700);
+
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        setContentPane(gamePanel);
+
         // 将游戏主面板添加至主程序面板框
-        add(gamePanel);
+        //add(gamePanel);
     }
 }

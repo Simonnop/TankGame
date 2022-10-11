@@ -100,6 +100,8 @@ public class Detection {
 
     }*/
 
+
+
     //专门用于tank的碰撞检测
     public static <K extends Tank,T extends GetInfo> boolean IsCollision(K t1, T t2) {
 
