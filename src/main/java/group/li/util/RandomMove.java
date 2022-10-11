@@ -13,7 +13,7 @@ public class RandomMove {
         for (int i = 0; i < 40; i++) {
             switch (tank.getDirection()) {
                 case 0://向上
-                    if (tank.getY() > 0 && !tank.isTouchEnemyTank()){
+                    if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         tank.moveUp();
                     }
                     try {
@@ -23,7 +23,7 @@ public class RandomMove {
                     }
                     break;
                 case 1://向右
-                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !tank.isTouchEnemyTank()){
+                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         tank.moveRight();
                     }
                     try {
@@ -33,7 +33,7 @@ public class RandomMove {
                     }
                     break;
                 case 2://向下
-                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !tank.isTouchEnemyTank()){
+                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         tank.moveDown();
                     }
                     try {
@@ -43,7 +43,7 @@ public class RandomMove {
                     }
                     break;
                 case 3://向左
-                    if (tank.getX() > 0  && !tank.isTouchEnemyTank()){
+                    if (tank.getX() > 0  && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         tank.moveLeft();
                     }
                     try {

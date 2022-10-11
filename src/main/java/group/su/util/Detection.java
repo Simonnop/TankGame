@@ -17,7 +17,7 @@ public class Detection {
     /* 重载可选:
          1. 坦克, 障碍物/坦克列表
          2. 敌方坦克列表, 我方坦克
-         3. 敌方坦克列表, 障碍物/坦克列表
+         4. 敌方坦克列表, 障碍物/坦克列表
 
      */
 
@@ -61,8 +61,9 @@ public class Detection {
         return false;
     }
 
+
     // 碰撞检测, 参数可接障碍物与坦克
-    public static <T extends GetInfo> boolean IsCollision(T t1, T t2) {
+  /*  public static <T extends GetInfo> boolean IsCollision(T t1, T t2) {
 
         //当前坦克的左上角坐标【bullet.getX(),bullet.getY()】
 
@@ -95,6 +96,81 @@ public class Detection {
         }
 
 
+        return false;
+
+    }*/
+
+    //专门用于tank的碰撞检测
+    public static <K extends Tank,T extends GetInfo> boolean IsCollision(K t1, T t2) {
+
+        //当前坦克的左上角坐标【bullet.getX(),bullet.getY()】
+
+        //还是要分情况进行判断，坦克方向不同，检测的位置不一样
+        switch (t1.getDirection()){
+            case 0:
+                //当前坦克的左上角坐标
+                if (t1.getX()+OBJECT_SIZE/2 >= t2.getX()+4 &&
+                        t1.getX() +OBJECT_SIZE/2<= t2.getX() + OBJECT_SIZE-4 &&
+                        t1.getY() >= t2.getY()+4 &&
+                        t1.getY() <= t2.getY() + OBJECT_SIZE-4) {
+                    return true;
+                }
+               /* //当前坦克的右上角坐标
+                if (t1.getX() + OBJECT_SIZE >= t2.getX() &&
+                        t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
+                        t1.getY() >= t2.getY() &&
+                        t1.getY() <= t2.getY() + OBJECT_SIZE) {
+                    return true;
+                }*/
+                break;
+            case 1:
+                //当前坦克的右上角坐标
+                if (t1.getX() + OBJECT_SIZE >= t2.getX()+4 &&
+                        t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE -4&&
+                        t1.getY()+OBJECT_SIZE/2 >= t2.getY() +4&&
+                        t1.getY()+OBJECT_SIZE/2 <= t2.getY() + OBJECT_SIZE-4) {
+                    return true;
+                }
+               /* //当前坦克的右下角坐标
+                if (t1.getX() + OBJECT_SIZE >= t2.getX() &&
+                        t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
+                        t1.getY() + OBJECT_SIZE >= t2.getY() &&
+                        t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
+                    return true;
+                }
+                break;*/
+            case 2:
+                //当前坦克的左下角坐标
+                if (t1.getX() >= t2.getX()+4 &&
+                        t1.getX() <= t2.getX() + OBJECT_SIZE-4 &&
+                        t1.getY() + OBJECT_SIZE -OBJECT_SIZE/2>= t2.getY()+4 &&
+                        t1.getY() + OBJECT_SIZE -OBJECT_SIZE/2 <= t2.getY() + OBJECT_SIZE-4) {
+                    return true;
+                }
+              /*  //当前坦克的右下角坐标
+                if (t1.getX() + OBJECT_SIZE >= t2.getX() &&
+                        t1.getX() + OBJECT_SIZE <= t2.getX() + OBJECT_SIZE &&
+                        t1.getY() + OBJECT_SIZE >= t2.getY() &&
+                        t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
+                    return true;
+                }*/
+                break;
+            case 4:
+                if (t1.getX() >= t2.getX() +4&&
+                        t1.getX() <= t2.getX() + OBJECT_SIZE -4&&
+                        t1.getY() -OBJECT_SIZE/2>= t2.getY()+4 &&
+                        t1.getY() -OBJECT_SIZE/2<= t2.getY() + OBJECT_SIZE-4) {
+                    return true;
+                }
+              /*  //当前坦克的左下角坐标
+                if (t1.getX() >= t2.getX() &&
+                        t1.getX() <= t2.getX() + OBJECT_SIZE &&
+                        t1.getY() + OBJECT_SIZE >= t2.getY() &&
+                        t1.getY() + OBJECT_SIZE <= t2.getY() + OBJECT_SIZE) {
+                    return true;
+                }*/
+                break;
+        }
         return false;
 
     }

@@ -1,5 +1,6 @@
 package group.su.control;
 
+import group.li.util.CollisionDetection;
 import group.li.util.DirectionUtil;
 import group.su.map.Obstacle;
 
@@ -26,22 +27,35 @@ public class Listener implements KeyListener {
          * 按下相应的键之后，变换方向并移动
          * */
 
+        //这个v代表默认速度的倍数，便于后期调整速度，可以放到其他类中变为静态
+        int v=5;
+
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             myTank.setDirection(2);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveDown();
+            if(CollisionDetection.IsTouchForMyTank()==false){
+                myTank.moveDown(v);
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             myTank.setDirection(0);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveUp();
+
+            if(CollisionDetection.IsTouchForMyTank()==false){
+                myTank.moveUp(v);
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             myTank.setDirection(1);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveRight();
+            if(CollisionDetection.IsTouchForMyTank()==false){
+                myTank.moveRight(v);
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             myTank.setDirection(3);
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveLeft();
+            if(CollisionDetection.IsTouchForMyTank()==false){
+                myTank.moveLeft(v);
+
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
             bulletOut(myTank);
         }else if (e.getKeyCode() == KeyEvent.VK_A) {

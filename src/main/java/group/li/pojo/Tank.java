@@ -97,6 +97,32 @@ public class Tank implements GetInfo {
         }
     }
 
+
+    //重载坦克移动方法，便于我方坦克进行速度调整
+    public void moveUp(int v) {
+        if (y > 0) {
+            y -= speed*v;
+        }
+    }
+
+    public void moveRight(int v) {
+        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+            x += speed*v;
+        }
+    }
+
+    public void moveDown(int v) {
+        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+            y += speed*v;
+        }
+    }
+
+    public void moveLeft(int v) {
+        if (x > 0) {
+            x -= speed*v;
+        }
+    }
+
     public Vector<Bullet> getBullets() {
         return bullets;
     }
