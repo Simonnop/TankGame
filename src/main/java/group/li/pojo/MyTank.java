@@ -32,7 +32,7 @@ public class MyTank extends Tank implements Runnable {
         super(x, y);
         setImage(myTank_up);
         System.out.println("tank init");
-        setHp(5);
+        setHp(1);
     }
 
 
