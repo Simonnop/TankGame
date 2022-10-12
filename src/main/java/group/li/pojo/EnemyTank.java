@@ -1,14 +1,13 @@
 package group.li.pojo;
 
-import group.li.util.CollisionDetection;
+import group.Attributes;
 import group.li.util.RandomMove;
-import group.su.util.Detection;
+import group.su.util.Factory;
 
 import java.awt.*;
 import java.util.Vector;
 
-import static group.Attributes.*;
-import static group.su.util.Factory.bulletOut;
+import static group.Attributes.enemyTanksList;
 
 
 //每个敌方坦克也是一个线程
@@ -38,30 +37,31 @@ public class EnemyTank extends Tank implements Runnable{
     }
 
 
-    @Override
     public void run() {
-        //产生一个随机时间，敌方坦克每一个随机时间发射一颗子弹
-        int randomTime = (int) (Math.random() * 4+2);
-        while (gameRun){
-            //开始随机移动
+        /*坦克在3-9s刷新后发子弹*/
+        int randomTime = (int)(Math.random() * 6.0 + 3.0);
+
+        while(Attributes.gameRun) {
             RandomMove.randomMove(this);
-            //被子弹打中了，结束线程
-            if(!isLive()){
+            if (!this.isLive()) {
                 break;
             }
+
             try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.sleep(10L);
+            } catch (InterruptedException var3) {
+                throw new RuntimeException(var3);
             }
 
-            randomTime--;
-            //产生一个随机时间，敌方坦克每一个随机时间发射一颗子弹
-            if(randomTime==0){
-                bulletOut(this);
-               randomTime= (int) (Math.random() * 4+2); //2-6的随机数
+            //游戏开始10s后再开始发射子弹
+            if (Attributes.time > 10) {
+                --randomTime;
+                if (randomTime == 0) {
+                    Factory.bulletOut(this);
+                    randomTime = (int)(Math.random() * 6.0 + 3.0);
+                }
             }
-
         }
+
     }
 }

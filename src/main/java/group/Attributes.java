@@ -31,7 +31,7 @@ public class Attributes {
     public static Vector<Bullet> allBulletList;
 
 
-
+    public static int time = 0;
     public static final int REFRESH_TIME = 25;
 
     public static final int OBJECT_SIZE = 40;

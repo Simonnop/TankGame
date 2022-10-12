@@ -1,12 +1,12 @@
 package group.su.view;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Vector;
-
 import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.su.map.Obstacle;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Vector;
 
 import static group.Attributes.*;
 import static group.su.util.Factory.drawBullet;
@@ -43,8 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        int time = 1;
-
+        time=0;
         while (gameRun) {
             try {
                 Thread.sleep(1000);

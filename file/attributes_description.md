@@ -18,6 +18,9 @@ GamePanel gamePanel
 MainFrame mainFrame
 -- 游戏主面板框及主程序
 
+time
+--游戏已进行的时间
+
 
 ## 常量说明
 
