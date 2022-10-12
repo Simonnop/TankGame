@@ -8,6 +8,7 @@ import group.su.view.GamePanel;
 import group.su.view.MainFrame;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 public class Attributes {
@@ -29,6 +30,8 @@ public class Attributes {
     public static MainFrame mainFrame;
 
     public static Vector<Bullet> allBulletList;
+
+    public static Set<EnemyTank> destorySet;
 
 
     public static int time = 0;
