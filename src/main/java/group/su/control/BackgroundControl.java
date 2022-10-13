@@ -3,8 +3,7 @@ package group.su.control;
 import group.su.view.GamePanel;
 import group.su.view.MainFrame;
 
-import static group.Attributes.gamePanel;
-import static group.Attributes.mainFrame;
+import static group.Attributes.*;
 
 public class BackgroundControl {
 
@@ -20,9 +19,11 @@ public class BackgroundControl {
         System.out.println("this is welcomeMenu");
     }
 
-    public void gamePanelShow(){
-        mainFrame.getContentPane().add(gamePanel);
+    public void gamePanelShow() {
+        // 这里还不能动态设置画板
+        //mainFrame.getContentPane().add(gamePanel);
         System.out.println("gamePanelShow");
+        gameRun = true;
     }
 
     public void gamePanelOut() {
