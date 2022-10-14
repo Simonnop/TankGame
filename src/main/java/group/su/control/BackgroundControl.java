@@ -3,8 +3,9 @@ package group.su.control;
 import group.su.view.GamePanel;
 import group.su.view.MainFrame;
 
-import static group.Attributes.gamePanel;
-import static group.Attributes.mainFrame;
+import static group.Attributes.*;
+import static group.su.view.MainFrame.testPanel;
+import static group.su.view.MainFrame.welMenuPanel;
 
 public class BackgroundControl {
 
@@ -16,19 +17,24 @@ public class BackgroundControl {
     }
 
     public void welcomeMenuShow(){
-        // mainFrame.add()
         System.out.println("this is welcomeMenu");
     }
 
-    public void gamePanelShow(){
+    public void gamePanelShow() {
         mainFrame.getContentPane().add(gamePanel);
+        mainFrame.revalidate();
         System.out.println("gamePanelShow");
+        gameRun = true;
     }
 
     public void gamePanelOut() {
+        //mainFrame.getContentPane().removeAll();
+        System.out.println("gamePanelOut");
+
         mainFrame.getContentPane().remove(gamePanel);
         mainFrame.repaint();
-        System.out.println("gamePanelOut");
+        mainFrame.getContentPane().add(welMenuPanel);
+        mainFrame.revalidate();
     }
 
     public void overMenuShow(){

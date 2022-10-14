@@ -2,14 +2,15 @@ package group.su.control;
 
 import group.li.util.CollisionDetection;
 import group.li.util.DirectionUtil;
-import group.su.map.Obstacle;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static group.Attributes.myTank;
-import static group.Attributes.obstacleMap;
+import static group.Attributes.*;
+import static group.Attributes.mainFrame;
 import static group.su.util.Factory.bulletOut;
+import static group.su.view.MainFrame.testPanel;
+import static group.su.view.MainFrame.welMenuPanel;
 
 public class Listener implements KeyListener {
     @Override
@@ -67,7 +68,11 @@ public class Listener implements KeyListener {
             bulletOut(myTank);
         }else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
-            obstacleMap.get(Obstacle.ObstacleKind.BRICK).remove(0);
+            mainFrame.getContentPane().remove(gamePanel);
+            mainFrame.repaint();
+//            mainFrame.getContentPane().add(testPanel);
+            mainFrame.getContentPane().add(welMenuPanel);
+            mainFrame.revalidate();
             System.out.println("get");
         }
     }
