@@ -38,8 +38,8 @@ public class EnemyTank extends Tank implements Runnable{
 
 
     public void run() {
-        /*坦克在3-9s刷新后发子弹*/
-        int randomTime = (int)(Math.random() * 6.0 + 3.0);
+        /*坦克在2-6s刷新后发子弹*/
+        int randomTime = (int)(Math.random() * 4.0 + 2.0);
 
         while(Attributes.gameRun) {
             RandomMove.randomMove(this);
@@ -53,12 +53,12 @@ public class EnemyTank extends Tank implements Runnable{
                 throw new RuntimeException(var3);
             }
 
-            //游戏开始10s后再开始发射子弹
-            if (Attributes.time > 10) {
+            //游戏开始5s后再开始发射子弹
+            if (Attributes.time > 5) {
                 --randomTime;
                 if (randomTime == 0) {
                     Factory.bulletOut(this);
-                    randomTime = (int)(Math.random() * 6.0 + 3.0);
+                    randomTime = (int)(Math.random() * 4.0 + 2.0);
                 }
             }
         }
