@@ -74,11 +74,17 @@ public class RandomMove {
 
         }
 
-        if(time<30) {
-            //游戏刚开始  坦克少往上走 只有15%的概率往上走
-            if (new Random().nextInt(100) > 85) {
+        if(time<10) {
+            //游戏刚开始10s  坦克少往上走 只有10%的概率往上走
+            if (new Random().nextInt(100) > 90) {
             }else{
-                direction=(int) (Math.random() * 3+1);
+                //坦克有80%概率往下走
+                if(new Random().nextInt(100)>80){
+                    direction=2;
+                }
+                else {
+                    direction=(int) (Math.random() * 3+1);
+                }
             }
         }else {
             //然后有60%机率改变方向随机的改变方向{
