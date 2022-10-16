@@ -7,6 +7,7 @@ public class MainFrame extends JFrame {
     public static TestPanel testPanel;
     public static WelMenuPanel welMenuPanel;
 
+    public static  OverMenuPanel overMenuPanel;
     public MainFrame(){
 
         testPanel = new TestPanel();

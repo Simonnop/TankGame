@@ -38,7 +38,9 @@ public class BackgroundControl {
     }
 
     public void overMenuShow(){
-        // mainFrame.add()
+       /* mainFrame.getContentPane().remove(gamePanel);
+        mainFrame.repaint();
+        mainFrame.getContentPane().add();*/
     }
 
 

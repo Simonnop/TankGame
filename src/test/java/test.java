@@ -1,9 +1,11 @@
 import group.Mybatis.dao.UserMapper;
 import group.Mybatis.pojo.User;
 import group.Mybatis.util.MybatisUtils;
+import group.su.view.WelMenuPanel;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.util.Vector;
 
 public class test {
@@ -45,5 +47,15 @@ public class test {
         int laozi = mapper.updateUser(new User("ziyu",12));
         System.out.println(laozi);
         sqlSession.close();
+    }
+
+
+    @Test
+    public void test4(){
+        JFrame s = new JFrame("s");
+        s.setVisible(true);
+        s.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        s.setBounds(500,500,500,500);
+        s.getContentPane().add(new WelMenuPanel());
     }
 }
