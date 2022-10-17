@@ -62,9 +62,9 @@ public class Detection {
             // 我们坦克命中敌方坦克加分判断
             if (bullet.getImage().equals(myTankBullet) && t instanceof EnemyTank) {
                 // 直接加分容易出现重复加分,使用set来避免
-                boolean add = destorySet.add((EnemyTank) t);
+                boolean add = destroySet.add((EnemyTank) t);
                 if (add) {
-                    System.out.println("score: "+destorySet.size());
+                    System.out.println("score: "+ destroySet.size());
                 }
             }
 

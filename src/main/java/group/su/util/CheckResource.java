@@ -9,7 +9,7 @@ public class CheckResource {
 
     // 检查静态资源是否准备完毕
 
-    public static boolean checkResource(){
+    public static boolean checkResource() {
 
         if (myTank == null) {
 
@@ -17,15 +17,23 @@ public class CheckResource {
         }
 
         try {
-            for (Tank tank:enemyTanksList) {}
-            for (Obstacle.ObstacleKind kind:obstacleMap.keySet()
-                 ) {
-                for (Obstacle o : obstacleMap.get(kind)) {}
+            for (Tank tank : enemyTanksList) {
+                if (tank == null) {
+                    return false;
+                }
+            }
+            for (Obstacle.ObstacleKind kind : obstacleMap.keySet()
+            ) {
+                for (Obstacle o : obstacleMap.get(kind)) {
+                    if (o == null) {
+                        return false;
+                    }
+                }
             }
         } catch (Exception e) {
             return false;
         }
-        
+
         return true;
     }
 }

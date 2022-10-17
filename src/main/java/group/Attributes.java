@@ -15,7 +15,7 @@ public class Attributes {
 
     // 描述文件: file/attributes_description.md
 
-    public static boolean gameRun = true;
+    public static boolean gameRun = false;
 
     public static MyTank myTank;
 
@@ -31,7 +31,7 @@ public class Attributes {
 
     public static Vector<Bullet> allBulletList;
 
-    public static Set<EnemyTank> destorySet;
+    public static Set<EnemyTank> destroySet;
 
 
     public static int time = 0;
