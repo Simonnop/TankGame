@@ -2,17 +2,12 @@ package group.su.control;
 
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
-import group.su.view.GamePanel;
-import group.su.view.MainFrame;
 
-
-import javax.swing.*;
 
 import java.util.HashSet;
 import java.util.Vector;
 
 import static group.Attributes.*;
-import static group.Attributes.WINDOW_WIDTH;
 import static group.su.map.MapData.map_1;
 import static group.su.util.CheckResource.checkResource;
 import static group.su.util.Detection.destoryDetection;
@@ -25,7 +20,7 @@ public class GameControl {
         // 创建子弹列表
         allBulletList = new Vector<>();
 
-        destorySet = new HashSet<>();
+        destroySet = new HashSet<>();
 
         // 根据地图中的点阵以工厂方法实例化障碍物,存储在Map中
         obstacleMap = initialMap(map_1);
@@ -43,7 +38,7 @@ public class GameControl {
     public void gameStart() {
 
         // 持续等待
-        while (true) {
+        for (; ; ) {
             // 等待静态资源准备完毕
             // 使用 && 短路,减少资源消耗
             if (gameRun && checkResource()) {

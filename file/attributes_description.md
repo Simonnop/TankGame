@@ -18,7 +18,7 @@ GamePanel gamePanel
 MainFrame mainFrame
 -- 游戏主面板框及主程序
 
-Set<EnemyTank> destorySet
+Set<EnemyTank> destroySet
 -- 玩家摧毁的坦克的集合
 
 time
