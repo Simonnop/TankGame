@@ -43,7 +43,7 @@ public class GameControl {
     public void gameStart() {
 
         // 持续等待
-        while (true) {
+        for (; ; ) {
             // 等待静态资源准备完毕
             // 使用 && 短路,减少资源消耗
             if (gameRun && checkResource()) {

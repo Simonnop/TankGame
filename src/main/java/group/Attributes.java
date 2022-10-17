@@ -15,7 +15,7 @@ public class Attributes {
 
     // 描述文件: file/attributes_description.md
 
-    public static boolean gameRun = true;
+    public static boolean gameRun = false;
 
     public static MyTank myTank;
 
