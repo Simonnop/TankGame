@@ -2,6 +2,8 @@ package group.li.util;
 
 import group.Attributes;
 import group.li.pojo.EnemyTank;
+import group.li.pojo.FastEnemyTank;
+import group.li.pojo.StrongEnemyTank;
 
 import java.util.Random;
 
@@ -20,7 +22,12 @@ public class RandomMove {
             switch (tank.getDirection()) {
                 case 0://向上
                     if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
-                        tank.moveUp();
+                        //fastEnemyTank 跑得快一些
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveUp(2);
+                        }else {
+                            tank.moveUp();
+                        }
                     }else {
                         //tank.setDirection(2);
                         tank.moveDown(0.5);
@@ -33,7 +40,11 @@ public class RandomMove {
                     break;
                 case 1://向右
                     if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
-                        tank.moveRight();
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveRight(2);
+                        }else {
+                            tank.moveRight();
+                        }
                     }else {
                         //tank.setDirection(1);
                         tank.moveLeft(0.5);
@@ -46,7 +57,11 @@ public class RandomMove {
                     break;
                 case 2://向下
                     if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
-                        tank.moveDown();
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveDown(2);
+                        }else {
+                            tank.moveDown();
+                        }
                     }else {
                         //tank.setDirection(2);
                         tank.moveUp(0.5);
@@ -59,7 +74,11 @@ public class RandomMove {
                     break;
                 case 3://向左
                     if (tank.getX() > 0  && !CollisionDetection.IsTouchForEnemyTank(tank)){
-                        tank.moveLeft();
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveLeft(2);
+                        }else {
+                            tank.moveLeft();
+                        }
                     }else{
                         //tank.setDirection(3);
                         tank.moveRight(0.5);
@@ -95,6 +114,13 @@ public class RandomMove {
         }
         //改变方向，根据换image
         tank.setDirection(direction);
-        DirectionUtil.ChangeImageAccordingDirection(tank);
+        if(tank instanceof FastEnemyTank){
+            DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank)tank);
+        } else if (tank instanceof StrongEnemyTank) {
+            DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank)tank);
+        }else {
+            DirectionUtil.ChangeImageAccordingDirection(tank);
+        }
+
     }
 }

@@ -23,7 +23,7 @@ public class OverMenuPanel extends JPanel{
         JLabel jl = new JLabel(accountEnterField.getText()+"的分数为"+score);
         jl.setSize(600,80);
         jl.setLocation(200,100);
-        jl.setFont(new Font("幼圆",Font.PLAIN,60));
+        jl.setFont(new Font("幼圆",Font.PLAIN,40));
         this.add(jl);
 
         //装按钮的框
