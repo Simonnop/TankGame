@@ -18,6 +18,7 @@ public class Application {
 
         // 欢迎起始菜单页面
         backgroundControl.welcomeMenuShow();
+
         // 创建地图对象等
         gameControl.gameInitial();
 

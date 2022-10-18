@@ -40,6 +40,7 @@ public class StrongEnemyTank extends EnemyTank {
 
             try {
                 Thread.sleep(10L);
+                this.setMovingLock(false);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }

@@ -1,6 +1,7 @@
 package group.li.pojo;
 
 import group.Attributes;
+import group.li.util.CollisionDetection;
 import group.li.util.RandomMove;
 import group.su.util.Factory;
 
@@ -30,13 +31,16 @@ public class EnemyTank extends Tank implements Runnable{
         int randomTime = (int)(Math.random() * 4.0 + 2.0);
 
         while(Attributes.gameRun) {
+
             RandomMove.randomMove(this);
+
             if (!this.isLive()) {
                 break;
             }
 
             try {
                 Thread.sleep(10L);
+                this.setMovingLock(false);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }
