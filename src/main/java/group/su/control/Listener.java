@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 
 import static group.Attributes.*;
 import static group.Attributes.mainFrame;
+import static group.li.pojo.MyTank.v;
 import static group.su.util.Factory.bulletOut;
 import static group.su.view.MainFrame.testPanel;
 import static group.su.view.MainFrame.welMenuPanel;
@@ -19,6 +20,8 @@ public class Listener implements KeyListener {
     Boolean movingLock_left = new Boolean(false);
     Boolean movingLock_right = new Boolean(false);
 
+    //用于坦克开火限制，临时记录时间
+    public static int temp_time=0;
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -67,8 +70,17 @@ public class Listener implements KeyListener {
                 myTank.moveLeft(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            bulletOut(myTank);
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
+
+            //坦克开火限制 ，暂时设置为1s内只能射击一次
+            if(temp_time==0){
+                bulletOut(myTank);
+                temp_time=time;
+            }
+            if(time -temp_time >1){
+                bulletOut(myTank);
+                temp_time=time;
+            }
+        }else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
             mainFrame.getContentPane().remove(gamePanel);
             mainFrame.repaint();

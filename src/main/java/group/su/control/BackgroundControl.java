@@ -2,11 +2,14 @@ package group.su.control;
 
 import group.su.view.GamePanel;
 import group.su.view.MainFrame;
+import group.su.view.OverMenuPanel;
 
 import static group.Attributes.*;
 import static group.su.view.MainFrame.*;
 
 public class BackgroundControl {
+
+
 
     public BackgroundControl() {
         // 创建游戏主面板
@@ -48,9 +51,11 @@ public class BackgroundControl {
     }
 
     public void overMenuShow() {
+        //奇怪的调节方法？？？，但是可以让结束界面完整出现
+        mainFrame.setSize(800+1,700);
+        mainFrame.setSize(800,700);
         mainFrame.getContentPane().remove(gamePanel);
-        mainFrame.getContentPane().add(overMenuPanel);
-        mainFrame.repaint();
+        mainFrame.getContentPane().add(new OverMenuPanel());
     }
 
 

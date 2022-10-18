@@ -2,6 +2,8 @@ package group.li.util;
 
 import group.Attributes;
 import group.li.pojo.EnemyTank;
+import group.li.pojo.FastEnemyTank;
+import group.li.pojo.StrongEnemyTank;
 
 import java.util.Random;
 
@@ -21,6 +23,16 @@ public class RandomMove {
                 case 0://向上
                     if (tank.getY() > 0 && !tank.getMovingLock()) {
                         tank.moveUp();
+                    if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
+                        //fastEnemyTank 跑得快一些
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveUp(1.5);
+                        }else {
+                            tank.moveUp();
+                        }
+                    }else {
+                        //tank.setDirection(2);
+                        tank.moveDown(0.5);
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
@@ -33,6 +45,15 @@ public class RandomMove {
                     if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH &&
                         !tank.getMovingLock()) {
                         tank.moveRight();
+                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveRight(1.5);
+                        }else {
+                            tank.moveRight();
+                        }
+                    }else {
+                        //tank.setDirection(1);
+                        tank.moveLeft(0.5);
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
@@ -45,6 +66,15 @@ public class RandomMove {
                     if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH &&
                         !tank.getMovingLock()) {
                         tank.moveDown();
+                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveDown(1.5);
+                        }else {
+                            tank.moveDown();
+                        }
+                    }else {
+                        //tank.setDirection(2);
+                        tank.moveUp(0.5);
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
@@ -56,10 +86,18 @@ public class RandomMove {
                 case 3://向左
                     if (tank.getX() > 0 && !tank.getMovingLock()) {
                         tank.moveLeft();
+                    if (tank.getX() > 0  && !CollisionDetection.IsTouchForEnemyTank(tank)){
+                        if(tank instanceof FastEnemyTank){
+                            tank.moveLeft(1.5);
+                        }else {
+                            tank.moveLeft();
+                        }
+                    }else{
+                        //tank.setDirection(3);
+                        tank.moveRight(0.5);
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
-                        checkCollision(tank);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -88,7 +126,14 @@ public class RandomMove {
         }
         //改变方向，根据换image
         tank.setDirection(direction);
-        DirectionUtil.ChangeImageAccordingDirection(tank);
+        if(tank instanceof FastEnemyTank){
+            DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank)tank);
+        } else if (tank instanceof StrongEnemyTank) {
+            DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank)tank);
+        }else {
+            DirectionUtil.ChangeImageAccordingDirection(tank);
+        }
+
     }
 
     public static void checkCollision(EnemyTank enemyTank) {

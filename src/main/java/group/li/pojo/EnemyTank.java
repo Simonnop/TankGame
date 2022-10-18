@@ -19,24 +19,12 @@ public class EnemyTank extends Tank implements Runnable{
     public static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
     public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
-    //让每个敌方坦克都拥有敌方坦克集  可以随时遍历检测是否碰撞
-    //可以在初始化坦克的时候 给每个敌方坦克加上敌方坦克集
-    private Vector <EnemyTank> enemyTanks =new Vector<>();
 
     public EnemyTank(int x, int y) {
         super(x, y);
         setImage(enemyTank_down);
         enemyTanksList.add(this);
     }
-
-    public Vector<EnemyTank> getEnemyTanks() {
-        return enemyTanks;
-    }
-
-    public void setEnemyTanks(Vector<EnemyTank> enemyTanks) {
-        this.enemyTanks = enemyTanks;
-    }
-
 
     public void run() {
         /*坦克在2-6s刷新后发子弹*/
