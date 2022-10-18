@@ -66,6 +66,7 @@ public class Listener implements KeyListener {
                 myTank.moveRight(v);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
+
             //坦克开火限制 ，暂时设置为1s内只能射击一次
             if(temp_time==0){
                 bulletOut(myTank);
