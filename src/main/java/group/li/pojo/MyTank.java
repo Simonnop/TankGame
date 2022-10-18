@@ -17,6 +17,9 @@ public class MyTank extends Tank implements Runnable {
 
     private int hp;
 
+    //这个v代表默认速度speed的倍数
+    public static int v=5;
+
     public int getHp() {
         return hp;
     }
