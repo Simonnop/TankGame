@@ -22,9 +22,7 @@ public class RandomMove {
             switch (tank.getDirection()) {
                 case 0://向上
                     if (tank.getY() > 0 && !tank.getMovingLock()) {
-                        tank.moveUp();
-                    if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
-                        //fastEnemyTank 跑得快一些
+
                         if(tank instanceof FastEnemyTank){
                             tank.moveUp(1.5);
                         }else {
@@ -44,8 +42,6 @@ public class RandomMove {
                 case 1://向右
                     if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH &&
                         !tank.getMovingLock()) {
-                        tank.moveRight();
-                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
                             tank.moveRight(1.5);
                         }else {
@@ -65,8 +61,6 @@ public class RandomMove {
                 case 2://向下
                     if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH &&
                         !tank.getMovingLock()) {
-                        tank.moveDown();
-                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
                             tank.moveDown(1.5);
                         }else {
@@ -85,8 +79,6 @@ public class RandomMove {
                     break;
                 case 3://向左
                     if (tank.getX() > 0 && !tank.getMovingLock()) {
-                        tank.moveLeft();
-                    if (tank.getX() > 0  && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
                             tank.moveLeft(1.5);
                         }else {
@@ -135,6 +127,7 @@ public class RandomMove {
         }
 
     }
+
 
     public static void checkCollision(EnemyTank enemyTank) {
         if (CollisionDetection.IsTouchForEnemyTank(enemyTank)) {
