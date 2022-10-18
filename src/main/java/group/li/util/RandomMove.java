@@ -24,7 +24,7 @@ public class RandomMove {
                     if (tank.getY() > 0 && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         //fastEnemyTank 跑得快一些
                         if(tank instanceof FastEnemyTank){
-                            tank.moveUp(2);
+                            tank.moveUp(1.5);
                         }else {
                             tank.moveUp();
                         }
@@ -41,7 +41,7 @@ public class RandomMove {
                 case 1://向右
                     if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
-                            tank.moveRight(2);
+                            tank.moveRight(1.5);
                         }else {
                             tank.moveRight();
                         }
@@ -58,7 +58,7 @@ public class RandomMove {
                 case 2://向下
                     if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
-                            tank.moveDown(2);
+                            tank.moveDown(1.5);
                         }else {
                             tank.moveDown();
                         }
@@ -75,7 +75,7 @@ public class RandomMove {
                 case 3://向左
                     if (tank.getX() > 0  && !CollisionDetection.IsTouchForEnemyTank(tank)){
                         if(tank instanceof FastEnemyTank){
-                            tank.moveLeft(2);
+                            tank.moveLeft(1.5);
                         }else {
                             tank.moveLeft();
                         }

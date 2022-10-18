@@ -40,10 +40,20 @@ public class Detection {
 
                 //如果是strongEnemyTank ，扣血
                 if(elem instanceof StrongEnemyTank){
-                    ((StrongEnemyTank) elem).setHp(((StrongEnemyTank) elem).getHp()-1);
+                    int hp =((StrongEnemyTank) elem).getHp()-1;
+                    ((StrongEnemyTank) elem).setHp(hp);
+                    System.out.println("hit!!  " + ((StrongEnemyTank) elem).getHp() + " hp left!");
                 }
 
             }
+
+            //加这个判断是为了加快动画消失的速度
+            if(elem instanceof StrongEnemyTank ){
+                if(((StrongEnemyTank) elem).getHp() <=0){
+                    elem.setLive(false);
+                }
+            }
+
             if (!elem.isLive()) {
                 list.remove(elem);
                 // 这里的 remove 之后会将遍历的指针前移,所以需要 i--
