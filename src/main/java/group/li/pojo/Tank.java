@@ -14,6 +14,8 @@ public class Tank implements GetInfo {
     private boolean isLive = true; // 判断是否存活
     private Image image;
 
+    private boolean movingLock = false;  // 碰撞后上运动锁
+
     private Vector<Bullet> bullets = new Vector<>();
 
 
@@ -70,6 +72,14 @@ public class Tank implements GetInfo {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public boolean getMovingLock() {
+        return movingLock;
+    }
+
+    public void setMovingLock(boolean movingLock) {
+        this.movingLock = movingLock;
     }
 
     // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面

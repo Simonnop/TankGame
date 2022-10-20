@@ -1,7 +1,9 @@
 package group.su.control;
 
 import group.li.pojo.EnemyTank;
+import group.li.pojo.FastEnemyTank;
 import group.li.pojo.MyTank;
+import group.li.pojo.StrongEnemyTank;
 
 
 import java.util.HashSet;
@@ -28,8 +30,8 @@ public class GameControl {
         // 实例化坦克
         enemyTanksList = new Vector<>();
         enemyTanksList.add(new EnemyTank(0, 0));
-        enemyTanksList.add(new EnemyTank(80, 0));
-        enemyTanksList.add(new EnemyTank(240, 0));
+        enemyTanksList.add(new StrongEnemyTank(80, 0));
+        enemyTanksList.add(new FastEnemyTank(240, 0));
         enemyTanksList.add(new EnemyTank(400, 0));
 
         myTank = new MyTank(240, 480);
