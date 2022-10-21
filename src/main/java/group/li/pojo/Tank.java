@@ -6,6 +6,8 @@ import group.GetInfo;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.li.util.CollisionDetection.IsTouchForTank;
+
 public class Tank implements GetInfo {
 
     public enum Direction {
@@ -87,26 +89,38 @@ public class Tank implements GetInfo {
 
     // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面
     public void moveUp() {
-        if (y > 0 && getMovingLock() != Direction.UP) {
-            y -= speed;
+        for (int i = 0; i < speed; i++) {
+            IsTouchForTank(this);
+            if (y > 0 && getMovingLock() != Direction.UP) {
+                y -= 1;
+            }
         }
     }
 
     public void moveRight() {
-        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getMovingLock() != Direction.RIGHT) {
-            x += speed;
+        for (int i = 0; i < speed; i++) {
+            IsTouchForTank(this);
+            if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getMovingLock() != Direction.RIGHT) {
+                x += 1;
+            }
         }
     }
 
     public void moveDown() {
-        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getMovingLock() != Direction.DOWN) {
-            y += speed;
+        for (int i = 0; i < speed; i++) {
+            IsTouchForTank(this);
+            if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getMovingLock() != Direction.DOWN) {
+                y += 1;
+            }
         }
     }
 
     public void moveLeft() {
-        if (x > 0 && getMovingLock() != Direction.LEFT) {
-            x -= speed;
+        for (int i = 0; i < speed; i++) {
+            IsTouchForTank(this);
+            if (x > 0 && getMovingLock() != Direction.LEFT) {
+                x -= 1;
+            }
         }
     }
 

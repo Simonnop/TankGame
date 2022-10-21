@@ -1,35 +1,37 @@
 package group.su.map;
 
+import group.GetInfo;
+
 import java.awt.*;
 import java.util.Random;
 
+import static group.Attributes.OBJECT_SIZE;
 import static group.Attributes.obstacleMap;
 import static group.su.map.MapData.*;
-import static group.su.map.MapData.imageBrick;
 
-public class Buff {
+public class Buff implements GetInfo {
 
     BuffKind buffKind;
 
     public enum BuffKind {
         MORE_BULLETS {
             @Override
-            public Buff returnBuff(int x, int y) {
+            protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, MORE_BULLETS);
             }
         }, SWIFT_BULLETS {
             @Override
-            public Buff returnBuff(int x, int y) {
+            protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, SWIFT_BULLETS);
             }
         }, ADD_LIVES {
             @Override
-            public Buff returnBuff(int x, int y) {
+            protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, ADD_LIVES);
             }
         };
 
-        public Buff returnBuff(int x, int y) {
+        protected Buff returnBuff(int x, int y) {
             return null;
         }
     }
@@ -49,21 +51,21 @@ public class Buff {
         this.image = image;
     }
 
-    private int[] getRandomPosition() throws InterruptedException {
+    private static int[] getRandomPosition() throws InterruptedException {
 
         int[] position = new int[2];
 
         do {
             // x 坐标
-            position[0] = new Random().nextInt(dotsLength);
+            position[0] = new Random().nextInt(dotsLength) * OBJECT_SIZE;
             // y 坐标
-            position[1] = new Random().nextInt(dotsWidth);
+            position[1] = new Random().nextInt(dotsWidth) * OBJECT_SIZE;
         } while (checkRandomPosition(position));
 
         return position;
     }
 
-    private boolean checkRandomPosition(int[] position) throws InterruptedException {
+    private static boolean checkRandomPosition(int[] position) throws InterruptedException {
 
         try {
             for (Obstacle.ObstacleKind kind : obstacleMap.keySet()
@@ -81,5 +83,36 @@ public class Buff {
         }
 
         return false;
+    }
+
+    public static Buff createBuff() throws InterruptedException {
+
+        BuffKind buffKind1 = BuffKind.values()[new Random().nextInt(3)];
+        return buffKind1.returnBuff(getRandomPosition()[0], getRandomPosition()[1]);
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public Image getImage() {
+        return image;
+    }
+
+    @Override
+    public void setLive(boolean live) {
+        this.isLive = live;
+    }
+
+    @Override
+    public boolean isLive() {
+        return isLive;
     }
 }

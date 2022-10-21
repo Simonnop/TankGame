@@ -52,19 +52,17 @@ public class CollisionDetection {
         }
     }
 
-    //为myTank准备的检测方法集成
-    public static void IsTouchForMyTank() {
-        myTank.setMovingLock(null);
-        IsTouchObstacles(myTank, obstacleMap);
-        IsTouchEnemyTanks(myTank, enemyTanksList);
-    }
-
-    //为enemyTank准备的检测方法集成
-    public static void IsTouchForEnemyTank(EnemyTank tank) {
-        tank.setMovingLock(null);
-        IsTouchObstacles(tank, obstacleMap);
-        IsTouchEnemyTanks(tank, enemyTanksList);
-        IsTouchMyTank(tank, myTank);
+    //为Tank准备的检测方法集成
+    public static void IsTouchForTank(Tank tank) {
+        if (tank instanceof MyTank) {
+            tank.setMovingLock(null);
+            IsTouchObstacles(tank, obstacleMap);
+            IsTouchEnemyTanks(tank, enemyTanksList);
+        } else {
+            IsTouchObstacles(tank, obstacleMap);
+            IsTouchEnemyTanks(tank, enemyTanksList);
+            IsTouchMyTank((EnemyTank) tank, myTank);
+        }
     }
 
     public static <K extends Tank, T extends GetInfo> Tank.Direction IsCollision(K t1, T t2) {
@@ -77,43 +75,43 @@ public class CollisionDetection {
                 //当前坦克的左上角坐标
                 if (t1.getX() > t2.getX() &&
                         t1.getX() < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() > t2.getY() - t1.getSpeed() &&
-                        t1.getY() < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() > t2.getY() - 1 &&
+                        t1.getY() < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.UP;
                 }
                 //当前坦克的左上角右上角中间坐标
                 if (t1.getX() + OBJECT_SIZE / 2 > t2.getX() &&
                         t1.getX() + OBJECT_SIZE / 2 < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() > t2.getY() - t1.getSpeed() &&
-                        t1.getY() < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() > t2.getY() - 1 &&
+                        t1.getY() < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.UP;
                 }
                 //当前坦克的右上角坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() &&
                         t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() > t2.getY() - t1.getSpeed() &&
-                        t1.getY() < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() > t2.getY() - 1 &&
+                        t1.getY() < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.UP;
                 }
                 break;
             case RIGHT:
                 //当前坦克的右上角坐标
-                if (t1.getX() + OBJECT_SIZE > t2.getX() - t1.getSpeed() &&
-                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() + OBJECT_SIZE > t2.getX() - 1 &&
+                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() > t2.getY() &&
                         t1.getY() < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.RIGHT;
                 }
                 //当前坦克的右上角右下角中间坐标
-                if (t1.getX() + OBJECT_SIZE > t2.getX() - t1.getSpeed() &&
-                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() + OBJECT_SIZE > t2.getX() - 1 &&
+                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() + OBJECT_SIZE / 2 > t2.getY() &&
                         t1.getY() + OBJECT_SIZE / 2 < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.RIGHT;
                 }
                 //当前坦克的右下角坐标
-                if (t1.getX() + OBJECT_SIZE > t2.getX() - t1.getSpeed() &&
-                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() + OBJECT_SIZE > t2.getX() - 1 &&
+                        t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() + OBJECT_SIZE > t2.getY() &&
                         t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.RIGHT;
@@ -123,43 +121,43 @@ public class CollisionDetection {
                 //当前坦克的左下角坐标
                 if (t1.getX() > t2.getX() &&
                         t1.getX() < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() + OBJECT_SIZE > t2.getY() - t1.getSpeed() &&
-                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() + OBJECT_SIZE > t2.getY() - 1 &&
+                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.DOWN;
                 }
                 //当前坦克的右下角左下角中间坐标
                 if (t1.getX() + OBJECT_SIZE / 2 > t2.getX() &&
                         t1.getX() + OBJECT_SIZE / 2 < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() + OBJECT_SIZE > t2.getY() - t1.getSpeed() &&
-                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() + OBJECT_SIZE > t2.getY() - 1 &&
+                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.DOWN;
                 }
                 //当前坦克的右下角坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() &&
                         t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE &&
-                        t1.getY() + OBJECT_SIZE > t2.getY() - t1.getSpeed() &&
-                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + t1.getSpeed()) {
+                        t1.getY() + OBJECT_SIZE > t2.getY() - 1 &&
+                        t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + 1) {
                     return Tank.Direction.DOWN;
                 }
                 break;
             case LEFT:
                 //当前坦克的左上角坐标
-                if (t1.getX() > t2.getX() - t1.getSpeed() &&
-                        t1.getX() < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() > t2.getX() - 1 &&
+                        t1.getX() < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() > t2.getY() &&
                         t1.getY() < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.LEFT;
                 }
                 //当前坦克的左上角左下角中间坐标
-                if (t1.getX() > t2.getX() - t1.getSpeed() &&
-                        t1.getX() < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() > t2.getX() - 1 &&
+                        t1.getX() < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() + OBJECT_SIZE / 2 > t2.getY() &&
                         t1.getY() + OBJECT_SIZE / 2 < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.LEFT;
                 }
                 //当前坦克的左下角坐标
-                if (t1.getX() > t2.getX() - t1.getSpeed() &&
-                        t1.getX() < t2.getX() + OBJECT_SIZE + t1.getSpeed() &&
+                if (t1.getX() > t2.getX() - 1 &&
+                        t1.getX() < t2.getX() + OBJECT_SIZE + 1 &&
                         t1.getY() + OBJECT_SIZE > t2.getY() &&
                         t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE) {
                     return Tank.Direction.LEFT;
