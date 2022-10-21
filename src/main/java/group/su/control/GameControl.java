@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Vector;
 
 import static group.Attributes.*;
+import static group.su.map.Buff.createBuff;
 import static group.su.map.MapData.map_1;
 import static group.su.util.CheckResource.checkResource;
 import static group.su.util.DestroyDetection.destoryDetection;
@@ -17,12 +18,14 @@ import static group.su.util.Factory.initialMap;
 
 public class GameControl {
 
-    public void gameInitial() {
+    public void gameInitial() throws InterruptedException {
 
         // 创建子弹列表
         allBulletList = new Vector<>();
 
         destroySet = new HashSet<>();
+
+        buffList = new Vector<>();
 
         // 根据地图中的点阵以工厂方法实例化障碍物,存储在Map中
         obstacleMap = initialMap(map_1);
@@ -35,6 +38,9 @@ public class GameControl {
         enemyTanksList.add(new EnemyTank(400, 0));
 
         myTank = new MyTank(240, 480);
+
+        buffList.add(createBuff());
+        buffList.add(createBuff());
     }
 
     public void gameStart() {

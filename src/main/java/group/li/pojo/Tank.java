@@ -6,20 +6,24 @@ import group.GetInfo;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.li.util.CollisionDetection.isAboutTouchForTank;
+
 public class Tank implements GetInfo {
 
     public enum Direction {
         UP, RIGHT, DOWN, LEFT
     }
+    // 建立方向的枚举类,看数字真的好累 >_<
+    // 适用于坦克,子弹和方向锁
 
     private int x;  //横坐标
     private int y;  //纵坐标
     private Direction direction; //坦克的方向 0-上  1-右 2-下 3-左
-    private double speed = 1; //默认速度
+    private int speed = 1; //默认速度
     private boolean isLive = true; // 判断是否存活
     private Image image;
 
-    private Direction movingLock = null;  // 碰撞后上运动锁
+    private Direction directionLock = null;  // 碰撞后上运动锁
 
     private Vector<Bullet> bullets = new Vector<>();
 
@@ -52,11 +56,11 @@ public class Tank implements GetInfo {
         this.direction = direction;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
@@ -77,36 +81,50 @@ public class Tank implements GetInfo {
         this.image = image;
     }
 
-    public Direction getMovingLock() {
-        return movingLock;
+    public Direction getDirectionLock() {
+        return directionLock;
     }
 
-    public void setMovingLock(Direction movingLock) {
-        this.movingLock = movingLock;
+    public void setDirectionLock(Direction directionLock) {
+        this.directionLock = directionLock;
     }
 
     // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面
+    // speed的作用机制,以speed倍移动一小步,每一次运动前都要进行碰撞检测
+    // speed若为分数,则循环 speed向下取整 +1 次
     public void moveUp() {
-        if (y > 0 && getMovingLock() != Direction.UP) {
-            y -= speed;
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (y > 0 && getDirectionLock() != Direction.UP) {
+                y -= 1;
+            }
         }
     }
 
     public void moveRight() {
-        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getMovingLock() != Direction.RIGHT) {
-            x += speed;
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getDirectionLock() != Direction.RIGHT) {
+                x += 1;
+            }
         }
     }
 
     public void moveDown() {
-        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getMovingLock() != Direction.DOWN) {
-            y += speed;
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getDirectionLock() != Direction.DOWN) {
+                y += 1;
+            }
         }
     }
 
     public void moveLeft() {
-        if (x > 0 && getMovingLock() != Direction.LEFT) {
-            x -= speed;
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (x > 0 && getDirectionLock() != Direction.LEFT) {
+                x -= 1;
+            }
         }
     }
 

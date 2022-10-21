@@ -9,8 +9,6 @@ import java.awt.event.KeyListener;
 
 import static group.Attributes.*;
 import static group.Attributes.mainFrame;
-import static group.li.pojo.MyTank.v;
-import static group.li.util.CollisionDetection.IsTouchForMyTank;
 import static group.su.util.Factory.bulletOut;
 import static group.su.view.MainFrame.welMenuPanel;
 
@@ -40,22 +38,18 @@ public class Listener implements KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             myTank.setDirection(Tank.Direction.DOWN);
-            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
             myTank.moveDown();
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             myTank.setDirection(Tank.Direction.UP);
-            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
             myTank.moveUp();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             myTank.setDirection(Tank.Direction.RIGHT);
-            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
             myTank.moveRight();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             myTank.setDirection(Tank.Direction.LEFT);
-            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
             myTank.moveLeft();
         } else if (e.getKeyCode() == KeyEvent.VK_S) {

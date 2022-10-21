@@ -37,7 +37,7 @@ public class MyTank extends Tank implements Runnable {
         setImage(myTank_up);
         System.out.println("tank init");
         setHp(1);
-        //setSpeed(5);
+        setSpeed(5);
         setDirection(Direction.UP);
     }
 

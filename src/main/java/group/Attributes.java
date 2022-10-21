@@ -3,6 +3,7 @@ package group;
 import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
+import group.su.map.Buff;
 import group.su.map.Obstacle;
 import group.su.view.GamePanel;
 import group.su.view.MainFrame;
@@ -30,6 +31,8 @@ public class Attributes {
     public static MainFrame mainFrame;
 
     public static Vector<Bullet> allBulletList;
+
+    public static Vector<Buff> buffList;
 
     public static Set<EnemyTank> destroySet;
 

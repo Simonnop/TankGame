@@ -2,6 +2,7 @@ package group.su.view;
 
 import group.li.pojo.Bullet;
 import group.li.pojo.EnemyTank;
+import group.su.map.Buff;
 import group.su.map.Obstacle;
 
 import javax.swing.*;
@@ -32,18 +33,22 @@ public class GamePanel extends JPanel implements Runnable {
         drawObject(myTank, g);
 
         // 绘制子弹
-        drawBullets(g,allBulletList);
+        drawBullets(g, allBulletList);
 
         // 绘制地图其他障碍物
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.WALL));
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.TREE));
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.BRICK));
+
+        for (Buff buff : buffList) {
+            drawObject(buff, g);
+        }
     }
 
     @Override
     public void run() {
 
-        time=0;
+        time = 0;
         while (gameRun) {
             try {
                 Thread.sleep(1000);
@@ -57,10 +62,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void drawObstacle(Graphics g, Vector<Obstacle> obstacleList) {
 
-        for (Obstacle obs : obstacleList
-        ) {
-            drawObject(obs, g);
+        try {
+            for (Obstacle obs : obstacleList
+            ) {
+                drawObject(obs, g);
+            }
+        } catch (Exception e) {
+            drawObstacle(g, obstacleList);
         }
+
     }
 
     public void drawBullets(Graphics g, Vector<Bullet> bullets) {

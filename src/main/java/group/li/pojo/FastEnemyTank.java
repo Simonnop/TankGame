@@ -16,7 +16,7 @@ public class FastEnemyTank extends EnemyTank {
 
     public FastEnemyTank(int x, int y) {
         super(x, y);
-        setSpeed(1.5);
+        setSpeed(2);
     }
 
     public void run() {
