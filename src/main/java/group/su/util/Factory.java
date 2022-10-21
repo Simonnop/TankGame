@@ -46,25 +46,25 @@ public class Factory {
         Bullet bullet;
 
         switch (tank.getDirection()) {
-            case 0:  // 上
+            case UP:  // 上
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
                         tank.getY() - BULLET_SIZE / 2,
                         tank.getDirection());
                 break;
-            case 1:  // 右
+            case RIGHT:  // 右
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
                         tank.getDirection());
                 break;
-            case 2:  // 下
+            case DOWN:  // 下
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
                         tank.getDirection());
                 break;
-            case 3:  // 左
+            case LEFT:  // 左
                 bullet = new Bullet(
                         tank.getX() - BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,

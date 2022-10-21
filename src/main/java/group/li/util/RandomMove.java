@@ -4,10 +4,12 @@ import group.Attributes;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.FastEnemyTank;
 import group.li.pojo.StrongEnemyTank;
+import group.li.pojo.Tank;
 
 import java.util.Random;
 
 import static group.Attributes.time;
+import static group.li.util.CollisionDetection.IsTouchForEnemyTank;
 
 //敌方坦克随机移动的方法
 //后面有待修改
@@ -19,62 +21,41 @@ public class RandomMove {
 
         int direction = 0;
         for (int i = 0; i < 30; i++) {
+            IsTouchForEnemyTank(tank);
             switch (tank.getDirection()) {
-                case 0://向上
-                    if (tank.getY() > 0 && !tank.getMovingLock()) {
-
-                        if(tank instanceof FastEnemyTank){
-                            tank.moveUp(1.5);
-                        }else {
-                            tank.moveUp();
-                        }
+                case UP: //向上
+                    if (tank.getY() > 0) {
+                        tank.moveUp();
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
-                        checkCollision(tank);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
-                case 1://向右
-                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH &&
-                        !tank.getMovingLock()) {
-                        if(tank instanceof FastEnemyTank){
-                            tank.moveRight(1.5);
-                        }else {
-                            tank.moveRight();
-                        }
+                case RIGHT: //向右
+                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+                        tank.moveRight();
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
-                        checkCollision(tank);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
-                case 2://向下
-                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH &&
-                        !tank.getMovingLock()) {
-                        if(tank instanceof FastEnemyTank){
-                            tank.moveDown(1.5);
-                        }else {
-                            tank.moveDown();
-                        }
+                case DOWN: //向下
+                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+                        tank.moveDown();
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
-                        checkCollision(tank);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     break;
-                case 3://向左
-                    if (tank.getX() > 0 && !tank.getMovingLock()) {
-                        if(tank instanceof FastEnemyTank){
-                            tank.moveLeft(1.5);
-                        }else {
-                            tank.moveLeft();
-                        }
+                case LEFT: //向左
+                    if (tank.getX() > 0) {
+                        tank.moveLeft();
                     }
                     try {
                         Thread.sleep(Attributes.REFRESH_TIME);
@@ -105,36 +86,14 @@ public class RandomMove {
 
         }
         //改变方向，根据换image
-        tank.setDirection(direction);
-        if(tank instanceof FastEnemyTank){
-            DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank)tank);
+        tank.setDirection(Tank.Direction.values()[direction]);
+
+        if (tank instanceof FastEnemyTank) {
+            DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank) tank);
         } else if (tank instanceof StrongEnemyTank) {
-            DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank)tank);
-        }else {
+            DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank) tank);
+        } else {
             DirectionUtil.ChangeImageAccordingDirection(tank);
         }
-
-    }
-
-
-    public static void checkCollision(EnemyTank enemyTank) {
-        if (CollisionDetection.IsTouchForEnemyTank(enemyTank)) {
-            enemyTank.setMovingLock(true);
-            switch (enemyTank.getDirection()) {
-                case 0:
-                    enemyTank.moveDown();
-                    break;
-                case 1:
-                    enemyTank.moveLeft();
-                    break;
-                case 2:
-                    enemyTank.moveUp();
-                    break;
-                case 3:
-                    enemyTank.moveRight();
-                    break;
-            }
-        }
-
     }
 }

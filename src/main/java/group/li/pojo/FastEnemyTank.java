@@ -16,9 +16,8 @@ public class FastEnemyTank extends EnemyTank {
 
     public FastEnemyTank(int x, int y) {
         super(x, y);
+        setSpeed(1.5);
     }
-
-
 
     public void run() {
         /*坦克在2-6s刷新后发子弹*/
@@ -32,7 +31,6 @@ public class FastEnemyTank extends EnemyTank {
 
             try {
                 Thread.sleep(10L);
-                this.setMovingLock(false);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }

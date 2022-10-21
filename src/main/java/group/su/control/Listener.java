@@ -1,5 +1,6 @@
 package group.su.control;
 
+import group.li.pojo.Tank;
 import group.li.util.CollisionDetection;
 import group.li.util.DirectionUtil;
 
@@ -9,19 +10,15 @@ import java.awt.event.KeyListener;
 import static group.Attributes.*;
 import static group.Attributes.mainFrame;
 import static group.li.pojo.MyTank.v;
+import static group.li.util.CollisionDetection.IsTouchForMyTank;
 import static group.su.util.Factory.bulletOut;
-import static group.su.view.MainFrame.testPanel;
 import static group.su.view.MainFrame.welMenuPanel;
 
 public class Listener implements KeyListener {
 
-    Boolean movingLock_up = new Boolean(false);
-    Boolean movingLock_down = new Boolean(false);
-    Boolean movingLock_left = new Boolean(false);
-    Boolean movingLock_right = new Boolean(false);
-
     //用于坦克开火限制，临时记录时间
-    public static int temp_time=0;
+    public static int temp_time = 0;
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -38,49 +35,40 @@ public class Listener implements KeyListener {
          * */
 
         //这个v代表默认速度的倍数，便于后期调整速度，可以放到其他类中变为静态
-        int v = 5;
+        //int v = 5;
+
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            myTank.setDirection(2);
-            updateMovingLock(movingLock_down);
+            myTank.setDirection(Tank.Direction.DOWN);
+            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if (!movingLock_down) {
-                myTank.moveDown(v);
-            }
+            myTank.moveDown();
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            myTank.setDirection(0);
-            updateMovingLock(movingLock_up);
+            myTank.setDirection(Tank.Direction.UP);
+            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-
-            if (!movingLock_up) {
-                myTank.moveUp(v);
-            }
+            myTank.moveUp();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            myTank.setDirection(1);
-            updateMovingLock(movingLock_right);
+            myTank.setDirection(Tank.Direction.RIGHT);
+            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if (!movingLock_right) {
-                myTank.moveRight(v);
-            }
+            myTank.moveRight();
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            myTank.setDirection(3);
-            updateMovingLock(movingLock_left);
+            myTank.setDirection(Tank.Direction.LEFT);
+            IsTouchForMyTank();
             DirectionUtil.ChangeImageAccordingDirection(myTank);
-            if (!movingLock_left) {
-                myTank.moveLeft(v);
-            }
+            myTank.moveLeft();
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
-
             //坦克开火限制 ，暂时设置为1s内只能射击一次
-            if(temp_time==0){
+            if (temp_time == 0) {
                 bulletOut(myTank);
-                temp_time=time;
+                temp_time = time;
             }
-            if(time -temp_time >1){
+            if (time - temp_time > 1) {
                 bulletOut(myTank);
-                temp_time=time;
+                temp_time = time;
             }
-        }else if (e.getKeyCode() == KeyEvent.VK_A) {
+        } else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
             mainFrame.getContentPane().remove(gamePanel);
             mainFrame.repaint();
@@ -94,51 +82,5 @@ public class Listener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-
-    private void updateMovingLock(Boolean lock) {
-
-        int v = 5;
-
-        if (lock == movingLock_up) {
-            movingLock_down = new Boolean(false);
-            movingLock_left = new Boolean(false);
-            movingLock_right = new Boolean(false);
-            if (CollisionDetection.IsTouchForMyTank()) {
-                movingLock_up = new Boolean(true);
-                myTank.moveDown(v);
-            }
-            System.out.println("up");
-        }
-        if (lock == movingLock_down) {
-            movingLock_up = new Boolean(false);
-            movingLock_left = new Boolean(false);
-            movingLock_right = new Boolean(false);
-            if (CollisionDetection.IsTouchForMyTank()) {
-                movingLock_down = new Boolean(true);
-                myTank.moveUp(v);
-            }
-            System.out.println("down");
-        }
-        if (lock == movingLock_left) {
-            movingLock_down = new Boolean(false);
-            movingLock_up = new Boolean(false);
-            movingLock_right = new Boolean(false);
-            if (CollisionDetection.IsTouchForMyTank()) {
-                movingLock_left = new Boolean(true);
-                myTank.moveRight(v);
-            }
-            System.out.println("left");
-        }
-        if (lock == movingLock_right) {
-            movingLock_down = new Boolean(false);
-            movingLock_left = new Boolean(false);
-            movingLock_up = new Boolean(false);
-            if (CollisionDetection.IsTouchForMyTank()) {
-                movingLock_right = new Boolean(true);
-                myTank.moveLeft(v);
-            }
-            System.out.println("right");
-        }
     }
 }

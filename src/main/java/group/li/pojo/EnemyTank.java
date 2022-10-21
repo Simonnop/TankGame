@@ -12,7 +12,7 @@ import static group.Attributes.enemyTanksList;
 
 
 //每个敌方坦克也是一个线程
-public class EnemyTank extends Tank implements Runnable{
+public class EnemyTank extends Tank implements Runnable {
 
     public static Image enemyTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_up.png"));
     public static Image enemyTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png"));
@@ -24,13 +24,14 @@ public class EnemyTank extends Tank implements Runnable{
         super(x, y);
         setImage(enemyTank_down);
         enemyTanksList.add(this);
+        setDirection(Direction.DOWN);
     }
 
     public void run() {
         /*坦克在2-6s刷新后发子弹*/
-        int randomTime = (int)(Math.random() * 4.0 + 2.0);
+        int randomTime = (int) (Math.random() * 4.0 + 2.0);
 
-        while(Attributes.gameRun) {
+        while (Attributes.gameRun) {
 
             RandomMove.randomMove(this);
 
@@ -40,7 +41,6 @@ public class EnemyTank extends Tank implements Runnable{
 
             try {
                 Thread.sleep(10L);
-                this.setMovingLock(false);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }
@@ -50,7 +50,7 @@ public class EnemyTank extends Tank implements Runnable{
                 --randomTime;
                 if (randomTime == 0) {
                     Factory.bulletOut(this);
-                    randomTime = (int)(Math.random() * 4.0 + 2.0);
+                    randomTime = (int) (Math.random() * 4.0 + 2.0);
                 }
             }
         }

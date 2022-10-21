@@ -12,7 +12,7 @@ import java.util.Vector;
 import static group.Attributes.*;
 import static group.su.map.MapData.map_1;
 import static group.su.util.CheckResource.checkResource;
-import static group.su.util.Detection.destoryDetection;
+import static group.su.util.DestroyDetection.destoryDetection;
 import static group.su.util.Factory.initialMap;
 
 public class GameControl {
