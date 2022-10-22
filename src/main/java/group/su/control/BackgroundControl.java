@@ -58,5 +58,4 @@ public class BackgroundControl {
         mainFrame.getContentPane().add(new OverMenuPanel());
     }
 
-
 }

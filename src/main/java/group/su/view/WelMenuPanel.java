@@ -1,6 +1,7 @@
 package group.su.view;
 
 import group.Mybatis.pojo.User;
+import group.su.control.Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.Objects;
 
 import static group.Attributes.gameRun;
+import static group.Attributes.mainFrame;
 import static group.Mybatis.util.UserMethod.addUser;
 import static group.Mybatis.util.UserMethod.getAllUsers;
 import static group.su.view.TextFieldHandler.checkNull;
@@ -43,13 +45,23 @@ public class WelMenuPanel extends JPanel {
 
         JButton loginButton = new JButton("进入游戏");
         loginButton.setSize(260, 40);
-        loginButton.setLocation(250, 330);
+        loginButton.setLocation(250, 300);
         loginButton.setForeground(Color.WHITE);
         loginButton.setFont(new Font("幼圆", Font.PLAIN, 20));
         loginButton.setBackground(new Color(1, 85, 157));
-        loginButton.addActionListener(new ButtonHandler());
+        loginButton.addActionListener(new LoginButtonHandler());
         this.add(loginButton);
         loginButton.requestFocus();
+
+        JButton localButton = new JButton("本地游戏");
+        localButton.setSize(260, 40);
+        localButton.setLocation(250, 370);
+        localButton.setForeground(Color.WHITE);
+        localButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        localButton.setBackground(new Color(1, 85, 157));
+        localButton.addActionListener(new LocalButtonHandler());
+        this.add(localButton);
+        localButton.requestFocus();
     }
 }
 
@@ -99,7 +111,7 @@ class TextFieldHandler implements MouseListener {
     }
 }
 
-class ButtonHandler implements ActionListener {
+class LoginButtonHandler implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -140,5 +152,15 @@ class ButtonHandler implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
             gameRun = true;
         }
+    }
+}
+
+class LocalButtonHandler implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        showMessageDialog(null,
+                "开始本地游戏", "提示",
+                JOptionPane.INFORMATION_MESSAGE);
+        gameRun = true;
     }
 }

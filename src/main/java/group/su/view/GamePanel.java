@@ -25,6 +25,11 @@ public class GamePanel extends JPanel implements Runnable {
         // 先画底层的水
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.RIVER));
 
+        // 画 buff
+        for (Buff buff : buffList) {
+            drawObject(buff, g);
+        }
+
         // 绘制坦克
         for (EnemyTank enemyTank : enemyTanksList
         ) {
@@ -39,10 +44,6 @@ public class GamePanel extends JPanel implements Runnable {
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.WALL));
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.TREE));
         drawObstacle(g, obstacleMap.get(Obstacle.ObstacleKind.BRICK));
-
-        for (Buff buff : buffList) {
-            drawObject(buff, g);
-        }
     }
 
     @Override
