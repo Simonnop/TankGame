@@ -6,6 +6,9 @@ import group.GetInfo;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.Attributes.*;
+import static group.li.pojo.Bullet.enemyTankBullet;
+import static group.li.pojo.Bullet.myTankBullet;
 import static group.li.util.CollisionDetection.isAboutTouchForTank;
 
 public class Tank implements GetInfo {
@@ -126,6 +129,53 @@ public class Tank implements GetInfo {
                 x -= 1;
             }
         }
+    }
+
+    public static void bulletOut(Tank tank) {
+
+        Bullet bullet;
+
+        switch (tank.getDirection()) {
+            case UP:  // 上
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case RIGHT:  // 右
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case DOWN:  // 下
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            case LEFT:  // 左
+                bullet = new Bullet(
+                        tank.getX() - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getDirection());
+                break;
+            default:
+                bullet = new Bullet(tank.getX(), tank.getY(), tank.getDirection());
+        }
+
+
+        if (tank instanceof MyTank) {
+            bullet.setImage(myTankBullet);
+        } else if (tank instanceof EnemyTank) {
+            bullet.setImage(enemyTankBullet);
+        }
+
+        //System.out.println("bullet out");
+
+        new Thread(bullet).start();
+
+        allBulletList.add(bullet);
     }
 
 

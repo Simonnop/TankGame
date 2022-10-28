@@ -1,6 +1,6 @@
 package group;
 
-import group.su.control.BackgroundControl;
+import group.su.control.PanelControl;
 import group.su.control.GameControl;
 
 public class Application {
@@ -9,21 +9,26 @@ public class Application {
      *  主程序流程
      * */
 
+    // 创建程序控制托管对象
+    private static final GameControl gameControl = new GameControl();
+
+    private static final PanelControl panelControl = new PanelControl();
+
+
     public static void main(String[] args) throws InterruptedException {
+        runApplication();
+    }
 
-        // 创建程序控制托管对象
-        GameControl gameControl = new GameControl();
-
-        BackgroundControl backgroundControl = new BackgroundControl();
+    public static void runApplication() throws InterruptedException {
 
         // 欢迎起始菜单页面
-        backgroundControl.welcomeMenuShow();
+        panelControl.welcomeMenuShow();
 
         // 创建地图对象等
         gameControl.gameInitial();
 
         // 显示游戏面板
-        backgroundControl.gamePanelShow();
+        panelControl.gamePanelShow();
         // 敌方坦克动起来,加入监听器
         gameControl.gameStart();
         // 更新判断等
@@ -32,9 +37,9 @@ public class Application {
         // 游戏结束与结算
         gameControl.gameOver();
         // 移除游戏面板
-        backgroundControl.gamePanelOut();
+        panelControl.gamePanelOut();
         // 显示结算菜单
-        backgroundControl.overMenuShow();
+        panelControl.overMenuShow();
 
     }
 }

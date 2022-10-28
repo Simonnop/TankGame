@@ -1,22 +1,25 @@
 package group.su.control;
 
+import group.GetInfo;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.FastEnemyTank;
 import group.li.pojo.MyTank;
 import group.li.pojo.StrongEnemyTank;
+import group.su.map.Obstacle;
 
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 
 import static group.Attributes.*;
 import static group.su.map.Buff.createBuff;
+import static group.su.map.MapData.initialMap;
 import static group.su.map.MapData.map_1;
-import static group.su.util.CheckResource.checkResource;
-import static group.su.util.DestroyDetection.destoryDetection;
-import static group.su.util.Factory.initialMap;
 
 public class GameControl {
+
+    static Listener listener = new Listener();
 
     public void gameInitial() throws InterruptedException {
 
@@ -47,9 +50,7 @@ public class GameControl {
 
         // 持续等待
         for (; ; ) {
-            // 等待静态资源准备完毕
-            // 使用 && 短路,减少资源消耗
-            if (gameRun && checkResource()) {
+            if (gameRun) {
                 // 开启游戏主面板线程
                 new Thread(gamePanel).start();
                 // 开启坦克线程,开始移动
@@ -59,8 +60,9 @@ public class GameControl {
                 }
                 new Thread(myTank).start();
 
-                // 加入监听器
-                mainFrame.addKeyListener(new Listener());
+                // 加入监听器,并保证只有一个监听器
+                mainFrame.removeKeyListener(listener);
+                mainFrame.addKeyListener(listener);
 
                 System.out.println("start");
 
@@ -76,6 +78,10 @@ public class GameControl {
             // 主线程休息,控制刷新率与负载
             Thread.sleep(REFRESH_TIME);
 
+            tryRecycle(obstacleMap.get(Obstacle.ObstacleKind.BRICK));
+            tryRecycle(enemyTanksList);
+            tryRecycle(allBulletList);
+
             // 重绘游戏主面板
             gamePanel.repaint();
         }
@@ -84,5 +90,17 @@ public class GameControl {
 
     public void gameOver() {
         System.out.println("over");
+    }
+
+    public <T extends GetInfo> void tryRecycle(Vector<T> list) {
+        synchronized (list) {
+            Iterator<T> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                T t = iterator.next();
+                if (!t.isLive()) {
+                    iterator.remove();
+                }
+            }
+        }
     }
 }

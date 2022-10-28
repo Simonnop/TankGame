@@ -6,7 +6,7 @@ import group.su.map.Obstacle;
 import java.awt.*;
 
 import static group.Attributes.*;
-import static group.su.util.DestroyDetection.destoryDetection;
+import static group.li.util.DestroyDetection.destoryDetection;
 
 //每个子弹都是一个线程 所以实现Runnable接口
 public class Bullet implements Runnable, GetInfo {

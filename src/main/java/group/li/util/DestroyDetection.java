@@ -1,4 +1,4 @@
-package group.su.util;
+package group.li.util;
 
 import group.li.pojo.*;
 import group.GetInfo;
@@ -26,8 +26,7 @@ public class DestroyDetection {
         for (int i = 0; i < list.size(); i++) {
             T elem = list.get(i);
             if (IsHit(bullet, elem)) {
-                if (!(elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.WALL)) &&
-                        !(elem instanceof MyTank) && !(elem instanceof StrongEnemyTank)) {
+                if (elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.BRICK)){
                     elem.setLive(false);
                 }
 
@@ -43,6 +42,8 @@ public class DestroyDetection {
                     int hp = ((StrongEnemyTank) elem).getHp() - 1;
                     ((StrongEnemyTank) elem).setHp(hp);
                     System.out.println("hit!!  " + ((StrongEnemyTank) elem).getHp() + " hp left!");
+                } else if (elem instanceof EnemyTank) {
+                    elem.setLive(false);
                 }
 
             }
@@ -52,12 +53,6 @@ public class DestroyDetection {
                 if (((StrongEnemyTank) elem).getHp() <= 0) {
                     elem.setLive(false);
                 }
-            }
-
-            if (!elem.isLive()) {
-                list.remove(elem);
-                // 这里的 remove 之后会将遍历的指针前移,所以需要 i--
-                i--;
             }
         }
     }

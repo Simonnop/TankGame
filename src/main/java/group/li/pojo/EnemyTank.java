@@ -1,12 +1,9 @@
 package group.li.pojo;
 
 import group.Attributes;
-import group.li.util.CollisionDetection;
 import group.li.util.RandomMove;
-import group.su.util.Factory;
 
 import java.awt.*;
-import java.util.Vector;
 
 import static group.Attributes.enemyTanksList;
 
@@ -49,7 +46,7 @@ public class EnemyTank extends Tank implements Runnable {
             if (Attributes.time > 5) {
                 --randomTime;
                 if (randomTime == 0) {
-                    Factory.bulletOut(this);
+                    bulletOut(this);
                     randomTime = (int) (Math.random() * 4.0 + 2.0);
                 }
             }

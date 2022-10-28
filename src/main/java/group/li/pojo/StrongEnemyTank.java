@@ -2,7 +2,6 @@ package group.li.pojo;
 
 import group.Attributes;
 import group.li.util.RandomMove;
-import group.su.util.Factory;
 
 import java.awt.*;
 
@@ -48,7 +47,7 @@ public class StrongEnemyTank extends EnemyTank {
             if (Attributes.time > 5) {
                 --randomTime;
                 if (randomTime == 0) {
-                    Factory.bulletOut(this);
+                    bulletOut(this);
                     randomTime = (int) (Math.random() * 4.0 + 2.0);
                 }
             }

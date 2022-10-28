@@ -58,4 +58,26 @@ public class MapData {
     }
 
     public static List<List<int[]>> map_2;
+
+    public static Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(List<List<int[]>> map) {
+
+        Map<Obstacle.ObstacleKind, Vector<Obstacle>> newMap = new HashMap<>();
+
+        for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
+        ) {
+            newMap.put(obstacleKind, new Vector<>());
+        }
+
+        for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
+        ) {
+            int[][] array = map.get(obstacleKind.ordinal()).toArray(new int[0][]);
+            for (int[] ints : array
+            ) {
+                // 工厂化创建对象
+                newMap.get(obstacleKind).add(
+                        obstacleKind.returnObject(ints[0] * OBJECT_SIZE, ints[1] * OBJECT_SIZE));
+            }
+        }
+        return newMap;
+    }
 }

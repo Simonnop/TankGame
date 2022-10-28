@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 
 import static group.Attributes.*;
 import static group.Attributes.mainFrame;
-import static group.su.util.Factory.bulletOut;
+import static group.li.pojo.Tank.bulletOut;
 import static group.su.view.MainFrame.welMenuPanel;
 
 public class Listener implements KeyListener {
@@ -64,11 +64,7 @@ public class Listener implements KeyListener {
             }
         } else if (e.getKeyCode() == KeyEvent.VK_A) {
             // 测试其他功能用
-            mainFrame.getContentPane().remove(gamePanel);
-            mainFrame.repaint();
-//            mainFrame.getContentPane().add(testPanel);
-            mainFrame.getContentPane().add(welMenuPanel);
-            mainFrame.revalidate();
+            gameRun = false;
             System.out.println("get");
         }
     }

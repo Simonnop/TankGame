@@ -11,11 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
 
-import static group.Attributes.gameRun;
-import static group.Attributes.mainFrame;
+import static group.Attributes.*;
 import static group.Mybatis.util.UserMethod.addUser;
 import static group.Mybatis.util.UserMethod.getAllUsers;
-import static group.su.view.TextFieldHandler.checkNull;
 import static group.su.view.WelMenuPanel.accountEnterField;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -53,7 +51,7 @@ public class WelMenuPanel extends JPanel {
         this.add(loginButton);
         loginButton.requestFocus();
 
-        JButton localButton = new JButton("本地游戏");
+        JButton localButton = new JButton("离线游戏(无需用户名)");
         localButton.setSize(260, 40);
         localButton.setLocation(250, 370);
         localButton.setForeground(Color.WHITE);
@@ -63,104 +61,108 @@ public class WelMenuPanel extends JPanel {
         this.add(localButton);
         localButton.requestFocus();
     }
-}
-
-class TextFieldHandler implements MouseListener {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-        checkNull();
-
-        if (e.getSource().equals(accountEnterField) &&
-                Objects.equals(accountEnterField.getText(), "用户名")) {
-            accountEnterField.setText("");
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 
     public static String checkNull() {
 
         String errorInfo = "";
         if (Objects.equals(accountEnterField.getText(), "") ||
-                Objects.equals(accountEnterField.getText(), "用户名")) {
+            Objects.equals(accountEnterField.getText(), "用户名")) {
             accountEnterField.setText("用户名");
             errorInfo += "账号不能为空\n";
         }
 
         return errorInfo;
     }
-}
 
-class LoginButtonHandler implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    class TextFieldHandler implements MouseListener {
 
-        String errorInfo = checkNull();
-        String name = accountEnterField.getText();
-        boolean isNew = true;
-        boolean isLocal = false;
+        @Override
+        public void mouseClicked(MouseEvent e) {
 
-        try {
-            for (User user : getAllUsers()) {
-                if (user.getUsername().equals(name)) {
-                    isNew = false;
-                    break;
-                }
+            checkNull();
+
+            if (e.getSource().equals(accountEnterField) &&
+                Objects.equals(accountEnterField.getText(), "用户名")) {
+                accountEnterField.setText("");
             }
-        } catch (Exception exception) {
-            System.out.println("Database connection error");
-            isLocal = true;
         }
 
-        if (!Objects.equals(errorInfo, "")) {
-            showMessageDialog(null,
-                    errorInfo, "错误",
-                    JOptionPane.ERROR_MESSAGE);
-        } else if (isLocal) {
-            showMessageDialog(null,
-                    "数据库连接错误\n为您开始本地游戏", "提示",
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+    class LoginButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String errorInfo = checkNull();
+            playerName = accountEnterField.getText();
+            boolean isNew = true;
+            boolean isLocal = false;
+
+            try {
+                for (User user : getAllUsers()) {
+                    if (user.getUsername().equals(playerName)) {
+                        isNew = false;
+                        break;
+                    }
+                }
+            } catch (Exception exception) {
+                System.out.println("Database connection error");
+                isLocal = true;
+            }
+
+            if (!Objects.equals(errorInfo, "")) {
+                showMessageDialog(mainFrame,
+                        errorInfo, "错误",
+                        JOptionPane.ERROR_MESSAGE);
+            } else if (isLocal) {
+                showMessageDialog(mainFrame,
+                        "数据库连接错误\n为您开始本地游戏", "提示",
+                        JOptionPane.INFORMATION_MESSAGE);
+                gameRun = true;
+            } else if (!isNew) {
+                showMessageDialog(mainFrame,
+                        "您好老玩家, " + playerName, "提示",
+                        JOptionPane.INFORMATION_MESSAGE);
+                gameRun = true;
+            } else if (addUser(new User(playerName)) == 1) {
+                showMessageDialog(mainFrame,
+                        "您好新玩家, " + playerName, "提示",
+                        JOptionPane.INFORMATION_MESSAGE);
+                gameRun = true;
+            }
+        }
+    }
+
+    class LocalButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            showMessageDialog(mainFrame,
+                    "开始离线游戏", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
-            gameRun = true;
-        } else if (!isNew) {
-            showMessageDialog(null,
-                    "您好老玩家, " + name, "提示",
-                    JOptionPane.INFORMATION_MESSAGE);
-            gameRun = true;
-        } else if (addUser(new User(name)) == 1) {
-            showMessageDialog(null,
-                    "您好新玩家, " + name, "提示",
-                    JOptionPane.INFORMATION_MESSAGE);
+            playerName = "您";
             gameRun = true;
         }
     }
+
 }
 
-class LocalButtonHandler implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        showMessageDialog(null,
-                "开始本地游戏", "提示",
-                JOptionPane.INFORMATION_MESSAGE);
-        gameRun = true;
-    }
-}
+

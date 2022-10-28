@@ -18,6 +18,8 @@ public class Attributes {
 
     public static boolean gameRun = false;
 
+    public static boolean restart = false;
+
     public static MyTank myTank;
 
     public static Vector<EnemyTank> enemyTanksList;
@@ -36,8 +38,12 @@ public class Attributes {
 
     public static Set<EnemyTank> destroySet;
 
+    public static String playerName;
 
     public static int time = 0;
+
+
+
     public static final int REFRESH_TIME = 25;
 
     public static final int OBJECT_SIZE = 40;
