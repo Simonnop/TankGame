@@ -1,15 +1,20 @@
 package group.li.pojo;
 
+import group.Application;
 import group.GetInfo;
+import group.su.control.GameInstance;
 import group.su.map.Obstacle;
 
 import java.awt.*;
+import java.util.Vector;
 
 import static group.Attributes.*;
-import static group.li.util.DestroyDetection.destoryDetection;
 
 //每个子弹都是一个线程 所以实现Runnable接口
 public class Bullet implements Runnable, GetInfo {
+
+    public static GameInstance gameInstance;
+
     private int x;//子弹x坐标
     private int y;//子弹x坐标
     private Tank.Direction direction = null;//子弹方向
@@ -97,7 +102,7 @@ public class Bullet implements Runnable, GetInfo {
     @Override
     public void run() {
         //子弹一旦开始创建 ，线程便开始无限循环
-        while (gameRun) {
+        while (Application.gameRun) {
 
             // 这里必须要加 sleep 否则子弹会直接飞得很远
             try {
@@ -109,10 +114,10 @@ public class Bullet implements Runnable, GetInfo {
             move(direction);
 
             // 子弹击中检测
-            destoryDetection(this, obstacleMap.get(Obstacle.ObstacleKind.BRICK));
-            destoryDetection(this, obstacleMap.get(Obstacle.ObstacleKind.WALL));
-            destoryDetection(this, enemyTanksList);
-            destoryDetection(this, myTank);
+            destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
+            destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.WALL));
+            destoryDetection(this, gameInstance.getEnemyTanksList());
+            destoryDetection(this, gameInstance.getMyTank());
 
             //当子弹碰到地图边缘时，线程结束
             if (!(x >= 0 && x <= WINDOW_LENGTH && y >= 0 && y <= WINDOW_WIDTH && isLive
@@ -124,4 +129,74 @@ public class Bullet implements Runnable, GetInfo {
         }
     }
 
+    public <T extends GetInfo> void destoryDetection(Bullet bullet, Vector<T> list) {
+
+
+        for (int i = 0; i < list.size(); i++) {
+            T elem = list.get(i);
+            if (IsHit(bullet, elem)) {
+                if (elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.BRICK)){
+                    elem.setLive(false);
+                }
+
+                bullet.setLive(false);
+
+                if (elem instanceof MyTank) {
+                    ((MyTank) elem).setHp(((MyTank) elem).getHp() - 1);
+                    System.out.println("hit!!  " + ((MyTank) elem).getHp() + " hp left!");
+                }
+
+                //如果是strongEnemyTank ，扣血
+                if (elem instanceof StrongEnemyTank) {
+                    int hp = ((StrongEnemyTank) elem).getHp() - 1;
+                    ((StrongEnemyTank) elem).setHp(hp);
+                    System.out.println("hit!!  " + ((StrongEnemyTank) elem).getHp() + " hp left!");
+                } else if (elem instanceof EnemyTank) {
+                    elem.setLive(false);
+                }
+
+            }
+
+            //加这个判断是为了加快动画消失的速度
+            if (elem instanceof StrongEnemyTank) {
+                if (((StrongEnemyTank) elem).getHp() <= 0) {
+                    elem.setLive(false);
+                }
+            }
+        }
+    }
+
+    public void destoryDetection(Bullet bullet, MyTank myTank) {
+        Vector<Tank> oneTankList = new Vector<>();
+        oneTankList.add(myTank);
+        destoryDetection(bullet, oneTankList);
+    }
+
+    public <T extends GetInfo> boolean IsHit(Bullet bullet, T t) {
+        if (bullet.getX() >= t.getX() &&
+            bullet.getX() <= t.getX() + OBJECT_SIZE &&
+            bullet.getY() >= t.getY() &&
+            bullet.getY() <= t.getY() + OBJECT_SIZE) {
+
+            // 我们坦克命中敌方坦克加分判断
+            if (bullet.getImage().equals(myTankBullet) && t instanceof EnemyTank) {
+                // 直接加分容易出现重复加分,使用set来避免
+                boolean add = gameInstance.getDestroySet().add((EnemyTank) t);
+                if (add) {
+                    System.out.println("score: " + gameInstance.getDestroySet().size());
+                }
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    public static GameInstance getGameInstance() {
+        return gameInstance;
+    }
+
+    public static void setGameInstance(GameInstance gameInstance) {
+        Bullet.gameInstance = gameInstance;
+    }
 }

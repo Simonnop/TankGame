@@ -15,6 +15,8 @@ public class MapData {
      *  二位数组列表存储地图
      * */
 
+    // TODO 枚举改进,单例模式
+
     static int dotsLength = WINDOW_LENGTH / OBJECT_SIZE;
 
     static int dotsWidth = WINDOW_WIDTH / OBJECT_SIZE;

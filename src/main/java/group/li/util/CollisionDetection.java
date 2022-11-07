@@ -17,6 +17,9 @@ public class CollisionDetection {
 
 
     public static void isTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks) {
+        if (tank.getDirectionLock() != null) {
+            return;
+        }
         for (int i = 0; i < enemyTanks.size(); i++) {
             //从vector中取出一辆敌人的坦克
             EnemyTank enemyTank = enemyTanks.get(i);
@@ -29,13 +32,17 @@ public class CollisionDetection {
         }
     }
 
-
-    public static void isTouchMyTank(EnemyTank thisTank, MyTank tank) {
-        tank.setDirectionLock(isCollision(tank, thisTank));
+    public static void isTouchMyTank(EnemyTank thisTank, MyTank myTank) {
+        if (thisTank.getDirectionLock() != null) {
+            return;
+        }
+        thisTank.setDirectionLock(isCollision(thisTank, myTank));
     }
 
     public static void isTouchObstacles(Tank tank, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap) {
-
+        if (tank.getDirectionLock() != null) {
+            return;
+        }
         Iterator<Obstacle.ObstacleKind> iterator = obstacleMap.keySet().iterator();
         while (iterator.hasNext()) {
             Obstacle.ObstacleKind key = iterator.next();
@@ -56,12 +63,12 @@ public class CollisionDetection {
     public static void isAboutTouchForTank(Tank tank) {
         if (tank instanceof MyTank) {
             tank.setDirectionLock(null);
-            isTouchObstacles(tank, obstacleMap);
-            isTouchEnemyTanks(tank, enemyTanksList);
+            isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
+            isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
         } else {
-            isTouchObstacles(tank, obstacleMap);
-            isTouchEnemyTanks(tank, enemyTanksList);
-            isTouchMyTank((EnemyTank) tank, myTank);
+            isTouchMyTank((EnemyTank) tank, Tank.getGameInstance().getMyTank());
+            isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
+            isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
         }
     }
 
