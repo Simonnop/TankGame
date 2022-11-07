@@ -50,12 +50,4 @@ public class test {
     }
 
 
-    @Test
-    public void test4(){
-        JFrame s = new JFrame("s");
-        s.setVisible(true);
-        s.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        s.setBounds(500,500,500,500);
-        s.getContentPane().add(new WelMenuPanel());
-    }
 }

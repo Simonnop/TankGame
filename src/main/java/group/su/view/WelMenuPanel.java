@@ -1,7 +1,7 @@
 package group.su.view;
 
+import group.Application;
 import group.Mybatis.pojo.User;
-import group.su.control.Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +11,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
 
-import static group.Attributes.*;
+import static group.Application.playerName;
 import static group.Mybatis.util.UserMethod.addUser;
 import static group.Mybatis.util.UserMethod.getAllUsers;
-import static group.su.view.WelMenuPanel.accountEnterField;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class WelMenuPanel extends JPanel {
 
-    static JTextField accountEnterField;
+    private final MainFrame mainFrame;
+    private static JTextField accountEnterField;
+
+    public WelMenuPanel(MainFrame mainFrame){
+        this.mainFrame = mainFrame;
+    }
 
     @Override
     public void paint(Graphics g) {
+
         super.paint(g);
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 800, 700);
@@ -62,7 +67,7 @@ public class WelMenuPanel extends JPanel {
         localButton.requestFocus();
     }
 
-    public static String checkNull() {
+    private static String checkNull() {
 
         String errorInfo = "";
         if (Objects.equals(accountEnterField.getText(), "") ||
@@ -137,17 +142,17 @@ public class WelMenuPanel extends JPanel {
                 showMessageDialog(mainFrame,
                         "数据库连接错误\n为您开始本地游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                gameRun = true;
+                Application.gameRun = true;
             } else if (!isNew) {
                 showMessageDialog(mainFrame,
                         "您好老玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                gameRun = true;
+                Application.gameRun = true;
             } else if (addUser(new User(playerName)) == 1) {
                 showMessageDialog(mainFrame,
                         "您好新玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                gameRun = true;
+                Application.gameRun = true;
             }
         }
     }
@@ -159,7 +164,7 @@ public class WelMenuPanel extends JPanel {
                     "开始离线游戏", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
             playerName = "您";
-            gameRun = true;
+            Application.gameRun = true;
         }
     }
 

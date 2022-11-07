@@ -1,21 +1,28 @@
 package group.su.control;
 
+import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
-import group.li.util.CollisionDetection;
 import group.li.util.DirectionUtil;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static group.Attributes.*;
-import static group.Attributes.mainFrame;
+import static group.Application.gameRun;
 import static group.li.pojo.Tank.bulletOut;
-import static group.su.view.MainFrame.welMenuPanel;
 
 public class Listener implements KeyListener {
 
-    //用于坦克开火限制，临时记录时间
-    public static int temp_time = 0;
+    // TODO 优化为单例模式
+
+    GameInstance gameInstance;
+    public int temp_time = 0;
+    int time;
+
+    MyTank myTank;
+
+    public Listener(GameInstance gameInstance) {
+        this.gameInstance = gameInstance;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -35,6 +42,10 @@ public class Listener implements KeyListener {
         //这个v代表默认速度的倍数，便于后期调整速度，可以放到其他类中变为静态
         //int v = 5;
 
+
+        myTank = gameInstance.getMyTank();
+        //用于坦克开火限制，临时记录时间
+        time = gameInstance.getTime();
 
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             myTank.setDirection(Tank.Direction.DOWN);

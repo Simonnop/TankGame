@@ -1,11 +1,9 @@
 package group.li.pojo;
 
-import group.li.util.RandomMove;
-
 import java.awt.*;
 import java.util.Vector;
 
-import static group.Attributes.gameRun;
+import static group.Application.gameRun;
 
 //我方坦克
 public class MyTank extends Tank implements Runnable {
@@ -35,7 +33,6 @@ public class MyTank extends Tank implements Runnable {
     public MyTank(int x, int y) {
         super(x, y);
         setImage(myTank_up);
-        System.out.println("tank init");
         setHp(1);
         setSpeed(5);
         setDirection(Direction.UP);

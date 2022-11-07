@@ -2,6 +2,7 @@ package group.li.pojo;
 
 import group.Attributes;
 import group.GetInfo;
+import group.su.control.GameInstance;
 
 import java.awt.*;
 import java.util.Vector;
@@ -12,6 +13,8 @@ import static group.li.pojo.Bullet.myTankBullet;
 import static group.li.util.CollisionDetection.isAboutTouchForTank;
 
 public class Tank implements GetInfo {
+
+    public static GameInstance gameInstance;
 
     public enum Direction {
         UP, RIGHT, DOWN, LEFT
@@ -175,7 +178,7 @@ public class Tank implements GetInfo {
 
         new Thread(bullet).start();
 
-        allBulletList.add(bullet);
+        gameInstance.getAllBulletList().add(bullet);
     }
 
 
@@ -212,5 +215,11 @@ public class Tank implements GetInfo {
         this.bullets = bullets;
     }
 
+    public static GameInstance getGameInstance() {
+        return gameInstance;
+    }
 
+    public static void setGameInstance(GameInstance gameInstance) {
+        Tank.gameInstance = gameInstance;
+    }
 }

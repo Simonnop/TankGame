@@ -5,15 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static group.Application.main;
-import static group.Application.runApplication;
-import static group.Attributes.*;
-import static group.su.view.MainFrame.overMenuPanel;
-import static group.su.view.MainFrame.welMenuPanel;
+import static group.Application.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
 public class OverMenuPanel extends JPanel {
+
+    private final MainFrame mainFrame;
 
     //没找到分数在哪，暂时用一下
 
@@ -21,7 +19,9 @@ public class OverMenuPanel extends JPanel {
     // 我算分是取它的 size(), 后面应该会更改
     static int score = 1;
 
-    public OverMenuPanel() {
+    public OverMenuPanel(MainFrame mainFrame) {
+
+        this.mainFrame = mainFrame;
 
         this.setSize(600, 600);
         this.setLocation(0, 0);

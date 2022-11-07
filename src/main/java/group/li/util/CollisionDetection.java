@@ -56,12 +56,12 @@ public class CollisionDetection {
     public static void isAboutTouchForTank(Tank tank) {
         if (tank instanceof MyTank) {
             tank.setDirectionLock(null);
-            isTouchObstacles(tank, obstacleMap);
-            isTouchEnemyTanks(tank, enemyTanksList);
+            isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
+            isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
         } else {
-            isTouchObstacles(tank, obstacleMap);
-            isTouchEnemyTanks(tank, enemyTanksList);
-            isTouchMyTank((EnemyTank) tank, myTank);
+            isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
+            isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
+            isTouchMyTank((EnemyTank) tank, Tank.getGameInstance().getMyTank());
         }
     }
 

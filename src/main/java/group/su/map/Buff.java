@@ -1,17 +1,19 @@
 package group.su.map;
 
 import group.GetInfo;
+import group.su.control.GameInstance;
 
 import java.awt.*;
 import java.util.Random;
 
 import static group.Attributes.OBJECT_SIZE;
-import static group.Attributes.obstacleMap;
 import static group.su.map.MapData.*;
 
 public class Buff implements GetInfo {
 
     BuffKind buffKind;
+
+    public static GameInstance gameInstance;
 
     public enum BuffKind {
         MORE_BULLETS {
@@ -68,9 +70,9 @@ public class Buff implements GetInfo {
     private static boolean checkRandomPosition(int[] position) throws InterruptedException {
 
         try {
-            for (Obstacle.ObstacleKind kind : obstacleMap.keySet()
+            for (Obstacle.ObstacleKind kind : gameInstance.getObstacleMap().keySet()
             ) {
-                for (Obstacle o : obstacleMap.get(kind)) {
+                for (Obstacle o : gameInstance.getObstacleMap().get(kind)) {
                     if (o.getX() == position[0] && o.getY() == position[1]) {
                         return true;
                     }

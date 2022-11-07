@@ -1,7 +1,6 @@
 package group.li.pojo;
 
-import group.Attributes;
-import group.li.util.RandomMove;
+import group.Application;
 
 import java.awt.*;
 
@@ -31,8 +30,8 @@ public class StrongEnemyTank extends EnemyTank {
         /*坦克在2-6s刷新后发子弹*/
         int randomTime = (int) (Math.random() * 4.0 + 2.0);
 
-        while (Attributes.gameRun) {
-            RandomMove.randomMove(this);
+        while (Application.gameRun) {
+            randomMove(this);
             if (!this.isLive()) {
                 break;
             }
@@ -44,7 +43,7 @@ public class StrongEnemyTank extends EnemyTank {
             }
 
             //游戏开始5s后再开始发射子弹
-            if (Attributes.time > 5) {
+            if (gameInstance.getTime() > 5) {
                 --randomTime;
                 if (randomTime == 0) {
                     bulletOut(this);
