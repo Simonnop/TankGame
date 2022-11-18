@@ -8,6 +8,7 @@ import group.su.map.Obstacle;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.Application.tempStop;
 import static group.Attributes.*;
 
 //每个子弹都是一个线程 所以实现Runnable接口
@@ -112,7 +113,9 @@ public class Bullet implements Runnable, GetInfo {
                 throw new RuntimeException(e);
             }
             //每次循环都要判断子弹的方向 根据方向从而不停移动
-            move(direction);
+            if (!tempStop) {
+                move(direction);
+            }
 
             // 子弹击中检测
             destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));

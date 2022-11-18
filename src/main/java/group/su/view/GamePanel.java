@@ -7,9 +7,12 @@ import group.su.map.Obstacle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.Map;
 import java.util.Vector;
 
 import static group.Application.gameRun;
+import static group.Application.tempStop;
 import static group.Attributes.*;
 import static group.li.pojo.EnemyTank.enemyTank_up;
 import static group.li.pojo.FastEnemyTank.fastEnemyTank_up;
@@ -24,9 +27,56 @@ public class GamePanel extends JPanel implements Runnable {
     public static Image floor = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/floor.png"));
 
     private final GameInstance gameInstance;
+    private final MainFrame mainFrame;
 
-    public GamePanel(GameInstance gameInstance) {
+    Button helpButton = new Button("Help");
+    Button exitButton = new Button("Exit");
+    Button pauseButton = new Button("Pause");
+
+    public GamePanel(GameInstance gameInstance, MainFrame mainFrame) {
+
+        this.mainFrame = mainFrame;
         this.gameInstance = gameInstance;
+
+        helpButton.setForeground(Color.BLACK);
+        helpButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        helpButton.setBackground(Color.WHITE);
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MyDialogDemo();
+                tempStop = true;
+            }
+        });
+        this.add(helpButton);
+
+        exitButton.setForeground(Color.BLACK);
+        exitButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        exitButton.setBackground(Color.WHITE);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameRun = false;
+            }
+        });
+        this.add(exitButton);
+
+        pauseButton.setForeground(Color.BLACK);
+        pauseButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        pauseButton.setBackground(Color.WHITE);
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tempStop == false) {
+                    tempStop = true;
+                    pauseButton.setLabel("Run");
+                } else {
+                    tempStop = false;
+                    pauseButton.setLabel("Pause");
+                }
+            }
+        });
+        this.add(pauseButton);
     }
 
     @Override
@@ -40,17 +90,24 @@ public class GamePanel extends JPanel implements Runnable {
         g.setColor(Color.GRAY);
         g.fillRect(WINDOW_LENGTH, 0, 200, WINDOW_WIDTH);
 
+        exitButton.setSize(50, 40);
+        exitButton.setLocation(610, 10);
+        helpButton.setSize(50, 40);
+        helpButton.setLocation(670, 10);
+        pauseButton.setSize(60, 40);
+        pauseButton.setLocation(730, 10);
+
         g.setColor(Color.WHITE);
         g.setFont(new Font("幼圆", Font.BOLD, 20));
-        g.drawString("剩余敌人:", 630, 60);
+        g.drawString("剩余敌人:", 630, 100);
 
         int[] counts = gameInstance.countKind();
-        g.drawImage(enemyTank_up, 630, 100, 40, 40, this);
-        g.drawString("x " + counts[0], 690, 130);
-        g.drawImage(fastEnemyTank_up, 630, 180, 40, 40, this);
-        g.drawString("x " + counts[1], 690, 210);
-        g.drawImage(StrongEnemyTank_up, 630, 260, 40, 40, this);
-        g.drawString("x " + counts[2], 690, 290);
+        g.drawImage(enemyTank_up, 630, 130, 40, 40, this);
+        g.drawString("x " + counts[0], 690, 160);
+        g.drawImage(fastEnemyTank_up, 630, 190, 40, 40, this);
+        g.drawString("x " + counts[1], 690, 220);
+        g.drawImage(StrongEnemyTank_up, 630, 250, 40, 40, this);
+        g.drawString("x " + counts[2], 690, 280);
 
         g.drawString("剩余生命:", 630, 360);
         for (int i = 0; i < gameInstance.getMyTank().getHp(); i++) {
@@ -126,4 +183,30 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    class MyDialogDemo extends JDialog{
+
+        public MyDialogDemo(){
+            this.setVisible(true);
+            this.setBounds(800,0,800,500);
+            this.setTitle("游戏介绍");
+
+            Container container = this.getContentPane();
+
+            JLabel label=new JLabel(new ImageIcon(
+                    Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/intro.png"))));
+            label.setSize(800,500);
+            container.add(label);
+
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+
+            this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    tempStop = false;
+                    mainFrame.requestFocus();
+                    System.out.println("go");
+                }
+            });
+        }
+    }
 }

@@ -53,7 +53,9 @@ public class Buff implements GetInfo {
             }
             @Override
             public void getBuff(Tank tank) {
-                tank.setHp(tank.getHp()+1);
+                if (tank.getHp()<4) {
+                    tank.setHp(tank.getHp()+1);
+                }
                 System.out.println("ADD_LIVES");
             }
         };

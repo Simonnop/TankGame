@@ -15,10 +15,12 @@ public class Application {
     // 可全局访问
 
     //默认是您
-    public static String playerName="您";
+    public static String playerName = null;
 
     public static boolean gameRun = false;
     public static boolean restart = false;
+
+    public static boolean tempStop = false;
 
     // 一个程序只有一个面板结构,故设置为 final
     private static final ViewControl VIEW_CONTROL = new ViewControl();
@@ -71,7 +73,7 @@ public class Application {
         for (; ; ) {
             System.out.print("");
             if (restart) {
-                gameRun = true;
+                gameRun = false;
                 restart = false;
                 runApplication(new GameInstance(map_1));
             }

@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static group.Application.tempStop;
+
 
 //每个敌方坦克也是一个线程
 public class EnemyTank extends Tank implements Runnable, GetInfo {
@@ -33,20 +35,24 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
         while (Application.gameRun) {
 
-            randomMove(this);
             try {
                 Thread.sleep(10L);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }
-            //游戏开始5s后再开始发射子弹
-            if (gameInstance.getTime() > 5) {
-                --randomTime;
-                if (randomTime == 0 && this.isLive()) {
-                    bulletOut(this);
-                    randomTime = (int) (Math.random() * 2.0 + 2.0);
+
+            if (!tempStop) {
+                randomMove(this);
+                //游戏开始5s后再开始发射子弹
+                if (gameInstance.getTime() > 5) {
+                    --randomTime;
+                    if (randomTime == 0 && this.isLive()) {
+                        bulletOut(this);
+                        randomTime = (int) (Math.random() * 2.0 + 2.0);
+                    }
                 }
             }
+
             if (!this.isLive()) {
                 break;
             }

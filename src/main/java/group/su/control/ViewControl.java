@@ -11,7 +11,7 @@ public class ViewControl {
 
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
-        this.gamePanel = new GamePanel(gameInstance);
+        this.gamePanel = new GamePanel(gameInstance,mainFrame);
         overMenuPanel.setGameInstance(gameInstance);
 
     }
@@ -38,7 +38,8 @@ public class ViewControl {
             mainFrame.removeKeyListener(mainFrame.getKeyListeners()[0]);
         }
         mainFrame.addKeyListener(new Listener(gamePanel.getGameInstance()));
-        System.out.println("gamePanelShow");
+        System.out.println("gamePanelShow "+mainFrame.getKeyListeners().length);
+        mainFrame.requestFocus();
     }
 
     public void gamePanelOut() {
@@ -51,7 +52,7 @@ public class ViewControl {
     public void overMenuShow() {
         //奇怪的调节方法？？？，但是可以让结束界面完整出现
         mainFrame.setSize(800 + 1, 700);
-        mainFrame.setSize(800, 700);
+        mainFrame.setSize(815, 645);
         mainFrame.getContentPane().add(overMenuPanel);
         mainFrame.repaint();
 

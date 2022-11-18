@@ -8,6 +8,7 @@ import group.su.map.Obstacle;
 import java.util.*;
 
 import static group.Application.gameRun;
+import static group.Application.tempStop;
 import static group.Attributes.*;
 import static group.su.control.Listener.moveByKeys;
 
@@ -87,7 +88,9 @@ public class GameInstance {
         moveByKeys();
 
         // 计时
-        flashCount++;
+        if (!tempStop){
+            flashCount++;
+        }
         if (flashCount == 1000 / REFRESH_TIME) {
             time++;
             System.out.println("test~~  " + time + "s");

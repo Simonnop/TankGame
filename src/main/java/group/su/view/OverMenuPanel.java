@@ -19,7 +19,7 @@ public class OverMenuPanel extends JPanel {
     // 分数没有以 int 储存, 为避免重复算分,其存在了 gameInstance 里的 destroySet (Set<EnemyTank>)
     static int score = 1;
 
-    JButton restartButton = new JButton("重新游戏");
+    JButton restartButton = new JButton("回到菜单");
     JButton endGameButton = new JButton("结束游戏");
 
     public OverMenuPanel(MainFrame mainFrame) {
@@ -63,9 +63,6 @@ public class OverMenuPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            showMessageDialog(mainFrame,
-                    "重新游戏", "提示",
-                    JOptionPane.INFORMATION_MESSAGE);
             restart = true;
         }
     }

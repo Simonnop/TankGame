@@ -18,10 +18,46 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class WelMenuPanel extends JPanel {
 
     private final MainFrame mainFrame;
-    private static JTextField accountEnterField;
+    private static JTextField accountEnterField = new JTextField("用户名");
+    JButton loginButton = new JButton("进入游戏");
+    JButton localButton = new JButton("离线游戏(无需用户名)");
 
     public WelMenuPanel(MainFrame mainFrame){
+
         this.mainFrame = mainFrame;
+
+        accountEnterField = new JTextField("用户名");
+        accountEnterField.addMouseListener(new TextFieldHandler());
+        this.add(accountEnterField);
+
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        loginButton.setBackground(new Color(1, 85, 157));
+        loginButton.addActionListener(new LoginButtonHandler());
+        this.add(loginButton);
+        localButton.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    showMessageDialog(mainFrame,
+                            "开始离线游戏", "提示",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    playerName = "您";
+                    Application.gameRun = true;
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+
+        localButton.setForeground(Color.WHITE);
+        localButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        localButton.setBackground(new Color(1, 85, 157));
+        localButton.addActionListener(new LocalButtonHandler());
+        this.add(localButton);
+
     }
 
     @Override
@@ -39,46 +75,22 @@ public class WelMenuPanel extends JPanel {
         g.setFont(new Font("幼圆", Font.PLAIN, 20));
         g.drawString("请输入您的用户名", 300, 170);
 
-        accountEnterField = new JTextField("用户名");
         accountEnterField.setSize(260, 40);
         accountEnterField.setLocation(250, 220);
-        accountEnterField.addMouseListener(new TextFieldHandler());
-        this.add(accountEnterField);
+        if (playerName != null) {
+            accountEnterField.setText(playerName);
+        }
+        if (Objects.equals(playerName, "您")) {
+            accountEnterField.setText("用户名");
+        }
+        accountEnterField.requestFocus();
 
-        JButton loginButton = new JButton("进入游戏");
         loginButton.setSize(260, 40);
         loginButton.setLocation(250, 300);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setFont(new Font("幼圆", Font.PLAIN, 20));
-        loginButton.setBackground(new Color(1, 85, 157));
-        loginButton.addActionListener(new LoginButtonHandler());
-        this.add(loginButton);
         loginButton.requestFocus();
 
-        JButton localButton = new JButton("离线游戏(无需用户名)");
-        localButton.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {}
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    showMessageDialog(mainFrame,
-                            "开始离线游戏", "提示",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    playerName = "您";
-                    Application.gameRun = true;
-                }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {}
-        });
         localButton.setSize(260, 40);
         localButton.setLocation(250, 370);
-        localButton.setForeground(Color.WHITE);
-        localButton.setFont(new Font("幼圆", Font.PLAIN, 20));
-        localButton.setBackground(new Color(1, 85, 157));
-        localButton.addActionListener(new LocalButtonHandler());
-        this.add(localButton);
         localButton.requestFocus();
     }
 
