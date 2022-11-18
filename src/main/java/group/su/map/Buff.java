@@ -1,6 +1,7 @@
 package group.su.map;
 
 import group.GetInfo;
+import group.li.pojo.Tank;
 import group.su.control.GameInstance;
 
 import java.awt.*;
@@ -21,21 +22,38 @@ public class Buff implements GetInfo {
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, MORE_BULLETS);
             }
+            @Override
+            public void getBuff(Tank tank) {
+                // TODO 子弹添加实现
+                tank.setBulletCount(tank.getBulletCount()+1);
+                System.out.println("MORE_BULLETS");
+            }
         }, SWIFT_BULLETS {
             @Override
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, SWIFT_BULLETS);
+            }
+            @Override
+            public void getBuff(Tank tank) {
+                tank.setBulletSpeed(10);
+                System.out.println("SWIFT_BULLETS");
             }
         }, ADD_LIVES {
             @Override
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageRiver, ADD_LIVES);
             }
+            @Override
+            public void getBuff(Tank tank) {
+                tank.setHp(tank.getHp()+1);
+                System.out.println("ADD_LIVES");
+            }
         };
 
         protected Buff returnBuff(int x, int y) {
             return null;
         }
+        public void getBuff(Tank tank){}
     }
 
     boolean isLive;
@@ -53,7 +71,7 @@ public class Buff implements GetInfo {
         this.image = image;
     }
 
-    private static int[] getRandomPosition() throws InterruptedException {
+    private static int[] getRandomPosition() {
 
         int[] position = new int[2];
 
@@ -67,30 +85,26 @@ public class Buff implements GetInfo {
         return position;
     }
 
-    private static boolean checkRandomPosition(int[] position) throws InterruptedException {
+    private static boolean checkRandomPosition(int[] position) {
 
-        try {
-            for (Obstacle.ObstacleKind kind : gameInstance.getObstacleMap().keySet()
-            ) {
-                for (Obstacle o : gameInstance.getObstacleMap().get(kind)) {
-                    if (o.getX() == position[0] && o.getY() == position[1]) {
-                        return true;
-                    }
+        for (Obstacle.ObstacleKind kind : gameInstance.getObstacleMap().keySet()
+        ) {
+            for (Obstacle o : gameInstance.getObstacleMap().get(kind)) {
+                if (o.getX() == position[0] && o.getY() == position[1]) {
+                    System.out.println("again");
+                    return true;
                 }
             }
-        } catch (Exception e) {
-            Thread.sleep(1000);
-            // 出现错误,延时再次调用, 不知道行不行 ???
-            return checkRandomPosition(position);
         }
 
         return false;
     }
 
-    public static Buff createBuff() throws InterruptedException {
+    public static Buff createBuff() {
 
         BuffKind buffKind1 = BuffKind.values()[new Random().nextInt(3)];
-        return buffKind1.returnBuff(getRandomPosition()[0], getRandomPosition()[1]);
+        int[] position = getRandomPosition();
+        return buffKind1.returnBuff(position[0], position[1]);
     }
 
     @Override
@@ -116,5 +130,13 @@ public class Buff implements GetInfo {
     @Override
     public boolean isLive() {
         return isLive;
+    }
+
+    public static void setGameInstance(GameInstance gameInstance) {
+        Buff.gameInstance = gameInstance;
+    }
+
+    public BuffKind getBuffKind() {
+        return buffKind;
     }
 }

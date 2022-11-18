@@ -2,14 +2,18 @@ package group.li.pojo;
 
 import group.Application;
 import group.Attributes;
+import group.GetInfo;
 import group.li.util.DirectionUtil;
+import group.su.map.Dot;
+import group.su.map.Obstacle;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 
 //每个敌方坦克也是一个线程
-public class EnemyTank extends Tank implements Runnable {
+public class EnemyTank extends Tank implements Runnable, GetInfo {
 
     public static Image enemyTank_up = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_up.png"));
     public static Image enemyTank_down = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_down.png"));
@@ -31,10 +35,6 @@ public class EnemyTank extends Tank implements Runnable {
 
             randomMove(this);
 
-            if (!this.isLive()) {
-                break;
-            }
-
             try {
                 Thread.sleep(10L);
             } catch (InterruptedException var3) {
@@ -48,6 +48,10 @@ public class EnemyTank extends Tank implements Runnable {
                     bulletOut(this);
                     randomTime = (int) (Math.random() * 4.0 + 2.0);
                 }
+            }
+
+            if (!this.isLive()) {
+                break;
             }
         }
 
@@ -135,5 +139,66 @@ public class EnemyTank extends Tank implements Runnable {
             }
 
         }
+    }
+
+
+    // 通过 A* 算法查找路径
+    public ArrayList<Dot> findRoadToTank(Tank targetTank) {
+
+        ArrayList<Dot> banDots = new ArrayList<>();
+        ArrayList<Dot> reachedDots = new ArrayList<>();
+        ArrayList<Dot> routeDots = new ArrayList<>();
+        Dot followDot;
+
+        // 根据地图设置不可到达点
+        for (Obstacle obstacle : Tank.getGameInstance().getObstacleMap().get(Obstacle.ObstacleKind.RIVER)
+        ) {
+            banDots.add(new Dot(obstacle.toSimpleDot(), null));
+        }
+        for (Obstacle obstacle : Tank.getGameInstance().getObstacleMap().get(Obstacle.ObstacleKind.WALL)
+        ) {
+            banDots.add(new Dot(obstacle.toSimpleDot(), null));
+        }
+        for (Obstacle obstacle : Tank.getGameInstance().getObstacleMap().get(Obstacle.ObstacleKind.BRICK)
+        ) {
+            banDots.add(new Dot(obstacle.toSimpleDot(), null));
+        }
+
+        // 由于是A*算法是扩展的,所以要将目标设置为起始点
+        // 起始点设置
+        Dot targetDot = new Dot(this.toSimpleDot(), null);
+        Dot beginDot = new Dot(targetTank.toSimpleDot(), null);
+
+        reachedDots.add(beginDot);
+
+        System.out.println("Find way from "+targetDot+" to "+beginDot);
+
+
+        loop:
+        // 开始扩展
+        while (true) {
+            for (int i = 0; i < reachedDots.size(); i++
+            ) {
+                Dot dot = reachedDots.get(i);
+                for (Dot newDot : dot.expend()
+                ) {
+                    if (!newDot.isInvolveDots(reachedDots) && !newDot.isInvolveDots(banDots)) {
+                        reachedDots.add(newDot);
+                    }
+                    if (newDot.isSamePosition(targetDot)) {
+                        followDot = newDot;
+                        break loop;
+                    }
+                }
+            }
+        }
+
+        // 向上查找路线
+        while (followDot.getParentDot() != null) {
+            routeDots.add(followDot);
+            followDot = followDot.getParentDot();
+        }
+        routeDots.add(beginDot);
+        return routeDots;
     }
 }

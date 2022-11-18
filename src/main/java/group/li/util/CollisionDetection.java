@@ -4,6 +4,7 @@ import group.GetInfo;
 import group.li.pojo.EnemyTank;
 import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
+import group.su.map.Buff;
 import group.su.map.Obstacle;
 
 import java.util.Iterator;
@@ -28,6 +29,16 @@ public class CollisionDetection {
             }
             if (isCollision(tank, enemyTank) != null) {
                 tank.setDirectionLock(isCollision(tank, enemyTank));
+            }
+        }
+    }
+
+    public static void isTouchBuff(Tank tank, Vector<Buff> buffList) {
+        for (int i = 0; i < buffList.size(); i++) {
+            Buff buff = buffList.get(i);
+            if (isCollision(tank, buff) != null && buff.isLive()) {
+                buff.getBuffKind().getBuff(tank);
+                buff.setLive(false);
             }
         }
     }
@@ -65,10 +76,12 @@ public class CollisionDetection {
             tank.setDirectionLock(null);
             isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
             isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
+            isTouchBuff(tank, Tank.getGameInstance().getBuffList());
         } else {
             isTouchMyTank((EnemyTank) tank, Tank.getGameInstance().getMyTank());
             isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
             isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
+            isTouchBuff(tank, Tank.getGameInstance().getBuffList());
         }
     }
 

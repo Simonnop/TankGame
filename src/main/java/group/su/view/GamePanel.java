@@ -56,8 +56,10 @@ public class GamePanel extends JPanel implements Runnable {
         } else {
             size = OBJECT_SIZE;
         }
-        for (T t : list) {
-            g.drawImage(t.getImage(), t.getX(), t.getY(), size, size, this);
+        synchronized (list) {
+            for (T t : list) {
+                g.drawImage(t.getImage(), t.getX(), t.getY(), size, size, this);
+            }
         }
     }
 

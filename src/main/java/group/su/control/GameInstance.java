@@ -8,8 +8,6 @@ import group.su.map.Obstacle;
 import java.util.*;
 
 import static group.Attributes.*;
-import static group.su.map.MapData.initialMap;
-import static group.su.map.MapData.map_1;
 
 public class GameInstance {
 
@@ -21,17 +19,20 @@ public class GameInstance {
     private Vector<Bullet> allBulletList;
     private Vector<Buff> buffList;
     private Set<EnemyTank> destroySet;
+    private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
 
     private int time = 0;
     private int flashCount = 0;
 
-    public GameInstance() {
+    public GameInstance(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
+        Buff.setGameInstance(this);
         this.factory = new Factory(this);
+        this.map = map;
     }
 
-    public void gameInitial() throws InterruptedException {
+    public void gameInitial() {
 
         // 列表初始化
         allBulletList = new Vector<>();
@@ -47,13 +48,13 @@ public class GameInstance {
         // 创建我方坦克
         factory.createGameObject(Factory.GameObject.MyTank, 240, 480);
         // 根据地图中的点阵以工厂方法实例化障碍物,存储在Map中
-        obstacleMap = initialMap(map_1);
+        obstacleMap = initialMap(map);
+        // 创建道具
+        factory.createGameObject(Factory.GameObject.RandomBuff);
+        factory.createGameObject(Factory.GameObject.RandomBuff);
+        factory.createGameObject(Factory.GameObject.RandomBuff);
 
         System.out.println("game init");
-
-        // 这里还有点问题
-        //buffList.add(createBuff());
-        //buffList.add(createBuff());
 
     }
 
@@ -78,6 +79,7 @@ public class GameInstance {
         tryRecycle(obstacleMap.get(Obstacle.ObstacleKind.BRICK));
         tryRecycle(enemyTanksList);
         tryRecycle(allBulletList);
+        tryRecycle(buffList);
 
         // 计时
         flashCount++;
@@ -102,6 +104,28 @@ public class GameInstance {
                 }
             }
         }
+    }
+
+    private Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(
+            Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
+
+        Map<Obstacle.ObstacleKind, Vector<Obstacle>> newMap = new HashMap<>();
+
+        for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
+        ) {
+            newMap.put(obstacleKind, new Vector<>());
+        }
+
+        for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
+        ) {
+            int[][] array = map.get(obstacleKind).toArray(new int[0][]);
+            for (int[] ints : array
+            ) {
+                newMap.get(obstacleKind).add(
+                        obstacleKind.returnObject(ints[0] * OBJECT_SIZE, ints[1] * OBJECT_SIZE));
+            }
+        }
+        return newMap;
     }
 
     public Factory getFactory() {
@@ -139,9 +163,4 @@ public class GameInstance {
     public int getTime() {
         return time;
     }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
 }

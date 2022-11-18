@@ -3,9 +3,11 @@ package group.su.control;
 import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
 import group.li.util.DirectionUtil;
+import group.su.map.Dot;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import static group.Application.gameRun;
 import static group.li.pojo.Tank.bulletOut;
@@ -77,6 +79,11 @@ public class Listener implements KeyListener {
             // 测试其他功能用
             gameRun = false;
             System.out.println("get");
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+            // 测试其他功能用
+            ArrayList<Dot> roadToTank = gameInstance.getEnemyTanksList().get(0).findRoadToTank(myTank);
+            System.out.println(roadToTank);
+
         }
     }
 

@@ -28,6 +28,9 @@ public class Tank implements GetInfo {
     private int speed = 1; //默认速度
     private boolean isLive = true; // 判断是否存活
     private Image image;
+    private int hp = 1;
+    private int bulletCount = 1; // 设置可供发射的子弹数
+    private int bulletSpeed = 5; // 设置子弹速度
 
     private Direction directionLock = null;  // 碰撞后上运动锁
 
@@ -87,6 +90,30 @@ public class Tank implements GetInfo {
         this.image = image;
     }
 
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getBulletCount() {
+        return bulletCount;
+    }
+
+    public void setBulletCount(int bulletCount) {
+        this.bulletCount = bulletCount;
+    }
+
+    public int getBulletSpeed() {
+        return bulletSpeed;
+    }
+
+    public void setBulletSpeed(int bulletSpeed) {
+        this.bulletSpeed = bulletSpeed;
+    }
+
     public Direction getDirectionLock() {
         return directionLock;
     }
@@ -143,28 +170,28 @@ public class Tank implements GetInfo {
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
                         tank.getY() - BULLET_SIZE / 2,
-                        tank.getDirection());
+                        tank);
                 break;
             case RIGHT:  // 右
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank.getDirection());
+                        tank);
                 break;
             case DOWN:  // 下
                 bullet = new Bullet(
                         tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
-                        tank.getDirection());
+                        tank);
                 break;
             case LEFT:  // 左
                 bullet = new Bullet(
                         tank.getX() - BULLET_SIZE / 2,
                         tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank.getDirection());
+                        tank);
                 break;
             default:
-                bullet = new Bullet(tank.getX(), tank.getY(), tank.getDirection());
+                bullet = new Bullet(tank.getX(), tank.getY(), tank);
         }
 
 

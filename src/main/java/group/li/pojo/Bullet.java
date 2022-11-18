@@ -28,10 +28,11 @@ public class Bullet implements Runnable, GetInfo {
 
     private Image image;
 
-    public Bullet(int x, int y, Tank.Direction direction) {
+    public Bullet(int x, int y, Tank tank) {
         this.x = x;
         this.y = y;
-        this.direction = direction;
+        this.direction = tank.getDirection();
+        this.speed = tank.getBulletSpeed();
     }
 
     public int getX() {
@@ -141,25 +142,15 @@ public class Bullet implements Runnable, GetInfo {
 
                 bullet.setLive(false);
 
-                if (elem instanceof MyTank) {
-                    ((MyTank) elem).setHp(((MyTank) elem).getHp() - 1);
-                    System.out.println("hit!!  " + ((MyTank) elem).getHp() + " hp left!");
+                if (elem instanceof Tank) {
+                    ((Tank) elem).setHp(((Tank) elem).getHp() - 1);
+                    System.out.println("hit!!  " + ((Tank) elem).getHp() + " hp left!");
                 }
-
-                //如果是strongEnemyTank ，扣血
-                if (elem instanceof StrongEnemyTank) {
-                    int hp = ((StrongEnemyTank) elem).getHp() - 1;
-                    ((StrongEnemyTank) elem).setHp(hp);
-                    System.out.println("hit!!  " + ((StrongEnemyTank) elem).getHp() + " hp left!");
-                } else if (elem instanceof EnemyTank) {
-                    elem.setLive(false);
-                }
-
             }
 
             //加这个判断是为了加快动画消失的速度
-            if (elem instanceof StrongEnemyTank) {
-                if (((StrongEnemyTank) elem).getHp() <= 0) {
+            if (elem instanceof Tank) {
+                if (((Tank) elem).getHp() <= 0) {
                     elem.setLive(false);
                 }
             }

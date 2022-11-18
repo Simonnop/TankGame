@@ -1,11 +1,16 @@
 package group.su.view;
 
+import group.Application;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import static group.Application.*;
+import static group.Application.restart;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 

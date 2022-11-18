@@ -2,13 +2,12 @@ package group.su.view;
 
 import group.Application;
 import group.Mybatis.pojo.User;
+import group.li.pojo.Tank;
+import group.li.util.DirectionUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Objects;
 
 import static group.Application.playerName;
@@ -57,6 +56,22 @@ public class WelMenuPanel extends JPanel {
         loginButton.requestFocus();
 
         JButton localButton = new JButton("离线游戏(无需用户名)");
+        localButton.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    showMessageDialog(mainFrame,
+                            "开始离线游戏", "提示",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    playerName = "您";
+                    Application.gameRun = true;
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
         localButton.setSize(260, 40);
         localButton.setLocation(250, 370);
         localButton.setForeground(Color.WHITE);

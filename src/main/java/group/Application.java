@@ -3,6 +3,8 @@ package group;
 import group.su.control.ViewControl;
 import group.su.control.GameInstance;
 
+import static group.su.map.MapData.map_1;
+
 public class Application {
 
     /*
@@ -21,7 +23,7 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        runApplication(new GameInstance());
+        runApplication(new GameInstance(map_1));
     }
 
     private static void runApplication(GameInstance gameInstance) throws InterruptedException {
@@ -68,7 +70,7 @@ public class Application {
             if (restart) {
                 gameRun = true;
                 restart = false;
-                runApplication(new GameInstance());
+                runApplication(new GameInstance(map_1));
             }
         }
     }

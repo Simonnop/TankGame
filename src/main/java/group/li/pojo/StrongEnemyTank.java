@@ -11,18 +11,9 @@ public class StrongEnemyTank extends EnemyTank {
     public static Image StrongEnemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/StrongEnemyTank_left.png"));
     public static Image StrongEnemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/StrongEnemyTank_right.png"));
 
-    private int hp=3;
-
     public StrongEnemyTank(int x, int y) {
         super(x, y);
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
+        this.setHp(3);
     }
 
     @Override
@@ -49,10 +40,6 @@ public class StrongEnemyTank extends EnemyTank {
                     bulletOut(this);
                     randomTime = (int) (Math.random() * 4.0 + 2.0);
                 }
-            }
-
-            if (hp<=0){
-              setLive(false);
             }
         }
     }
