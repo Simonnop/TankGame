@@ -33,8 +33,6 @@ public class MyTank extends Tank implements Runnable {
         setSpeed(5);
         setDirection(Direction.UP);
     }
-
-
     public Vector<Bullet> getBullets() {
         return bullets;
     }
@@ -47,7 +45,6 @@ public class MyTank extends Tank implements Runnable {
     @Override
     public void run() {
         while (gameRun) {
-
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

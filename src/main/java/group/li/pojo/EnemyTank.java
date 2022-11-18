@@ -28,28 +28,25 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     }
 
     public void run() {
-        /*坦克在2-6s刷新后发子弹*/
-        int randomTime = (int) (Math.random() * 4.0 + 2.0);
+        /*坦克在2-4s刷新后发子弹*/
+        int randomTime = (int) (Math.random()*2.0  + 2.0);
 
         while (Application.gameRun) {
 
             randomMove(this);
-
             try {
                 Thread.sleep(10L);
             } catch (InterruptedException var3) {
                 throw new RuntimeException(var3);
             }
-
             //游戏开始5s后再开始发射子弹
             if (gameInstance.getTime() > 5) {
                 --randomTime;
                 if (randomTime == 0) {
                     bulletOut(this);
-                    randomTime = (int) (Math.random() * 4.0 + 2.0);
+                    randomTime = (int) (Math.random() *2.0 + 2.0);
                 }
             }
-
             if (!this.isLive()) {
                 break;
             }
@@ -57,10 +54,8 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
     }
 
-    public static void randomMove(EnemyTank tank) {
+    public void randomMove(EnemyTank tank) {
         //根据当前坦克的方向来继续移动
-        //朝某个方向移动40*Constant.REFRESH_TIME ms 之后再改变方向
-
         int direction = 0;
 
         if (gameInstance.getTime() < 10) {
@@ -75,11 +70,10 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                 }
             }
         } else {
-            //然后有60%机率改变方向随机的改变方向{
+            //然后有60%机率随机的改变方向{
             if (new Random().nextInt(100) > 40) {
                 direction = (int) (Math.random() * 4);
             }
-
         }
         //改变方向，根据换image
         tank.setDirection(Tank.Direction.values()[direction]);

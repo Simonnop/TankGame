@@ -13,7 +13,9 @@ public class Application {
 
     // 用户名,开始游戏,重新游戏
     // 可全局访问
-    public static String playerName;
+
+    //默认是您
+    public static String playerName="您";
 
     public static boolean gameRun = false;
     public static boolean restart = false;
@@ -36,6 +38,7 @@ public class Application {
         VIEW_CONTROL.welcomeMenuShow();
         // 创建地图对象等
         gameInstance.gameInitial();
+
 
         // 等待 gameRun 为 true
         for (; ; ) {

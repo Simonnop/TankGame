@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import static group.Application.*;
 import static group.Application.restart;
@@ -15,53 +13,44 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 
 public class OverMenuPanel extends JPanel {
-
     private final MainFrame mainFrame;
 
-    //没找到分数在哪，暂时用一下
-
     // 分数没有以 int 储存, 为避免重复算分,其存在了 attributes 里的 destroySet (Set<EnemyTank>)
-    // 我算分是取它的 size(), 后面应该会更改
     static int score = 1;
 
-    public OverMenuPanel(MainFrame mainFrame) {
+    public OverMenuPanel(MainFrame mainFrame) {this.mainFrame = mainFrame;}
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 800, 700);
 
-        this.mainFrame = mainFrame;
-
-        this.setSize(600, 600);
-        this.setLocation(0, 0);
-        this.setLayout(null);
-        JLabel jl = new JLabel(playerName + "的分数为" + score);
-        jl.setSize(600, 80);
-        jl.setLocation(200, 100);
-        jl.setFont(new Font("幼圆", Font.PLAIN, 40));
-        this.add(jl);
-
-        //装按钮的框
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setSize(600, 520);
-        buttonPanel.setLocation(55, 250);
-        buttonPanel.setLayout(new FlowLayout());
-        this.add(buttonPanel);
+        g.setColor(Color.black);
+        g.setFont(new Font("幼圆", Font.BOLD, 45));
+        g.drawString(playerName + "的分数为" + score, 260, 180);
 
         //重新游戏按钮
         JButton restart = new JButton("重新游戏");
-        restart.setSize(220, 40);
+        restart.setSize(260, 40);
         restart.setForeground(Color.WHITE);
-        restart.setFont(new Font("幼圆", Font.PLAIN, 30));
+        restart.setLocation(250, 300);
+        restart.setFont(new Font("幼圆", Font.PLAIN, 20));
         restart.setBackground(new Color(1, 85, 157));
         restart.addActionListener(new restartButtonHandler());
-        buttonPanel.add(restart);
+        this.add(restart);
+        restart.requestFocus();
+
 
         //结束游戏按钮
         JButton endGame = new JButton("结束游戏");
-        endGame.setSize(220, 40);
+        endGame.setSize(260, 40);
+        endGame.setLocation(250, 370);
         endGame.setForeground(Color.WHITE);
-        endGame.setFont(new Font("幼圆", Font.PLAIN, 30));
+        endGame.setFont(new Font("幼圆", Font.PLAIN, 20));
         endGame.setBackground(new Color(1, 85, 157));
         endGame.addActionListener(new endGameButtonHandler());
-        buttonPanel.add(endGame);
-
+        this.add(endGame);
+        endGame.requestFocus();
     }
 
     class restartButtonHandler implements ActionListener {

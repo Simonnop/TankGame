@@ -25,7 +25,7 @@ public class Tank implements GetInfo {
     private int x;  //横坐标
     private int y;  //纵坐标
     private Direction direction; //坦克的方向 0-上  1-右 2-下 3-左
-    private int speed = 1; //默认速度
+    private double speed = 1.5; //默认速度
     private boolean isLive = true; // 判断是否存活
     private Image image;
     private int hp = 1;
@@ -65,11 +65,11 @@ public class Tank implements GetInfo {
         this.direction = direction;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -209,30 +209,30 @@ public class Tank implements GetInfo {
     }
 
 
-    //重载坦克移动方法，便于我方坦克进行速度调整
-//    public void moveUp(double v) {
-//        if (y > 0) {
-//            y -= speed * v;
-//        }
-//    }
-//
-//    public void moveRight(double v) {
-//        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
-//            x += speed * v;
-//        }
-//    }
-//
-//    public void moveDown(double v) {
-//        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
-//            y += speed * v;
-//        }
-//    }
-//
-//    public void moveLeft(double v) {
-//        if (x > 0) {
-//            x -= speed * v;
-//        }
-//    }
+ /*   重载坦克移动方法，便于我方坦克进行速度调整
+    public void moveUp(double v) {
+        if (y > 0) {
+            y -= speed * v;
+        }
+    }
+
+    public void moveRight(double v) {
+        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+            x += speed * v;
+        }
+    }
+
+    public void moveDown(double v) {
+        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+            y += speed * v;
+        }
+    }
+
+    public void moveLeft(double v) {
+        if (x > 0) {
+            x -= speed * v;
+        }
+    }*/
 
     public Vector<Bullet> getBullets() {
         return bullets;
