@@ -106,6 +106,23 @@ public class GameInstance {
         }
     }
 
+    public int[] countKind() {
+        int[] counts = new int[3];
+
+        for (EnemyTank e:enemyTanksList
+             ) {
+            if (e instanceof FastEnemyTank) {
+                counts[1]++;
+            } else if (e instanceof StrongEnemyTank) {
+                counts[2]++;
+            } else {
+                counts[0]++;
+            }
+        }
+
+        return counts;
+    }
+
     private Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(
             Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
 

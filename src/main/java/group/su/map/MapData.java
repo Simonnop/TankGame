@@ -2,7 +2,6 @@ package group.su.map;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 import static group.Attributes.*;
 
@@ -28,6 +27,8 @@ public class MapData {
             Panel.class.getResource("/img/Tree.png"));
     static Image imageWall = Toolkit.getDefaultToolkit().getImage(
             Panel.class.getResource("/img/Wall.png"));
+    static Image imageFloor = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/floor.png"));
 
     public static Map<Obstacle.ObstacleKind,ArrayList<int[]>> map_1;
 

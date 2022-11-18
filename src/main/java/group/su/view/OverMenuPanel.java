@@ -1,6 +1,6 @@
 package group.su.view;
 
-import group.Application;
+import group.su.control.GameInstance;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +14,14 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class OverMenuPanel extends JPanel {
     private final MainFrame mainFrame;
+    private GameInstance gameInstance;
 
-    // 分数没有以 int 储存, 为避免重复算分,其存在了 attributes 里的 destroySet (Set<EnemyTank>)
+    // 分数没有以 int 储存, 为避免重复算分,其存在了 gameInstance 里的 destroySet (Set<EnemyTank>)
     static int score = 1;
 
-    public OverMenuPanel(MainFrame mainFrame) {this.mainFrame = mainFrame;}
+    public OverMenuPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -27,7 +30,7 @@ public class OverMenuPanel extends JPanel {
 
         g.setColor(Color.black);
         g.setFont(new Font("幼圆", Font.BOLD, 45));
-        g.drawString(playerName + "的分数为" + score, 260, 180);
+        g.drawString(playerName + "的分数为" + gameInstance.getDestroySet().size(), 260, 180);
 
         //重新游戏按钮
         JButton restart = new JButton("重新游戏");
@@ -71,4 +74,11 @@ public class OverMenuPanel extends JPanel {
         }
     }
 
+    public GameInstance getGameInstance() {
+        return gameInstance;
+    }
+
+    public void setGameInstance(GameInstance gameInstance) {
+        this.gameInstance = gameInstance;
+    }
 }

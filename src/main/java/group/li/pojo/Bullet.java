@@ -136,7 +136,7 @@ public class Bullet implements Runnable, GetInfo {
         for (int i = 0; i < list.size(); i++) {
             T elem = list.get(i);
             if (IsHit(bullet, elem)) {
-                if (elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.BRICK)){
+                if (elem instanceof Obstacle && ((Obstacle) elem).getKind().equals(Obstacle.ObstacleKind.BRICK)) {
                     elem.setLive(false);
                 }
 
@@ -172,9 +172,11 @@ public class Bullet implements Runnable, GetInfo {
             // 我们坦克命中敌方坦克加分判断
             if (bullet.getImage().equals(myTankBullet) && t instanceof EnemyTank) {
                 // 直接加分容易出现重复加分,使用set来避免
-                boolean add = gameInstance.getDestroySet().add((EnemyTank) t);
-                if (add) {
-                    System.out.println("score: " + gameInstance.getDestroySet().size());
+                if (((EnemyTank) t).getHp() == 1) {
+                    boolean add = gameInstance.getDestroySet().add((EnemyTank) t);
+                    if (add) {
+                        System.out.println("score: " + gameInstance.getDestroySet().size());
+                    }
                 }
             }
 

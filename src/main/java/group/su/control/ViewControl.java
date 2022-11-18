@@ -1,9 +1,6 @@
 package group.su.control;
 
-import group.su.view.GamePanel;
-import group.su.view.MainFrame;
-import group.su.view.OverMenuPanel;
-import group.su.view.WelMenuPanel;
+import group.su.view.*;
 
 public class ViewControl {
 
@@ -15,6 +12,8 @@ public class ViewControl {
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
         this.gamePanel = new GamePanel(gameInstance);
+        overMenuPanel.setGameInstance(gameInstance);
+
     }
 
     public void welcomeMenuShow() {
@@ -55,6 +54,7 @@ public class ViewControl {
         mainFrame.setSize(800, 700);
         mainFrame.getContentPane().add(overMenuPanel);
         mainFrame.repaint();
+
         System.out.println("overMenuShow");
     }
 }

@@ -83,7 +83,6 @@ public class Listener implements KeyListener {
             // 测试其他功能用
             ArrayList<Dot> roadToTank = gameInstance.getEnemyTanksList().get(0).findRoadToTank(myTank);
             System.out.println(roadToTank);
-
         }
     }
 
