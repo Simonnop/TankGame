@@ -20,6 +20,8 @@ public class WelMenuPanel extends JPanel {
     private final MainFrame mainFrame;
     private static JTextField accountEnterField;
 
+    static  boolean isNew ;
+    static  boolean isLocal ;
     public WelMenuPanel(MainFrame mainFrame){
         this.mainFrame = mainFrame;
     }
@@ -134,8 +136,8 @@ public class WelMenuPanel extends JPanel {
 
             String errorInfo = checkNull();
             playerName = accountEnterField.getText();
-            boolean isNew = true;
-            boolean isLocal = false;
+            isNew = true;
+            isLocal = false;
 
             try {
                 for (User user : getAllUsers()) {
