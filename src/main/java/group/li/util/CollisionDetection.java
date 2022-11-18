@@ -16,7 +16,6 @@ import static group.Attributes.*;
 //碰撞检测的方法
 public class CollisionDetection {
 
-
     public static void isTouchEnemyTanks(Tank tank, Vector<EnemyTank> enemyTanks) {
         if (tank.getDirectionLock() != null) {
             return;
@@ -51,6 +50,7 @@ public class CollisionDetection {
     }
 
     public static void isTouchObstacles(Tank tank, Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap) {
+
         if (tank.getDirectionLock() != null) {
             return;
         }
@@ -59,11 +59,18 @@ public class CollisionDetection {
             Obstacle.ObstacleKind key = iterator.next();
             if (key == Obstacle.ObstacleKind.RIVER ||
                 key == Obstacle.ObstacleKind.WALL ||
-                key == Obstacle.ObstacleKind.BRICK) {
+                key == Obstacle.ObstacleKind.BRICK ||
+                key == Obstacle.ObstacleKind.BASE) {
                 Vector<Obstacle> obstacles = obstacleMap.get(key);
                 for (int i = 0; i < obstacles.size(); i++) {
                     if (isCollision(tank, obstacles.get(i)) != null) {
                         tank.setDirectionLock(isCollision(tank, obstacles.get(i)));
+                        // 若是补给站,则每隔一秒加子弹
+                        if (obstacles.get(i).getKind().equals(Obstacle.ObstacleKind.BASE) && tank instanceof MyTank) {
+                            if (((MyTank) tank).getBulletNum() < 6) {
+                                ((MyTank) tank).setBulletNum(6);
+                            }
+                        }
                     }
                 }
             }
@@ -87,12 +94,16 @@ public class CollisionDetection {
 
     public static <K extends Tank, T extends GetInfo> Tank.Direction isCollision(K t1, T t2) {
 
-        // 根据当前坦克的方向判断障碍物,下一步将要碰撞,则把移动锁设置为该方向
 
         //当前坦克的左上角坐标【bullet.getX(),bullet.getY()】
 
         //还是要分情况进行判断，坦克方向不同，检测的位置不一样
+
+        // 根据当前坦克的方向判断障碍物,下一步将要碰撞,则把移动锁设置为该方向
         int step = 1;
+
+        // 帮助坦克寻找空缺方向,实现平滑移动
+        int getWayCount = 0;
 
         switch (t1.getDirection()) {
             case UP:
@@ -101,20 +112,29 @@ public class CollisionDetection {
                     t1.getX() < t2.getX() + OBJECT_SIZE &&
                     t1.getY() > t2.getY() - step &&
                     t1.getY() < t2.getY() + OBJECT_SIZE + step) {
-                    return Tank.Direction.UP;
+                    getWayCount += 2;
                 }
                 //当前坦克的左上角右上角中间坐标
                 if (t1.getX() + OBJECT_SIZE / 2 > t2.getX() &&
                     t1.getX() + OBJECT_SIZE / 2 < t2.getX() + OBJECT_SIZE &&
                     t1.getY() > t2.getY() - step &&
                     t1.getY() < t2.getY() + OBJECT_SIZE + step) {
-                    return Tank.Direction.UP;
+                    getWayCount += 3;
                 }
                 //当前坦克的右上角坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() &&
                     t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE &&
                     t1.getY() > t2.getY() - step &&
                     t1.getY() < t2.getY() + OBJECT_SIZE + step) {
+                    getWayCount += 1;
+                }
+                if (getWayCount == 2 && !(t2 instanceof EnemyTank)) {
+                    t1.setX((t1.getX() + 1));
+                }
+                if (getWayCount == 1 && !(t2 instanceof EnemyTank)) {
+                    t1.setX((t1.getX() - 1));
+                }
+                if (getWayCount > 0) {
                     return Tank.Direction.UP;
                 }
                 break;
@@ -124,20 +144,29 @@ public class CollisionDetection {
                     t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() > t2.getY() &&
                     t1.getY() < t2.getY() + OBJECT_SIZE) {
-                    return Tank.Direction.RIGHT;
+                    getWayCount += 2;
                 }
                 //当前坦克的右上角右下角中间坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() - step &&
                     t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() + OBJECT_SIZE / 2 > t2.getY() &&
                     t1.getY() + OBJECT_SIZE / 2 < t2.getY() + OBJECT_SIZE) {
-                    return Tank.Direction.RIGHT;
+                    getWayCount += 3;
                 }
                 //当前坦克的右下角坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() - step &&
                     t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() + OBJECT_SIZE > t2.getY() &&
                     t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE) {
+                    getWayCount += 1;
+                }
+                if (getWayCount == 2 && !(t2 instanceof EnemyTank)) {
+                    t1.setY((t1.getY() + 1));
+                }
+                if (getWayCount == 1 && !(t2 instanceof EnemyTank)) {
+                    t1.setY((t1.getY() - 1));
+                }
+                if (getWayCount > 0) {
                     return Tank.Direction.RIGHT;
                 }
                 break;
@@ -147,20 +176,29 @@ public class CollisionDetection {
                     t1.getX() < t2.getX() + OBJECT_SIZE &&
                     t1.getY() + OBJECT_SIZE > t2.getY() - step &&
                     t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + step) {
-                    return Tank.Direction.DOWN;
+                    getWayCount += 2;
                 }
                 //当前坦克的右下角左下角中间坐标
                 if (t1.getX() + OBJECT_SIZE / 2 > t2.getX() &&
                     t1.getX() + OBJECT_SIZE / 2 < t2.getX() + OBJECT_SIZE &&
                     t1.getY() + OBJECT_SIZE > t2.getY() - step &&
                     t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + step) {
-                    return Tank.Direction.DOWN;
+                    getWayCount += 3;
                 }
                 //当前坦克的右下角坐标
                 if (t1.getX() + OBJECT_SIZE > t2.getX() &&
                     t1.getX() + OBJECT_SIZE < t2.getX() + OBJECT_SIZE &&
                     t1.getY() + OBJECT_SIZE > t2.getY() - step &&
                     t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE + step) {
+                    getWayCount += 1;
+                }
+                if (getWayCount == 2 && !(t2 instanceof EnemyTank)) {
+                    t1.setX((t1.getX() + 1));
+                }
+                if (getWayCount == 1 && !(t2 instanceof EnemyTank)) {
+                    t1.setX((t1.getX() - 1));
+                }
+                if (getWayCount > 0) {
                     return Tank.Direction.DOWN;
                 }
                 break;
@@ -170,20 +208,29 @@ public class CollisionDetection {
                     t1.getX() < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() > t2.getY() &&
                     t1.getY() < t2.getY() + OBJECT_SIZE) {
-                    return Tank.Direction.LEFT;
+                    getWayCount += 2;
                 }
                 //当前坦克的左上角左下角中间坐标
                 if (t1.getX() > t2.getX() - step &&
                     t1.getX() < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() + OBJECT_SIZE / 2 > t2.getY() &&
                     t1.getY() + OBJECT_SIZE / 2 < t2.getY() + OBJECT_SIZE) {
-                    return Tank.Direction.LEFT;
+                    getWayCount += 3;
                 }
                 //当前坦克的左下角坐标
                 if (t1.getX() > t2.getX() - step &&
                     t1.getX() < t2.getX() + OBJECT_SIZE + step &&
                     t1.getY() + OBJECT_SIZE > t2.getY() &&
                     t1.getY() + OBJECT_SIZE < t2.getY() + OBJECT_SIZE) {
+                    getWayCount += 1;
+                }
+                if (getWayCount == 2 && !(t2 instanceof EnemyTank)) {
+                    t1.setY((t1.getY() + 1));
+                }
+                if (getWayCount == 1 && !(t2 instanceof EnemyTank)) {
+                    t1.setY((t1.getY() - 1));
+                }
+                if (getWayCount > 0) {
                     return Tank.Direction.LEFT;
                 }
                 break;

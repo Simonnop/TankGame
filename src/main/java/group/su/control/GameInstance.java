@@ -7,7 +7,10 @@ import group.su.map.Obstacle;
 
 import java.util.*;
 
+import static group.Application.gameRun;
 import static group.Attributes.*;
+import static group.su.control.Listener.moveByKeys;
+
 
 public class GameInstance {
 
@@ -19,7 +22,7 @@ public class GameInstance {
     private Vector<Bullet> allBulletList;
     private Vector<Buff> buffList;
     private Set<EnemyTank> destroySet;
-    private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
+    private final Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
 
     private int time = 0;
     private int flashCount = 0;
@@ -81,12 +84,20 @@ public class GameInstance {
         tryRecycle(allBulletList);
         tryRecycle(buffList);
 
+        moveByKeys();
+
         // 计时
         flashCount++;
         if (flashCount == 1000 / REFRESH_TIME) {
             time++;
             System.out.println("test~~  " + time + "s");
             flashCount = 0;
+        }
+
+        // 打光了所有敌方坦克,游戏结束
+        if (enemyTanksList.isEmpty()) {
+            gameRun = false;
+            System.out.println("win");
         }
     }
 
@@ -109,8 +120,8 @@ public class GameInstance {
     public int[] countKind() {
         int[] counts = new int[3];
 
-        for (EnemyTank e:enemyTanksList
-             ) {
+        for (EnemyTank e : enemyTanksList
+        ) {
             if (e instanceof FastEnemyTank) {
                 counts[1]++;
             } else if (e instanceof StrongEnemyTank) {

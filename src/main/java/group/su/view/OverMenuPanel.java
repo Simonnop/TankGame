@@ -19,8 +19,27 @@ public class OverMenuPanel extends JPanel {
     // 分数没有以 int 储存, 为避免重复算分,其存在了 gameInstance 里的 destroySet (Set<EnemyTank>)
     static int score = 1;
 
+    JButton restartButton = new JButton("重新游戏");
+    JButton endGameButton = new JButton("结束游戏");
+
     public OverMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+
+        restartButton.setSize(260, 40);
+        restartButton.setForeground(Color.WHITE);
+        restartButton.setLocation(250, 300);
+        restartButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        restartButton.setBackground(new Color(1, 85, 157));
+        restartButton.addActionListener(new restartButtonHandler());
+        this.add(restartButton);
+
+        endGameButton.setSize(260, 40);
+        endGameButton.setLocation(250, 370);
+        endGameButton.setForeground(Color.WHITE);
+        endGameButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        endGameButton.setBackground(new Color(1, 85, 157));
+        endGameButton.addActionListener(new endGameButtonHandler());
+        this.add(endGameButton);
     }
     @Override
     public void paint(Graphics g) {
@@ -32,28 +51,12 @@ public class OverMenuPanel extends JPanel {
         g.setFont(new Font("幼圆", Font.BOLD, 45));
         g.drawString(playerName + "的分数为" + gameInstance.getDestroySet().size(), 260, 180);
 
-        //重新游戏按钮
-        JButton restart = new JButton("重新游戏");
-        restart.setSize(260, 40);
-        restart.setForeground(Color.WHITE);
-        restart.setLocation(250, 300);
-        restart.setFont(new Font("幼圆", Font.PLAIN, 20));
-        restart.setBackground(new Color(1, 85, 157));
-        restart.addActionListener(new restartButtonHandler());
-        this.add(restart);
-        restart.requestFocus();
-
-
-        //结束游戏按钮
-        JButton endGame = new JButton("结束游戏");
-        endGame.setSize(260, 40);
-        endGame.setLocation(250, 370);
-        endGame.setForeground(Color.WHITE);
-        endGame.setFont(new Font("幼圆", Font.PLAIN, 20));
-        endGame.setBackground(new Color(1, 85, 157));
-        endGame.addActionListener(new endGameButtonHandler());
-        this.add(endGame);
-        endGame.requestFocus();
+        endGameButton.setSize(260, 40);
+        endGameButton.setLocation(250, 370);
+        restartButton.setSize(260, 40);
+        restartButton.setLocation(250, 300);
+        restartButton.requestFocus();
+        endGameButton.requestFocus();
     }
 
     class restartButtonHandler implements ActionListener {

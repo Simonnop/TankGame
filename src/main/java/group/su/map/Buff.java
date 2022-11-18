@@ -1,6 +1,7 @@
 package group.su.map;
 
 import group.GetInfo;
+import group.li.pojo.MyTank;
 import group.li.pojo.Tank;
 import group.su.control.GameInstance;
 
@@ -16,22 +17,29 @@ public class Buff implements GetInfo {
 
     public static GameInstance gameInstance;
 
+    static Image imageBuff = Toolkit.getDefaultToolkit().getImage(
+            Panel.class.getResource("/img/Buff.png"));
+
     public enum BuffKind {
-        MORE_BULLETS {
+        ADD_BULLETS {
             @Override
             protected Buff returnBuff(int x, int y) {
-                return new Buff(x, y, imageRiver, MORE_BULLETS);
+                return new Buff(x, y, imageBuff, ADD_BULLETS);
             }
             @Override
             public void getBuff(Tank tank) {
                 // TODO 子弹添加实现
-                tank.setBulletCount(tank.getBulletCount()+1);
-                System.out.println("MORE_BULLETS");
+                if (tank instanceof MyTank) {
+                    if (((MyTank) tank).getBulletNum() < 6) {
+                        ((MyTank) tank).setBulletNum(6);
+                    }
+                }
+                System.out.println("ADD_BULLETS");
             }
         }, SWIFT_BULLETS {
             @Override
             protected Buff returnBuff(int x, int y) {
-                return new Buff(x, y, imageRiver, SWIFT_BULLETS);
+                return new Buff(x, y, imageBuff, SWIFT_BULLETS);
             }
             @Override
             public void getBuff(Tank tank) {
@@ -41,7 +49,7 @@ public class Buff implements GetInfo {
         }, ADD_LIVES {
             @Override
             protected Buff returnBuff(int x, int y) {
-                return new Buff(x, y, imageRiver, ADD_LIVES);
+                return new Buff(x, y, imageBuff, ADD_LIVES);
             }
             @Override
             public void getBuff(Tank tank) {

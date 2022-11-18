@@ -38,6 +38,11 @@ public class Obstacle implements GetInfo {
             public Obstacle returnObject(int x, int y) {
                 return new Obstacle(x, y, imageBrick, BRICK);
             }
+        }, BASE {
+            @Override
+            public Obstacle returnObject(int x, int y) {
+                return new Obstacle(x, y, imageBase, BASE);
+            }
         };
 
         /*, MyTank {

@@ -29,7 +29,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
     public void run() {
         /*坦克在2-4s刷新后发子弹*/
-        int randomTime = (int) (Math.random()*2.0  + 2.0);
+        int randomTime = (int) (Math.random() * 2.0 + 2.0);
 
         while (Application.gameRun) {
 
@@ -42,9 +42,9 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             //游戏开始5s后再开始发射子弹
             if (gameInstance.getTime() > 5) {
                 --randomTime;
-                if (randomTime == 0) {
+                if (randomTime == 0 && this.isLive()) {
                     bulletOut(this);
-                    randomTime = (int) (Math.random() *2.0 + 2.0);
+                    randomTime = (int) (Math.random() * 2.0 + 2.0);
                 }
             }
             if (!this.isLive()) {
@@ -165,7 +165,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
         reachedDots.add(beginDot);
 
-        System.out.println("Find way from "+targetDot+" to "+beginDot);
+        System.out.println("Find way from " + targetDot + " to " + beginDot);
 
 
         loop:

@@ -54,12 +54,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         g.drawString("剩余生命:", 630, 360);
         for (int i = 0; i < gameInstance.getMyTank().getHp(); i++) {
-            g.drawImage(lives, 630 + i * 40, 390, 30, 25, this);
+            g.drawImage(lives, 630 + i * 30, 390, 25, 20, this);
         }
 
-        g.drawString("待发弹药:", 630, 460);
-        for (int i = 0; i < 2; i++) {
-            g.drawImage(bullet, 630 + i * 20, 490, 10, 25, this);
+        g.drawString("剩余弹药:", 630, 460);
+        for (int i = 0; i < gameInstance.getMyTank().getBulletNum(); i++) {
+            g.drawImage(bullet, 630 + i * 15, 490, 10, 25, this);
         }
 
         g.drawString("得分: " + gameInstance.getDestroySet().size(), 630, 560);
@@ -84,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.WALL));
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.TREE));
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
+        drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BASE));
     }
 
     private <T extends GetInfo> void drawObjects(Graphics g, Vector<T> list) {

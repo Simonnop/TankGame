@@ -117,6 +117,7 @@ public class Bullet implements Runnable, GetInfo {
             // 子弹击中检测
             destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
             destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.WALL));
+            destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BASE));
             destoryDetection(this, gameInstance.getEnemyTanksList());
             destoryDetection(this, gameInstance.getMyTank());
 

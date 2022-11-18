@@ -15,6 +15,17 @@ public class MyTank extends Tank implements Runnable {
 
     private int hp;
 
+    //可以子弹数限制
+    private int bulletNum;
+
+    public MyTank(int x, int y) {
+        super(x, y);
+        setImage(myTank_up);
+        setHp(2);
+        setSpeed(3);
+        setBulletNum(6);
+        setDirection(Direction.UP);
+    }
     public int getHp() {
         return hp;
     }
@@ -23,24 +34,13 @@ public class MyTank extends Tank implements Runnable {
         this.hp = hp;
     }
 
-    //可以发射多颗子弹
-    private Vector<Bullet> bullets = new Vector<>();
-
-    public MyTank(int x, int y) {
-        super(x, y);
-        setImage(myTank_up);
-        setHp(1);
-        setSpeed(5);
-        setDirection(Direction.UP);
-    }
-    public Vector<Bullet> getBullets() {
-        return bullets;
+    public int getBulletNum() {
+        return bulletNum;
     }
 
-    public void setBullets(Vector<Bullet> bullets) {
-        this.bullets = bullets;
+    public void setBulletNum(int bulletNum) {
+        this.bulletNum = bulletNum;
     }
-
 
     @Override
     public void run() {
