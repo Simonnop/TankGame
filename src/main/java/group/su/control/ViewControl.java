@@ -9,6 +9,7 @@ public class ViewControl {
     private final WelMenuPanel welMenuPanel = new WelMenuPanel(mainFrame);
     private final OverMenuPanel overMenuPanel = new OverMenuPanel(mainFrame);
 
+    private final RankListPanel rankListPanel =new RankListPanel(mainFrame);
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
         this.gamePanel = new GamePanel(gameInstance,mainFrame);
@@ -53,9 +54,16 @@ public class ViewControl {
         //奇怪的调节方法？？？，但是可以让结束界面完整出现
         mainFrame.setSize(800 + 1, 700);
         mainFrame.setSize(815, 645);
+        mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(overMenuPanel);
-        mainFrame.repaint();
-
         System.out.println("overMenuShow");
+    }
+
+    public void rankListShow(){
+        mainFrame.getContentPane().removeAll();
+        mainFrame.getContentPane().add(rankListPanel);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        System.out.println("rankListShow");
     }
 }

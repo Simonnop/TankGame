@@ -23,7 +23,7 @@ public class Application {
     public static boolean tempStop = false;
 
     // 一个程序只有一个面板结构,故设置为 final
-    private static final ViewControl VIEW_CONTROL = new ViewControl();
+    public static final ViewControl VIEW_CONTROL = new ViewControl();
 
     public static void main(String[] args) throws InterruptedException {
 

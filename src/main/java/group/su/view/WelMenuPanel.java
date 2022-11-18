@@ -22,6 +22,8 @@ public class WelMenuPanel extends JPanel {
     JButton loginButton = new JButton("进入游戏");
     JButton localButton = new JButton("离线游戏(无需用户名)");
 
+    static  boolean isNew ;
+    static  boolean isLocal ;
     public WelMenuPanel(MainFrame mainFrame){
 
         this.mainFrame = mainFrame;
@@ -146,8 +148,8 @@ public class WelMenuPanel extends JPanel {
 
             String errorInfo = checkNull();
             playerName = accountEnterField.getText();
-            boolean isNew = true;
-            boolean isLocal = false;
+            isNew = true;
+            isLocal = false;
 
             try {
                 for (User user : getAllUsers()) {
