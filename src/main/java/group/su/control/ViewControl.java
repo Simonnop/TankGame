@@ -57,9 +57,6 @@ public class ViewControl {
         //奇怪的调节方法？？？，但是可以让结束界面完整出现
         mainFrame.setSize(800 + 1, 700);
         mainFrame.setSize(815, 645);
-
-
-
         mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(overMenuPanel);
         System.out.println("overMenuShow");

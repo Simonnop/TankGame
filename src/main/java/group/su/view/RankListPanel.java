@@ -40,13 +40,15 @@ public class RankListPanel extends JPanel {
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 800, 700);
+        //g.setColor(Color.WHITE);
+       // g.fillRect(0, 0, 800, 700);
 
         backButton.setSize(150, 40);
         backButton.requestFocus();
 
         RankListTable.setRowHeight(50);							//行高
+//        RankListTable.getColumnModel().getColumn(0).setPreferredWidth(200);//；列宽
+//        RankListTable.getColumnModel().getColumn(1).setPreferredWidth(200);
         RankListTable.setFont(new Font("幼圆", Font.BOLD, 25));;//字体、颜色、大小
         RankListTable.setShowHorizontalLines(true);           //显示行的分割线
         RankListTable.setShowVerticalLines(true);	  		   //显示列的分割线
@@ -55,8 +57,6 @@ public class RankListPanel extends JPanel {
         RankListTable.setColumnSelectionAllowed (false);	  //是否允许选中一整列
         RankListTable.setRowSelectionAllowed (false);//是否允许选中一整行
         setTableHeader();//表头渲染
-
-
     }
 
     public JTable getRankListTable(){
@@ -103,6 +103,7 @@ public class RankListPanel extends JPanel {
         };
         RankListTable.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(dtcr1);
         RankListTable.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(dtcr2);
+        RankListTable.getTableHeader().setPreferredSize(new Dimension(100,50));
     }
 }
 

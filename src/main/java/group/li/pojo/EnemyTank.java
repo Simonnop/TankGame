@@ -48,7 +48,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             }
 
             if (!tempStop) {
-                //每10s调用一次算法
+                //每6s调用一次算法
                 --randomTimeFindRoad;
                 if(randomTimeFindRoad ==0&& this.isLive()){
                     roadsDots= findRoadToTank(getGameInstance().getMyTank());
@@ -216,43 +216,46 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         }
 
         routeDots.add(beginDot);
-        System.out.println(routeDots);
+        routeDots.remove(0);
         return routeDots;
     }
 
     public int moveAccordingDots(ArrayList<Dot> Dots,int followDotsIndex){
         Direction direction ;
         for (int i = followDotsIndex; i < Dots.size(); i++) {
-           /* int target_x=Dots.get(i).getSimpleX()*dotsWidth;
-            int target_y=Dots.get(i).getSimpleY()*dotsLength;*/
-
-            int targetX=Dots.get(i).getSimpleX();
-            int targetY=Dots.get(i).getSimpleY();
-            int currentX=getX()/OBJECT_SIZE;
-            int currentY=getY()/OBJECT_SIZE;
-            System.out.println(currentY);
-            System.out.println(targetY);
-            System.out.println(currentX);
-            System.out.println(targetX);
+            int targetX=Dots.get(i).getSimpleX()*OBJECT_SIZE;
+            int targetY=Dots.get(i).getSimpleY()*OBJECT_SIZE;
+            int currentX=getX();
+            int currentY=getY();
 
 
-         /*   if(target_x - getX()==0 && target_y -getY()==0){
+//            int targetX=Dots.get(i).getSimpleX();
+//            int targetY=Dots.get(i).getSimpleY();
+//            int currentX=getX()/OBJECT_SIZE;
+//            int currentY=getY()/OBJECT_SIZE;
+//            System.out.println(currentY);
+//            System.out.println(targetY);
+//            System.out.println(currentX);
+//            System.out.println(targetX);
+
+
+           if(targetX - currentX==0 && targetY -currentY==0){
                 followDotsIndex++;
                 System.out.println(followDotsIndex);
                 return followDotsIndex;
             }
 
-            if(target_x - getX() >0){
+            if(targetX- currentX >0){
                 direction=  RIGHT;
-            }else if (target_x - getX() <0){
+            }else if (targetX - currentX <0){
                 direction=  LEFT;
-            } else if ( target_y -getY() >0) {
+            } else if ( targetY-currentY >0) {
                 direction= DOWN;
             }else {
                 direction= UP;
-            }*/
+            }
 
-            if(targetX ==currentX && targetY==currentY){
+           /* if(targetX ==currentX && targetY==currentY){
                 followDotsIndex++;
                 System.out.println("followDotsIndex"+followDotsIndex);
                 return followDotsIndex;
@@ -267,7 +270,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                 direction= DOWN;
             }else {
                 direction= UP;
-            }
+            }*/
 
             this.setDirection(direction);
             //先改变方向，根据换image
