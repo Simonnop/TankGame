@@ -19,16 +19,15 @@ import static group.Application.playerName;
 public class RankListPanel extends JPanel {
 
     private final MainFrame mainFrame;
-    JButton backButton = new JButton("返回");
-
-    JTable RankListTable=getRankListTable();
+    JButton backButton;
+    JTable RankListTable;
      public  RankListPanel (MainFrame mainFrame){
          this.mainFrame=mainFrame;
-
+         backButton = new JButton("返回");
+         RankListTable=getRankListTable();
          JScrollPane Scroll=new JScrollPane(RankListTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
          Scroll.getViewport().setBackground(new Color(243,247,255));
          this.add(Scroll);
-
 
          backButton.setForeground(Color.WHITE);
          backButton.setFont(new Font("幼圆", Font.PLAIN, 20));
@@ -70,6 +69,7 @@ public class RankListPanel extends JPanel {
             usersInfo[i][0]=allUsers.get(i).getUsername();
             usersInfo[i][1]=Integer.toString(allUsers.get(i).getScore());
         }
+
         JTable jTable=new JTable(usersInfo,title){
             public boolean isCellEditable(int row, int column)
             {

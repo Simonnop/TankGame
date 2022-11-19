@@ -1,5 +1,7 @@
 package group.su.view;
 
+import group.Mybatis.pojo.User;
+import group.Mybatis.util.UserMethod;
 import group.su.control.GameInstance;
 
 import javax.swing.*;
@@ -46,6 +48,8 @@ public class OverMenuPanel extends JPanel {
         rankListButton.setBackground(new Color(1, 85, 157));
         rankListButton.addActionListener(new rankListButtonHandler());
         this.add(rankListButton);
+
+
     }
     @Override
     public void paint(Graphics g) {
@@ -67,6 +71,8 @@ public class OverMenuPanel extends JPanel {
         restartButton.requestFocus();
         endGameButton.requestFocus();
         rankListButton.requestFocus();
+        System.out.println("repaint");
+        updateUser(gameInstance);
     }
 
     class restartButtonHandler implements ActionListener {
@@ -92,8 +98,27 @@ public class OverMenuPanel extends JPanel {
                             "数据库连接错误\n无法查看排行榜", "提示",
                             JOptionPane.INFORMATION_MESSAGE);
                 }else {
-                    VIEW_CONTROL.rankListShow();
+                    VIEW_CONTROL.rankListShow(new RankListPanel( mainFrame));
                 }
+        }
+    }
+
+    public  void updateUser(GameInstance gameInstance){
+        if(!WelMenuPanel.isLocal) {
+            System.out.println("update");
+
+           User u= new User(playerName, gameInstance.getDestroySet().size());
+
+            if( UserMethod.getScore(u.getUsername())< u.getScore()){
+                UserMethod.updateUser(u);
+            }
+           /* try {
+                if( UserMethod.getScore(u.getUsername())< u.getScore()){
+                    UserMethod.updateUser(u);
+                }
+            }catch (NullPointerException e){
+                System.out.println("NullPointerException from OverMenuPanel.updateUser");
+            }*/
         }
     }
 
