@@ -23,7 +23,7 @@ public class WelMenuPanel extends JPanel {
     JButton localButton = new JButton("离线游戏(无需用户名)");
 
     static  boolean isNew ;
-    static  boolean isLocal ;
+    public static  boolean isLocal ;
     public WelMenuPanel(MainFrame mainFrame){
 
         this.mainFrame = mainFrame;

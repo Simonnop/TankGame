@@ -2,6 +2,8 @@ package group;
 
 import group.su.control.ViewControl;
 import group.su.control.GameInstance;
+import group.su.view.OverMenuPanel;
+import group.su.view.WelMenuPanel;
 
 import static group.su.map.MapData.map_1;
 
@@ -14,7 +16,7 @@ public class Application {
     // 用户名,开始游戏,重新游戏
     // 可全局访问
 
-    //默认是您
+
     public static String playerName = null;
 
     public static boolean gameRun = false;
@@ -59,6 +61,7 @@ public class Application {
             // 更新判断等
             gameInstance.gameUpdate();
         }
+
 
         // 等待 gameRun 为 false,即上面循环执行结束
         // 游戏结束与结算
