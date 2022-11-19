@@ -17,8 +17,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class WelMenuPanel extends JPanel {
 
+    public static Image background = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/background.jpg"));
+
     private final MainFrame mainFrame;
-    private static JTextField accountEnterField = new JTextField("用户名");
+    private static TextField accountEnterField = new TextField("用户名");
     JButton loginButton = new JButton("进入游戏");
     JButton localButton = new JButton("离线游戏(无需用户名)");
 
@@ -28,7 +30,7 @@ public class WelMenuPanel extends JPanel {
 
         this.mainFrame = mainFrame;
 
-        accountEnterField = new JTextField("用户名");
+        accountEnterField = new TextField("用户名");
         accountEnterField.addMouseListener(new TextFieldHandler());
         this.add(accountEnterField);
 
@@ -66,19 +68,22 @@ public class WelMenuPanel extends JPanel {
     public void paint(Graphics g) {
 
         super.paint(g);
+
+        g.drawImage(background, 0, 0, 800, 700, this);
+
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 800, 700);
+        g.fillRoundRect(220, 70, 350, 400,20,20);
 
         g.setColor(new Color(87, 152, 203));
         g.setFont(new Font("幼圆", Font.BOLD, 40));
-        g.drawString("坦 克 大 战", 260, 130);
+        g.drawString("坦 克 大 战", 280, 130);
 
         g.setColor(Color.gray);
         g.setFont(new Font("幼圆", Font.PLAIN, 20));
-        g.drawString("请输入您的用户名", 300, 170);
+        g.drawString("请输入您的用户名", 315, 170);
 
         accountEnterField.setSize(260, 40);
-        accountEnterField.setLocation(250, 220);
+        accountEnterField.setLocation(265, 220);
         if (playerName != null) {
             accountEnterField.setText(playerName);
         }
@@ -88,11 +93,11 @@ public class WelMenuPanel extends JPanel {
         accountEnterField.requestFocus();
 
         loginButton.setSize(260, 40);
-        loginButton.setLocation(250, 300);
+        loginButton.setLocation(265, 300);
         loginButton.requestFocus();
 
         localButton.setSize(260, 40);
-        localButton.setLocation(250, 370);
+        localButton.setLocation(265, 370);
         localButton.requestFocus();
     }
 

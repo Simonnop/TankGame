@@ -33,12 +33,17 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         setDirection(Direction.DOWN);
     }
 
+    private int targetX;
+    private int targetY;
+
+    int changeDirectionTime = 0;
+
     public void run() {
         //坦克在2-4s刷新后发子弹
         int randomTime = (int) (Math.random() * 2.0 + 3.0);
         int randomTimeFindRoad = 6;
-        int followDotsIndex=0;
-        ArrayList<Dot> roadsDots=findRoadToTank(getGameInstance().getMyTank());
+        int followDotsIndex = 0;
+        ArrayList<Dot> roadsDots = findRoadToTank(getGameInstance().getMyTank());
         while (Application.gameRun) {
 
             try {
@@ -50,20 +55,22 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             if (!tempStop) {
                 //每6s调用一次算法
                 --randomTimeFindRoad;
-                if(randomTimeFindRoad ==0&& this.isLive()){
-                    roadsDots= findRoadToTank(getGameInstance().getMyTank());
-                    randomTimeFindRoad=6;
-                    followDotsIndex=0;
+                if (randomTimeFindRoad == 0 && this.isLive()) {
+                    roadsDots = findRoadToTank(getGameInstance().getMyTank());
+                    randomTimeFindRoad = 6;
+                    followDotsIndex = 0;
                 }
 
 
                 //randomMove(this);
-                followDotsIndex=moveAccordingDots(roadsDots,followDotsIndex);
+                followDotsIndex = moveAccordingDots(roadsDots, followDotsIndex);
                 //游戏开始4s后再开始发射子弹
                 if (gameInstance.getTime() > 4) {
                     --randomTime;
                     if (randomTime == 0 && this.isLive()) {
-                        bulletOut(this);
+                        if (!friendlyInDirection()) {
+                            bulletOut(this);
+                        }
                         //System.out.println("bullet");
                         randomTime = (int) (Math.random() * 2.0 + 3.0);
                     }
@@ -110,7 +117,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         // 改变方向后重置锁
         tank.setDirectionLock(null);
 
-        for (int i = 0; i <20; i++) {
+        for (int i = 0; i < 20; i++) {
             switch (tank.getDirection()) {
                 case UP: //向上
                     if (tank.getY() > 0) {
@@ -179,6 +186,10 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         ) {
             banDots.add(new Dot(obstacle.toSimpleDot(), null));
         }
+        for (Obstacle obstacle : Tank.getGameInstance().getObstacleMap().get(Obstacle.ObstacleKind.BASE)
+        ) {
+            banDots.add(new Dot(obstacle.toSimpleDot(), null));
+        }
 
         // 由于是A*算法是扩展的,所以要将目标设置为起始点
         // 起始点设置
@@ -220,14 +231,14 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         return routeDots;
     }
 
-    public int moveAccordingDots(ArrayList<Dot> Dots,int followDotsIndex){
-        Direction direction ;
+    public int moveAccordingDots(ArrayList<Dot> Dots, int followDotsIndex) {
+        Direction direction;
         for (int i = followDotsIndex; i < Dots.size(); i++) {
-            int targetX=Dots.get(i).getSimpleX()*OBJECT_SIZE;
-            int targetY=Dots.get(i).getSimpleY()*OBJECT_SIZE;
-            int currentX=getX();
-            int currentY=getY();
 
+            targetX = Dots.get(i).getSimpleX() * OBJECT_SIZE;
+            targetY = Dots.get(i).getSimpleY() * OBJECT_SIZE;
+            int currentX = getX();
+            int currentY = getY();
 
 //            int targetX=Dots.get(i).getSimpleX();
 //            int targetY=Dots.get(i).getSimpleY();
@@ -239,22 +250,32 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 //            System.out.println(targetX);
 
 
-           if(targetX - currentX==0 && targetY -currentY==0){
+            if (targetX - currentX == 0 && targetY - currentY == 0) {
                 followDotsIndex++;
                 System.out.println(followDotsIndex);
+                changeDirectionTime = 0;
                 return followDotsIndex;
             }
 
-            if(targetX- currentX >0){
-                direction=  RIGHT;
-            }else if (targetX - currentX <0){
-                direction=  LEFT;
-            } else if ( targetY-currentY >0) {
-                direction= DOWN;
-            }else {
-                direction= UP;
+            if (targetX - currentX > 0) {
+                direction = RIGHT;
+                changeDirectionTime++;
+            } else if (targetX - currentX < 0) {
+                direction = LEFT;
+                changeDirectionTime++;
+            } else if (targetY - currentY > 0) {
+                direction = DOWN;
+                changeDirectionTime++;
+            } else {
+                direction = UP;
+                changeDirectionTime++;
             }
 
+            // 如果始终到不了目标点,先移动到整点
+            if (changeDirectionTime > 6) {
+                smoothMoveToSimpleDot();
+                changeDirectionTime = 0;
+            }
            /* if(targetX ==currentX && targetY==currentY){
                 followDotsIndex++;
                 System.out.println("followDotsIndex"+followDotsIndex);
@@ -274,63 +295,118 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
             this.setDirection(direction);
             //先改变方向，根据换image
-            if (this instanceof FastEnemyTank) {
-                DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank) this);
-            } else if (this instanceof StrongEnemyTank) {
-                DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank) this);
-            } else {
-                DirectionUtil.ChangeImageAccordingDirection(this);
-            }
+            // setDirection 集成换image
 
-           for (int j = 0; j < 20; j++) {
-            switch (direction) {
-                case UP: //向上
-                    if (this.getY() > 0) {
-                        this.moveUp();
-                    }
-                    try {
-                        Thread.sleep(Attributes.REFRESH_TIME);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case RIGHT: //向右
-                    if (this.getX() + OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
-                        this.moveRight();
-                    }
-                    try {
-                        Thread.sleep(Attributes.REFRESH_TIME);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case DOWN: //向下
-                    if (this.getY() + OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
-                        this.moveDown();
-                    }
-                    try {
-                        Thread.sleep(Attributes.REFRESH_TIME);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case LEFT: //向左
-                    if (this.getX() > 0) {
-                        this.moveLeft();
-                    }
-                    try {
-                        Thread.sleep(Attributes.REFRESH_TIME);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
+            this.setDirectionLock(null);
 
-        }
+            for (int j = 0; j < 20; j++) {
+                // 如果已经到了整点,break
+                if (arriveTargetDot()) {
+                    break;
+                }
+                try {
+                    Thread.sleep(Attributes.REFRESH_TIME);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                switch (direction) {
+                    case UP: //向上
+                        if (this.getY() > 0) {
+                            this.moveUp();
+                        }
+                        break;
+                    case RIGHT: //向右
+                        if (this.getX() + OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+                            this.moveRight();
+                        }
+                        break;
+                    case DOWN: //向下
+                        if (this.getY() + OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+                            this.moveDown();
+                        }
+                        break;
+                    case LEFT: //向左
+                        if (this.getX() > 0) {
+                            this.moveLeft();
+                        }
+                        break;
+                }
+
+            }
 
             return followDotsIndex;
         }
         return followDotsIndex;
+    }
+
+    private boolean friendlyInDirection() {
+        // 给敌坦克看旁边有没有友军,防止误伤
+        // 我方坦克贴脸,直接打
+        Tank myTank = gameInstance.getMyTank();
+        if (Math.pow(myTank.toSimpleDot()[0] - this.toSimpleDot()[0], 2) <= 1 &&
+            Math.pow(myTank.toSimpleDot()[1] - this.toSimpleDot()[1], 2) <= 1) {
+            return false;
+        }
+        for (GetInfo e : gameInstance.getEnemyTanksList()
+        ) {
+            if (!this.equals(e)) {
+                if (this.getDirection().equals(UP) && e.getY() < this.getY() &&
+                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0],2) <= 4) {
+                    return true;
+                }
+                if (this.getDirection().equals(DOWN) && e.getY() > this.getY() &&
+                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0],2) <= 4) {
+                    return true;
+                }
+                if (this.getDirection().equals(RIGHT) && e.getX() > this.getX() &&
+                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1],2) <= 4) {
+                    return true;
+                }
+                if (this.getDirection().equals(LEFT) && e.getX() < this.getX() &&
+                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1],2) <= 4) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean arriveTargetDot() {
+        if (getX() == targetX && getY() == targetY) {
+            return true;
+        }
+        return false;
+    }
+
+    private void smoothMoveToSimpleDot(){
+        while (true) {
+            setDirectionLock(null);
+            if (!(getX() == toSimpleDot()[0] * OBJECT_SIZE)) {
+                setDirection(LEFT);
+                moveLeft();
+            }
+            else if (!(getY() == toSimpleDot()[1] * OBJECT_SIZE)) {
+                setDirection(UP);
+                moveUp();
+            }else break;
+            try {
+                Thread.sleep(Attributes.REFRESH_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        super.setDirection(direction);
+        if (this instanceof FastEnemyTank) {
+            DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank) this);
+        } else if (this instanceof StrongEnemyTank) {
+            DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank) this);
+        } else {
+            DirectionUtil.ChangeImageAccordingDirection(this);
+        }
     }
 }
 

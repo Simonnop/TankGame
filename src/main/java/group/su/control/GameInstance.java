@@ -32,7 +32,7 @@ public class GameInstance {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
         Buff.setGameInstance(this);
-        this.factory = new Factory(this);
+        this.factory = Factory.getFactoryInstance(this);
         this.map = map;
     }
 
@@ -85,6 +85,7 @@ public class GameInstance {
         tryRecycle(allBulletList);
         tryRecycle(buffList);
 
+        // 根据键盘输入移动
         moveByKeys();
 
         // 计时
@@ -121,6 +122,8 @@ public class GameInstance {
     }
 
     public int[] countKind() {
+        // 统计敌方每种 tank 的数量
+
         int[] counts = new int[3];
 
         for (EnemyTank e : enemyTanksList

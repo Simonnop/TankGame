@@ -5,6 +5,7 @@ import group.Mybatis.util.UserMethod;
 import group.su.view.*;
 
 import static group.Application.playerName;
+import static group.su.control.Listener.getListener;
 
 public class ViewControl {
     private GamePanel gamePanel;
@@ -37,11 +38,8 @@ public class ViewControl {
         mainFrame.repaint();
         // 游戏面板开始刷新
         new Thread(gamePanel).start();
-        // 加入监听器,并保证只有一个监听器
-        if (mainFrame.getKeyListeners().length != 0) {
-            mainFrame.removeKeyListener(mainFrame.getKeyListeners()[0]);
-        }
-        mainFrame.addKeyListener(new Listener(gamePanel.getGameInstance()));
+        // 加入监听器,并以单例模式(饿汉)保证只有一个监听器
+        mainFrame.addKeyListener(getListener(gamePanel.getGameInstance()));
         System.out.println("gamePanelShow "+mainFrame.getKeyListeners().length);
         mainFrame.requestFocus();
     }

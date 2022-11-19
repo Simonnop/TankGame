@@ -32,8 +32,10 @@ public class MapData {
 
     public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> map_1;
 
+    public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> map_2;
+
     static {
-        // RIVER, WALL, TREE, BRICK
+        // RIVER, WALL, TREE, BRICK, BASE
         // 从初始化时使用 二维数组 是因为好写, 可以直接用 python 输出复制过来
 
         map_1 = new HashMap<>();
@@ -56,11 +58,11 @@ public class MapData {
                         {9, 7}, {9, 9}, {9, 11}, {9, 12}, {11, 6}, {11, 7}, {11, 8},
                         {11, 9}, {11, 11}, {11, 12}}
         )));
-        map_1.put(Obstacle.ObstacleKind.BASE, new ArrayList<>(Arrays.asList( // Brick
+        map_1.put(Obstacle.ObstacleKind.BASE, new ArrayList<>(Arrays.asList( // Base
                 new int[][]{{6, 4}, {6, 10}}
         )));
     }
 
-    public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> map_2;
+
 
 }

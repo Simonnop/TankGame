@@ -28,7 +28,6 @@ public class Buff implements GetInfo {
             }
             @Override
             public void getBuff(Tank tank) {
-                // TODO 子弹添加实现
                 if (tank instanceof MyTank) {
                     if (((MyTank) tank).getBulletNum() < 6) {
                         ((MyTank) tank).setBulletNum(6);
@@ -43,7 +42,7 @@ public class Buff implements GetInfo {
             }
             @Override
             public void getBuff(Tank tank) {
-                tank.setBulletSpeed(10);
+                tank.setBulletSpeed(12);
                 System.out.println("SWIFT_BULLETS");
             }
         }, ADD_LIVES {

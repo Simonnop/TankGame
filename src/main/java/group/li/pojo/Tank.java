@@ -2,6 +2,7 @@ package group.li.pojo;
 
 import group.Attributes;
 import group.GetInfo;
+import group.li.util.DirectionUtil;
 import group.su.control.GameInstance;
 
 import java.awt.*;
@@ -25,12 +26,12 @@ public class Tank implements GetInfo {
     private int x;  //横坐标
     private int y;  //纵坐标
     private Direction direction; //坦克的方向 0-上  1-右 2-下 3-左
-    private double speed = 1.0; //默认速度
+    private double speed = 2.0; //默认速度
     private boolean isLive = true; // 判断是否存活
     private Image image;
     private int hp = 1;
     private int bulletCount = 1; // 设置可供发射的子弹数
-    private int bulletSpeed = 5; // 设置子弹速度
+    private int bulletSpeed = 6; // 设置子弹速度
 
     private Direction directionLock = null;  // 碰撞后上运动锁
 
@@ -128,6 +129,9 @@ public class Tank implements GetInfo {
     public void moveUp() {
         for (int i = 0; i < speed; i++) {
             isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
             if (y > 0 && getDirectionLock() != Direction.UP) {
                 y -= 1;
             }
@@ -137,6 +141,9 @@ public class Tank implements GetInfo {
     public void moveRight() {
         for (int i = 0; i < speed; i++) {
             isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
             if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getDirectionLock() != Direction.RIGHT) {
                 x += 1;
             }
@@ -146,6 +153,9 @@ public class Tank implements GetInfo {
     public void moveDown() {
         for (int i = 0; i < speed; i++) {
             isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
             if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getDirectionLock() != Direction.DOWN) {
                 y += 1;
             }
@@ -155,6 +165,9 @@ public class Tank implements GetInfo {
     public void moveLeft() {
         for (int i = 0; i < speed; i++) {
             isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
             if (x > 0 && getDirectionLock() != Direction.LEFT) {
                 x -= 1;
             }

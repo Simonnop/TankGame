@@ -14,5 +14,6 @@ public class StrongEnemyTank extends EnemyTank {
     public StrongEnemyTank(int x, int y) {
         super(x, y);
         this.setHp(3);
+        this.setSpeed(1.0);
     }
 }
