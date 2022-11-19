@@ -49,6 +49,7 @@ public class WelMenuPanel extends JPanel {
                             "开始离线游戏", "提示",
                             JOptionPane.INFORMATION_MESSAGE);
                     playerName = "您";
+                    isLocal = true;
                     Application.gameRun = true;
                 }
             }
@@ -198,6 +199,7 @@ public class WelMenuPanel extends JPanel {
                     "开始离线游戏", "提示",
                     JOptionPane.INFORMATION_MESSAGE);
             playerName = "您";
+            isLocal = true;
             Application.gameRun = true;
         }
     }

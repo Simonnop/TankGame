@@ -34,6 +34,8 @@ public class MapData {
 
     public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> map_2;
 
+    public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> map_3;
+
     static {
         // RIVER, WALL, TREE, BRICK, BASE
         // 从初始化时使用 二维数组 是因为好写, 可以直接用 python 输出复制过来

@@ -97,8 +97,6 @@ public class Listener implements KeyListener{
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             myTank.setHp(100);
         }
-
-        System.out.println(keys);
     }
 
     @Override

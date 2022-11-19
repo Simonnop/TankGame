@@ -70,7 +70,11 @@ public class OverMenuPanel extends JPanel {
         endGameButton.requestFocus();
         rankListButton.requestFocus();
         System.out.println("repaint");
-        updateUser(gameInstance);
+        if (!isUpdate) {
+            updateUser(gameInstance);
+            isUpdate = true;
+        }
+
     }
 
     class restartButtonHandler implements ActionListener {
