@@ -1,5 +1,6 @@
 package group.li.pojo;
 
+import com.alibaba.druid.sql.visitor.functions.Right;
 import group.Application;
 import group.Attributes;
 import group.GetInfo;
@@ -12,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static group.Application.tempStop;
+import static group.Attributes.OBJECT_SIZE;
+import static group.li.pojo.Tank.Direction.*;
+import static group.su.map.MapData.dotsLength;
+import static group.su.map.MapData.dotsWidth;
 
 
 //每个敌方坦克也是一个线程
@@ -22,7 +27,6 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     public static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
     public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
-
     public EnemyTank(int x, int y) {
         super(x, y);
         setImage(enemyTank_down);
@@ -30,9 +34,11 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     }
 
     public void run() {
-        /*坦克在2-4s刷新后发子弹*/
-        int randomTime = (int) (Math.random() * 2.0 + 2.0);
-
+        //坦克在2-4s刷新后发子弹
+        int randomTime = (int) (Math.random() * 2.0 + 3.0);
+        int randomTimeFindRoad = 6;
+        int followDotsIndex=0;
+        ArrayList<Dot> roadsDots=findRoadToTank(getGameInstance().getMyTank());
         while (Application.gameRun) {
 
             try {
@@ -42,17 +48,27 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             }
 
             if (!tempStop) {
-                randomMove(this);
-                //游戏开始5s后再开始发射子弹
-                if (gameInstance.getTime() > 5) {
+                //每10s调用一次算法
+                --randomTimeFindRoad;
+                if(randomTimeFindRoad ==0&& this.isLive()){
+                    roadsDots= findRoadToTank(getGameInstance().getMyTank());
+                    randomTimeFindRoad=6;
+                    followDotsIndex=0;
+                }
+
+
+                //randomMove(this);
+                followDotsIndex=moveAccordingDots(roadsDots,followDotsIndex);
+                //游戏开始4s后再开始发射子弹
+                if (gameInstance.getTime() > 4) {
                     --randomTime;
                     if (randomTime == 0 && this.isLive()) {
                         bulletOut(this);
-                        randomTime = (int) (Math.random() * 2.0 + 2.0);
+                        //System.out.println("bullet");
+                        randomTime = (int) (Math.random() * 2.0 + 3.0);
                     }
                 }
             }
-
             if (!this.isLive()) {
                 break;
             }
@@ -94,7 +110,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         // 改变方向后重置锁
         tank.setDirectionLock(null);
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i <20; i++) {
             switch (tank.getDirection()) {
                 case UP: //向上
                     if (tank.getY() > 0) {
@@ -107,7 +123,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                     }
                     break;
                 case RIGHT: //向右
-                    if (tank.getX() + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+                    if (tank.getX() + OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
                         tank.moveRight();
                     }
                     try {
@@ -117,7 +133,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                     }
                     break;
                 case DOWN: //向下
-                    if (tank.getY() + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+                    if (tank.getY() + OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
                         tank.moveDown();
                     }
                     try {
@@ -198,7 +214,120 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             routeDots.add(followDot);
             followDot = followDot.getParentDot();
         }
+
         routeDots.add(beginDot);
+        System.out.println(routeDots);
         return routeDots;
     }
+
+    public int moveAccordingDots(ArrayList<Dot> Dots,int followDotsIndex){
+        Direction direction ;
+        for (int i = followDotsIndex; i < Dots.size(); i++) {
+           /* int target_x=Dots.get(i).getSimpleX()*dotsWidth;
+            int target_y=Dots.get(i).getSimpleY()*dotsLength;*/
+
+            int targetX=Dots.get(i).getSimpleX();
+            int targetY=Dots.get(i).getSimpleY();
+            int currentX=getX()/OBJECT_SIZE;
+            int currentY=getY()/OBJECT_SIZE;
+            System.out.println(currentY);
+            System.out.println(targetY);
+            System.out.println(currentX);
+            System.out.println(targetX);
+
+
+         /*   if(target_x - getX()==0 && target_y -getY()==0){
+                followDotsIndex++;
+                System.out.println(followDotsIndex);
+                return followDotsIndex;
+            }
+
+            if(target_x - getX() >0){
+                direction=  RIGHT;
+            }else if (target_x - getX() <0){
+                direction=  LEFT;
+            } else if ( target_y -getY() >0) {
+                direction= DOWN;
+            }else {
+                direction= UP;
+            }*/
+
+            if(targetX ==currentX && targetY==currentY){
+                followDotsIndex++;
+                System.out.println("followDotsIndex"+followDotsIndex);
+                return followDotsIndex;
+            }
+
+            if(targetX - currentX >0){
+                direction=  RIGHT;
+            }else if (targetX - currentX <0){
+                direction=  LEFT;
+            } else if (targetY -currentY >0) {
+                System.out.println("down");
+                direction= DOWN;
+            }else {
+                direction= UP;
+            }
+
+            this.setDirection(direction);
+            //先改变方向，根据换image
+            if (this instanceof FastEnemyTank) {
+                DirectionUtil.ChangeImageAccordingDirectionFast((FastEnemyTank) this);
+            } else if (this instanceof StrongEnemyTank) {
+                DirectionUtil.ChangeImageAccordingDirectionStrong((StrongEnemyTank) this);
+            } else {
+                DirectionUtil.ChangeImageAccordingDirection(this);
+            }
+
+           for (int j = 0; j < 20; j++) {
+            switch (direction) {
+                case UP: //向上
+                    if (this.getY() > 0) {
+                        this.moveUp();
+                    }
+                    try {
+                        Thread.sleep(Attributes.REFRESH_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case RIGHT: //向右
+                    if (this.getX() + OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
+                        this.moveRight();
+                    }
+                    try {
+                        Thread.sleep(Attributes.REFRESH_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case DOWN: //向下
+                    if (this.getY() + OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
+                        this.moveDown();
+                    }
+                    try {
+                        Thread.sleep(Attributes.REFRESH_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case LEFT: //向左
+                    if (this.getX() > 0) {
+                        this.moveLeft();
+                    }
+                    try {
+                        Thread.sleep(Attributes.REFRESH_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+
+        }
+
+            return followDotsIndex;
+        }
+        return followDotsIndex;
+    }
 }
+

@@ -25,7 +25,7 @@ public class Tank implements GetInfo {
     private int x;  //横坐标
     private int y;  //纵坐标
     private Direction direction; //坦克的方向 0-上  1-右 2-下 3-左
-    private double speed = 1.5; //默认速度
+    private double speed = 1.0; //默认速度
     private boolean isLive = true; // 判断是否存活
     private Image image;
     private int hp = 1;
