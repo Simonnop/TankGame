@@ -16,7 +16,7 @@ public interface UserMapper {
     int getScore(@Param("username") String username);
 
     //获取所有用户
-    @Select("select * from tankgame.user ")
+    @Select("select * from tankgame.user  order by score  desc  ")
     Vector<User> getAllUsers();
 
     //添加新用户
