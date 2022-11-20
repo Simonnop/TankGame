@@ -94,25 +94,14 @@ public class SelectPanel extends JPanel {
         public void actionPerformed(ActionEvent actionEvent) {
 
             if (difficultyIsSelect) {
-                if(WelMenuPanel.isNew){
-                    UserMethod.addUser(new User(playerName,difficulty));
-                }
-
-                //这一部分还没写完， 判断了是老玩家之后，还要判断他选定的难度里面是否有他
-                /*else {
-                    for (User user : getAllUsersAccordingToType(difficulty)) {
-                        if (!user.getUsername().equals(playerName)) {
-                            isTheSameType=false;
-                        }else {
-                            isTheSameType=true;
-                            break;
-                        }
-                    }
-                    if(!isTheSameType){
-                        UserMethod.addUser(new User(playerName,difficulty));
-                    }
-                }*/
+                //再次判断玩家类型，是否add
+                playerJudgement();
+                //根据难度修改坦克属性,未写
+                modifyEnemyTankAccordingTodifficulty();
+                //根据选择地图来加载地图，未写
+                loadMap();
                 allIsSelect = true;
+                diffcultiesSelect.clearSelection();
             }
         }
     }
@@ -137,5 +126,36 @@ public class SelectPanel extends JPanel {
             }
         }
 
+
     }
+
+    //对选择难度后的玩家江西判断
+    public void playerJudgement(){
+        if(WelMenuPanel.isNew){
+            UserMethod.addUser(new User(playerName,difficulty));
+        }
+        // 判断了是老玩家之后，还要判断他选定的难度里面是否有他
+        else {
+            for (User user : getAllUsersAccordingToType(difficulty)) {
+                if (!user.getUsername().equals(playerName)) {
+                    isTheSameType=false;
+                }else {
+                    isTheSameType=true;
+                    break;
+                }
+            }
+            if(!isTheSameType){
+                UserMethod.addUser(new User(playerName,difficulty));
+            }
+        }
+    }
+
+    public void modifyEnemyTankAccordingTodifficulty(){
+
+    }
+    public void loadMap(){
+
+    }
+
+
 }

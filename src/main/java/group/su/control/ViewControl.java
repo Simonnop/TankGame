@@ -72,6 +72,7 @@ public class ViewControl {
         mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(selectPanel);
         mainFrame.revalidate();
-        System.out.println("selectPanel");
+        mainFrame.repaint();
+//        System.out.println("selectPanel");
     }
 }

@@ -12,7 +12,7 @@ public class User {
 
     public User(String username ,String type) {
         this.username = username;
-        this.score = 0;
+        this.type=type;
     }
 
 

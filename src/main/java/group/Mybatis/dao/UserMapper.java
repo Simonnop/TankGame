@@ -24,11 +24,11 @@ public interface UserMapper {
     Vector<User> getAllUsersAccordingToType(@Param("type") String type);
 
     //添加新用户
-    @Insert("insert into tankgame.user  values(#{username},#{score})")
+    @Insert("insert into tankgame.user  values(#{username},#{score},#{type})")
     int addUser(User user);
 
     //更新用户信息
-    @Update("update tankgame.user set username=#{username},score =#{score} where username=#{username}")
+    @Update("update tankgame.user set username=#{username},score =#{score},type=#{type} where username=#{username} and type=#{type}")
     int updateUser(User user);
 
     //
