@@ -6,9 +6,9 @@
 <!--    引入外部配置文件,下面的property就不用填具体值
             当然也可以直接在properties里面写-->
     <properties resource="db.properties"/>
-    <settings>
-        <setting name="logImpl" value="STDOUT_LOGGING"/>
-    </settings>
+<!--    <settings>-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+<!--    </settings>-->
 
     <environments default="development">
         <environment id="development">

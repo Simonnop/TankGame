@@ -81,6 +81,7 @@ public class OverMenuPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+
             restart = true;
         }
     }

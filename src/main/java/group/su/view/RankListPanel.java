@@ -105,13 +105,15 @@ public class RankListPanel extends JPanel {
         RankListTable.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(dtcr2);
         RankListTable.getTableHeader().setPreferredSize(new Dimension(100,50));
     }
-}
 
-class backButtonHandler implements ActionListener{
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        VIEW_CONTROL.overMenuShow();
+    class backButtonHandler implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            VIEW_CONTROL.overMenuShow();
+        }
     }
+
+
 }
 
 

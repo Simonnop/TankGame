@@ -39,7 +39,6 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     int changeDirectionTime = 0;
 
     public void run() {
-        //坦克在2-4s刷新后发子弹
         int randomTime = (int) (Math.random() * 2.0 + 3.0);
         int randomTimeFindRoad = 6;
         int followDotsIndex = 0;
@@ -61,11 +60,10 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                     followDotsIndex = 0;
                 }
 
-
                 //randomMove(this);
                 followDotsIndex = moveAccordingDots(roadsDots, followDotsIndex);
-                //游戏开始4s后再开始发射子弹
-                if (gameInstance.getTime() > 4) {
+                //游戏开始5s后再开始发射子弹
+                if (gameInstance.getTime() > 5) {
                     --randomTime;
                     if (randomTime == 0 && this.isLive()) {
                         if (!friendlyInDirection()) {

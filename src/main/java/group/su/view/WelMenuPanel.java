@@ -50,7 +50,7 @@ public class WelMenuPanel extends JPanel {
                             JOptionPane.INFORMATION_MESSAGE);
                     playerName = "您";
                     isLocal = true;
-                    Application.gameRun = true;
+                    Application.isInput = true;
                 }
             }
             @Override
@@ -177,17 +177,17 @@ public class WelMenuPanel extends JPanel {
                 showMessageDialog(mainFrame,
                         "数据库连接错误\n为您开始本地游戏", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                Application.gameRun = true;
+                Application.isInput = true;
             } else if (!isNew) {
                 showMessageDialog(mainFrame,
                         "您好老玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                Application.gameRun = true;
+                Application.isInput = true;
             } else if (addUser(new User(playerName)) == 1) {
                 showMessageDialog(mainFrame,
                         "您好新玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);
-                Application.gameRun = true;
+                Application.isInput = true;
             }
         }
     }
@@ -200,7 +200,7 @@ public class WelMenuPanel extends JPanel {
                     JOptionPane.INFORMATION_MESSAGE);
             playerName = "您";
             isLocal = true;
-            Application.gameRun = true;
+            Application.isInput = true;
         }
     }
 
