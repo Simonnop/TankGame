@@ -116,13 +116,6 @@ public class OverMenuPanel extends JPanel {
             if( UserMethod.getScore(u.getUsername(),difficulty)< u.getScore()){
                 UserMethod.updateUser(u);
             }
-           /* try {
-                if( UserMethod.getScore(u.getUsername())< u.getScore()){
-                    UserMethod.updateUser(u);
-                }
-            }catch (NullPointerException e){
-                System.out.println("NullPointerException from OverMenuPanel.updateUser");
-            }*/
         }
     }
 

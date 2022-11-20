@@ -52,8 +52,9 @@ public class Application {
         // 等待输入用户名
         // 选择难度和地图
         for (;;){
-            System.out.println("w");
+            System.out.println(isInput);
             if(isInput){
+                System.out.println("w");
                 VIEW_CONTROL.selectPanel();
                 if( SelectPanel.allIsSelect){
                     gameRun=true;
