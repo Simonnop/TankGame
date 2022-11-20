@@ -94,8 +94,12 @@ public class SelectPanel extends JPanel {
         public void actionPerformed(ActionEvent actionEvent) {
 
             if (difficultyIsSelect) {
+                //再次判断玩家类型，是否add
                 playerJudgement();
-                
+                //根据难度修改坦克属性,未写
+                modifyEnemyTankAccordingTodifficulty();
+                //根据选择地图来加载地图，未写
+                loadMap();
                 allIsSelect = true;
                 diffcultiesSelect.clearSelection();
             }
@@ -144,6 +148,13 @@ public class SelectPanel extends JPanel {
                 UserMethod.addUser(new User(playerName,difficulty));
             }
         }
+    }
+
+    public void modifyEnemyTankAccordingTodifficulty(){
+
+    }
+    public void loadMap(){
+
     }
 
 
