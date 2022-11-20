@@ -1,17 +1,22 @@
 package group.su.control;
 
+import group.Mybatis.pojo.User;
+import group.Mybatis.util.UserMethod;
 import group.su.view.*;
 
-public class ViewControl {
+import static group.Application.playerName;
+import static group.su.control.Listener.getListener;
 
+public class ViewControl {
     private GamePanel gamePanel;
     private final MainFrame mainFrame = new MainFrame();
     private final WelMenuPanel welMenuPanel = new WelMenuPanel(mainFrame);
     private final OverMenuPanel overMenuPanel = new OverMenuPanel(mainFrame);
 
+
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
-        this.gamePanel = new GamePanel(gameInstance);
+        this.gamePanel = new GamePanel(gameInstance,mainFrame);
         overMenuPanel.setGameInstance(gameInstance);
 
     }
@@ -33,12 +38,10 @@ public class ViewControl {
         mainFrame.repaint();
         // 游戏面板开始刷新
         new Thread(gamePanel).start();
-        // 加入监听器,并保证只有一个监听器
-        if (mainFrame.getKeyListeners().length != 0) {
-            mainFrame.removeKeyListener(mainFrame.getKeyListeners()[0]);
-        }
-        mainFrame.addKeyListener(new Listener(gamePanel.getGameInstance()));
-        System.out.println("gamePanelShow");
+        // 加入监听器,并以单例模式(饿汉)保证只有一个监听器
+        mainFrame.addKeyListener(getListener(gamePanel.getGameInstance()));
+        System.out.println("gamePanelShow "+mainFrame.getKeyListeners().length);
+        mainFrame.requestFocus();
     }
 
     public void gamePanelOut() {
@@ -51,10 +54,17 @@ public class ViewControl {
     public void overMenuShow() {
         //奇怪的调节方法？？？，但是可以让结束界面完整出现
         mainFrame.setSize(800 + 1, 700);
-        mainFrame.setSize(800, 700);
+        mainFrame.setSize(815, 645);
+        mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(overMenuPanel);
-        mainFrame.repaint();
-
         System.out.println("overMenuShow");
+    }
+
+    public void rankListShow(RankListPanel rankListPanel){
+        mainFrame.getContentPane().removeAll();
+        mainFrame.getContentPane().add(rankListPanel);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+        System.out.println("rankListShow");
     }
 }

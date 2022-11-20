@@ -67,4 +67,12 @@ public class Dot {
     public Dot getParentDot() {
         return parentDot;
     }
+
+    public int getSimpleX() {
+        return simpleX;
+    }
+
+    public int getSimpleY() {
+        return simpleY;
+    }
 }

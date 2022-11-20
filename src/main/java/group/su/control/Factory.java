@@ -13,10 +13,14 @@ public class Factory {
     *  使用单例模式改进 Factory
     * */
 
-    private final GameInstance gameInstance;
+    private GameInstance gameInstance;
 
-    Factory(GameInstance gameInstance) {
-        this.gameInstance = gameInstance;
+
+    private static Factory factory = new Factory();
+
+    public static Factory getFactoryInstance(GameInstance gameInstance) {
+        factory.gameInstance = gameInstance;
+        return factory;
     }
 
     enum GameObject {

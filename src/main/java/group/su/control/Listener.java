@@ -14,7 +14,13 @@ import static group.li.pojo.Tank.bulletOut;
 
 public class Listener implements KeyListener{
 
-    // TODO 优化为单例模式
+
+    private static Listener listener = new Listener();
+
+    public static Listener getListener(GameInstance gameInstance) {
+        listener.gameInstance = gameInstance;
+        return listener;
+    }
 
     GameInstance gameInstance;
     public int temp_time = 0;
@@ -24,8 +30,7 @@ public class Listener implements KeyListener{
 
     static ArrayList<Character> keys = new ArrayList<>();
 
-    public Listener(GameInstance gameInstance) {
-        this.gameInstance = gameInstance;
+    public Listener() {
     }
 
     @Override
@@ -90,12 +95,8 @@ public class Listener implements KeyListener{
             gameRun = false;
             System.out.println("get");
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            // 测试其他功能用
-            ArrayList<Dot> roadToTank = gameInstance.getEnemyTanksList().get(0).findRoadToTank(myTank);
-            System.out.println(roadToTank);
+            myTank.setHp(100);
         }
-
-        System.out.println(keys);
     }
 
     @Override

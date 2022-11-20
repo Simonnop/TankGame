@@ -2,6 +2,8 @@ package group;
 
 import group.su.control.ViewControl;
 import group.su.control.GameInstance;
+import group.su.view.OverMenuPanel;
+import group.su.view.WelMenuPanel;
 
 import static group.su.map.MapData.map_1;
 
@@ -14,14 +16,18 @@ public class Application {
     // 用户名,开始游戏,重新游戏
     // 可全局访问
 
-    //默认是您
-    public static String playerName="您";
+
+    public static String playerName = null;
 
     public static boolean gameRun = false;
     public static boolean restart = false;
 
+    public static boolean tempStop = false;
+
+    public static boolean isUpdate = false;
+
     // 一个程序只有一个面板结构,故设置为 final
-    private static final ViewControl VIEW_CONTROL = new ViewControl();
+    public static final ViewControl VIEW_CONTROL = new ViewControl();
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -58,6 +64,7 @@ public class Application {
             gameInstance.gameUpdate();
         }
 
+
         // 等待 gameRun 为 false,即上面循环执行结束
         // 游戏结束与结算
         gameInstance.gameOver();
@@ -71,8 +78,9 @@ public class Application {
         for (; ; ) {
             System.out.print("");
             if (restart) {
-                gameRun = true;
+                gameRun = false;
                 restart = false;
+                isUpdate = false;
                 runApplication(new GameInstance(map_1));
             }
         }

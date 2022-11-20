@@ -8,6 +8,7 @@ import group.su.map.Obstacle;
 import java.awt.*;
 import java.util.Vector;
 
+import static group.Application.tempStop;
 import static group.Attributes.*;
 
 //每个子弹都是一个线程 所以实现Runnable接口
@@ -18,7 +19,7 @@ public class Bullet implements Runnable, GetInfo {
     private int x;//子弹x坐标
     private int y;//子弹x坐标
     private Tank.Direction direction = null;//子弹方向
-    private int speed = 5;//子弹默认速度
+    private int speed = 8;//子弹默认速度
     private boolean isLive = true; //子弹是否还存活
 
     public static Image enemyTankBullet = Toolkit.getDefaultToolkit().getImage(
@@ -112,7 +113,9 @@ public class Bullet implements Runnable, GetInfo {
                 throw new RuntimeException(e);
             }
             //每次循环都要判断子弹的方向 根据方向从而不停移动
-            move(direction);
+            if (!tempStop) {
+                move(direction);
+            }
 
             // 子弹击中检测
             destoryDetection(this, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
