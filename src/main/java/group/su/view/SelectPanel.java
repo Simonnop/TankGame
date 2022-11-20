@@ -94,26 +94,10 @@ public class SelectPanel extends JPanel {
         public void actionPerformed(ActionEvent actionEvent) {
 
             if (difficultyIsSelect) {
-                System.out.println("if");
-                if(WelMenuPanel.isNew){
-                    UserMethod.addUser(new User(playerName,difficulty));
-                }
-                //这一部分还没写完， 判断了是老玩家之后，还要判断他选定的难度里面是否有他
-                else {
-                    System.out.println("else");
-                    for (User user : getAllUsersAccordingToType(difficulty)) {
-                        if (!user.getUsername().equals(playerName)) {
-                            isTheSameType=false;
-                        }else {
-                            isTheSameType=true;
-                            break;
-                        }
-                    }
-                    if(!isTheSameType){
-                        UserMethod.addUser(new User(playerName,difficulty));
-                    }
-                }
+                playerJudgement();
+                
                 allIsSelect = true;
+                diffcultiesSelect.clearSelection();
             }
         }
     }
@@ -138,5 +122,29 @@ public class SelectPanel extends JPanel {
             }
         }
 
+
     }
+
+    //对选择难度后的玩家江西判断
+    public void playerJudgement(){
+        if(WelMenuPanel.isNew){
+            UserMethod.addUser(new User(playerName,difficulty));
+        }
+        // 判断了是老玩家之后，还要判断他选定的难度里面是否有他
+        else {
+            for (User user : getAllUsersAccordingToType(difficulty)) {
+                if (!user.getUsername().equals(playerName)) {
+                    isTheSameType=false;
+                }else {
+                    isTheSameType=true;
+                    break;
+                }
+            }
+            if(!isTheSameType){
+                UserMethod.addUser(new User(playerName,difficulty));
+            }
+        }
+    }
+
+
 }
