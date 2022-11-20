@@ -24,7 +24,7 @@ public class OverMenuPanel extends JPanel {
     JButton restartButton = new JButton("回到菜单");
     JButton endGameButton = new JButton("结束游戏");
 
-    JButton rankListButton=new JButton("查看排行榜");
+    JButton rankListButton = new JButton("查看排行榜");
 
     public OverMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -50,6 +50,7 @@ public class OverMenuPanel extends JPanel {
         this.add(rankListButton);
 
     }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -94,26 +95,26 @@ public class OverMenuPanel extends JPanel {
         }
     }
 
-    class rankListButtonHandler implements ActionListener{
+    class rankListButtonHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-                if(WelMenuPanel.isLocal){
-                    showMessageDialog(mainFrame,
-                            "离线游戏\n无法查看排行榜", "提示",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }else {
-                    VIEW_CONTROL.rankListShow(new RankListPanel( mainFrame));
-                }
+            if (WelMenuPanel.isLocal) {
+                showMessageDialog(mainFrame,
+                        "离线游戏\n无法查看排行榜", "提示",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                VIEW_CONTROL.rankListShow(new RankListPanel(mainFrame));
+            }
         }
     }
 
-    public  void updateUser(GameInstance gameInstance){
-        if(!WelMenuPanel.isLocal ) {
+    public void updateUser(GameInstance gameInstance) {
+        if (!WelMenuPanel.isLocal) {
             System.out.println("update");
 
-           User u= new User(playerName, gameInstance.getDestroySet().size(), difficulty);
+            User u = new User(playerName, gameInstance.getDestroySet().size(), difficulty);
 
-            if( UserMethod.getScore(u.getUsername(),difficulty)< u.getScore()){
+            if (UserMethod.getScore(u.getUsername(), difficulty) < u.getScore()) {
                 UserMethod.updateUser(u);
             }
         }
