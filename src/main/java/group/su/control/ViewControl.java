@@ -13,7 +13,7 @@ public class ViewControl {
     private final WelMenuPanel welMenuPanel = new WelMenuPanel(mainFrame);
     private final OverMenuPanel overMenuPanel = new OverMenuPanel(mainFrame);
 
-
+    private final SelectPanel selectPanel =new SelectPanel(mainFrame);
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
         this.gamePanel = new GamePanel(gameInstance,mainFrame);
@@ -32,7 +32,7 @@ public class ViewControl {
 
     public void gamePanelShow() {
 
-        mainFrame.getContentPane().remove(welMenuPanel);
+        mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(gamePanel);
         mainFrame.revalidate();
         mainFrame.repaint();
@@ -66,5 +66,12 @@ public class ViewControl {
         mainFrame.revalidate();
         mainFrame.repaint();
         System.out.println("rankListShow");
+    }
+
+    public void selectPanel(){
+        mainFrame.getContentPane().removeAll();
+        mainFrame.getContentPane().add(selectPanel);
+        mainFrame.revalidate();
+        System.out.println("selectPanel");
     }
 }

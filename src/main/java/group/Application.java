@@ -2,7 +2,9 @@ package group;
 
 import group.su.control.ViewControl;
 import group.su.control.GameInstance;
+import group.su.view.MainFrame;
 import group.su.view.OverMenuPanel;
+import group.su.view.SelectPanel;
 import group.su.view.WelMenuPanel;
 
 import static group.su.map.MapData.map_1;
@@ -26,6 +28,9 @@ public class Application {
 
     public static boolean isUpdate = false;
 
+    //菜单阶段是否结束
+    public static boolean isInput= false;
+
     // 一个程序只有一个面板结构,故设置为 final
     public static final ViewControl VIEW_CONTROL = new ViewControl();
 
@@ -42,11 +47,26 @@ public class Application {
 
         // 欢迎起始菜单页面
         VIEW_CONTROL.welcomeMenuShow();
+
+
+        // 等待输入用户名
+        // 选择难度和地图
+        for (;;){
+            System.out.println("w");
+            if(isInput){
+                VIEW_CONTROL.selectPanel();
+                if( SelectPanel.allIsSelect){
+                    gameRun=true;
+                    break;
+                }
+            }
+        }
+
         // 创建地图对象等
         gameInstance.gameInitial();
 
 
-        // 等待 gameRun 为 true
+        // 等待 gameRun  为 true
         for (; ; ) {
             System.out.print("");
             if (gameRun) {
@@ -81,6 +101,8 @@ public class Application {
                 gameRun = false;
                 restart = false;
                 isUpdate = false;
+                isInput=false;
+                SelectPanel.allIsSelect=false;
                 runApplication(new GameInstance(map_1));
             }
         }
