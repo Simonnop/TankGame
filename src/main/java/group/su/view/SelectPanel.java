@@ -1,10 +1,17 @@
 package group.su.view;
 
+import group.Mybatis.pojo.User;
+import group.Mybatis.util.UserMethod;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+
+import static group.Application.playerName;
+import static group.Mybatis.util.UserMethod.getAllUsers;
+import static group.Mybatis.util.UserMethod.getAllUsersAccordingToType;
 
 public class SelectPanel extends JPanel {
     private final MainFrame mainFrame;
@@ -13,6 +20,7 @@ public class SelectPanel extends JPanel {
 
     public static boolean allIsSelect = false;
     public boolean difficultyIsSelect = false;
+    public static boolean isTheSameType=true;
     JRadioButton rb1;
     JRadioButton rb2;
     JRadioButton rb3;
@@ -80,9 +88,30 @@ public class SelectPanel extends JPanel {
 //    }
 
     class mapSelectHandler implements ActionListener {
+
+
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+
             if (difficultyIsSelect) {
+                if(WelMenuPanel.isNew){
+                    UserMethod.addUser(new User(playerName,difficulty));
+                }
+
+                //这一部分还没写完， 判断了是老玩家之后，还要判断他选定的难度里面是否有他
+                /*else {
+                    for (User user : getAllUsersAccordingToType(difficulty)) {
+                        if (!user.getUsername().equals(playerName)) {
+                            isTheSameType=false;
+                        }else {
+                            isTheSameType=true;
+                            break;
+                        }
+                    }
+                    if(!isTheSameType){
+                        UserMethod.addUser(new User(playerName,difficulty));
+                    }
+                }*/
                 allIsSelect = true;
             }
         }
@@ -95,7 +124,12 @@ public class SelectPanel extends JPanel {
             while (radioBtns.hasMoreElements()) {
                 AbstractButton btn = radioBtns.nextElement();
                 if (btn.isSelected()) {
-                    difficulty = btn.getText();
+                    switch (btn.getText()){
+                        case "简单模式": difficulty = "简单"; break;
+                        case "普通模式": difficulty = "普通";break;
+                        case "困难模式": difficulty = "困难";break;
+                        case "地狱模式": difficulty = "地狱";break;
+                    }
                     difficultyIsSelect = true;
                     break;
                 }

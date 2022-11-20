@@ -1,6 +1,5 @@
 package group.Mybatis.pojo;
 
-
 import lombok.Data;
 
 @Data
@@ -8,32 +7,19 @@ public class User {
 
     private String username;
     private int score;
+    private String type;
 
 
-    public User(String username ) {
+    public User(String username ,String type) {
         this.username = username;
         this.score = 0;
     }
-    public User(String username,int score) {
+
+
+    public User(String username, int score, String type) {
         this.username = username;
         this.score = score;
-    }
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+        this.type = type;
     }
 
     @Override
@@ -43,4 +29,6 @@ public class User {
                 ", score=" + score +
                 '}';
     }
+
+
 }

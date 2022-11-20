@@ -103,6 +103,8 @@ public class Application {
                 isUpdate = false;
                 isInput=false;
                 SelectPanel.allIsSelect=false;
+                SelectPanel.difficulty=null;
+                SelectPanel.isTheSameType=true;
                 runApplication(new GameInstance(map_1));
             }
         }

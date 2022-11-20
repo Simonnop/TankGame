@@ -24,30 +24,30 @@ public class test {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        int score = mapper.getScore("ziyu");
+        int score = mapper.getScore("ziyu","简单");
         System.out.println(score);
         sqlSession.close();
     }
 
-    @Test
-    public void test2(){
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-
-        int popo = mapper.addUser(new User("popo"));
-        System.out.println(popo);
-        sqlSession.close();
-    }
-
-    @Test
-    public void test3(){
-        SqlSession sqlSession = MybatisUtils.getSqlSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-
-        int laozi = mapper.updateUser(new User("ziyu",12));
-        System.out.println(laozi);
-        sqlSession.close();
-    }
+//    @Test
+//    public void test2(){
+//        SqlSession sqlSession = MybatisUtils.getSqlSession();
+//        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+//
+//        int popo = mapper.addUser(new User("popo"));
+//        System.out.println(popo);
+//        sqlSession.close();
+//    }
+//
+//    @Test
+//    public void test3(){
+//        SqlSession sqlSession = MybatisUtils.getSqlSession();
+//        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+//
+//        int laozi = mapper.updateUser(new User("ziyu",12));
+//        System.out.println(laozi);
+//        sqlSession.close();
+//    }
 
 
 }
