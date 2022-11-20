@@ -99,7 +99,7 @@ public class OverMenuPanel extends JPanel {
         public void actionPerformed(ActionEvent actionEvent) {
                 if(WelMenuPanel.isLocal){
                     showMessageDialog(mainFrame,
-                            "数据库连接错误\n无法查看排行榜", "提示",
+                            "离线游戏\n无法查看排行榜", "提示",
                             JOptionPane.INFORMATION_MESSAGE);
                 }else {
                     VIEW_CONTROL.rankListShow(new RankListPanel( mainFrame));

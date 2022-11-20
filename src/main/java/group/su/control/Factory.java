@@ -6,6 +6,8 @@ import group.li.pojo.MyTank;
 import group.li.pojo.StrongEnemyTank;
 import group.su.map.Buff;
 
+import java.util.Random;
+
 public class Factory {
 
     /*
@@ -24,22 +26,32 @@ public class Factory {
     }
 
     enum GameObject {
-        EnemyTank, MyTank, StrongEnemyTank, FastEnemyTank, RandomBuff
+        EnemyTank, MyTank, RandomBuff
     }
 
     public void createGameObject(GameObject gameObject, int... position) {
 
         if (gameObject.equals(GameObject.EnemyTank)) {
-            gameInstance.getEnemyTanksList().add(new EnemyTank(position[0], position[1]));
+            int i = new Random().nextInt(3); // 0,1,2
+            if (i == 0) {
+                EnemyTank enemyTank = new EnemyTank(position[0], position[1]);
+                gameInstance.getEnemyTanksList().add(enemyTank);
+                new Thread(enemyTank).start();
+            }
+            if (i == 1) {
+                EnemyTank enemyTank = new StrongEnemyTank(position[0], position[1]);
+                gameInstance.getEnemyTanksList().add(enemyTank);
+                new Thread(enemyTank).start();
+            }
+            if (i == 2) {
+                EnemyTank enemyTank = new FastEnemyTank(position[0], position[1]);
+                gameInstance.getEnemyTanksList().add(enemyTank);
+                new Thread(enemyTank).start();
+            }
+
         }
         else if (gameObject.equals(GameObject.MyTank)) {
             gameInstance.setMyTank(new MyTank(position[0], position[1]));
-        }
-        else if (gameObject.equals(GameObject.StrongEnemyTank)) {
-            gameInstance.getEnemyTanksList().add(new StrongEnemyTank(position[0], position[1]));
-        }
-        else if (gameObject.equals(GameObject.FastEnemyTank)) {
-            gameInstance.getEnemyTanksList().add(new FastEnemyTank(position[0], position[1]));
         }
         else if (gameObject.equals(GameObject.RandomBuff)) {
             gameInstance.getBuffList().add(Buff.createBuff());

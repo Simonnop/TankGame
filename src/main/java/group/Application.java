@@ -8,6 +8,7 @@ import group.su.view.SelectPanel;
 import group.su.view.WelMenuPanel;
 
 import static group.su.map.MapData.map_1;
+import static group.su.map.MapData.map_2;
 
 public class Application {
 
@@ -29,14 +30,14 @@ public class Application {
     public static boolean isUpdate = false;
 
     //菜单阶段是否结束
-    public static boolean isInput= false;
+    public static boolean isInput = false;
 
     // 一个程序只有一个面板结构,故设置为 final
     public static final ViewControl VIEW_CONTROL = new ViewControl();
 
     public static void main(String[] args) throws InterruptedException {
 
-        runApplication(new GameInstance(map_1));
+        runApplication(new GameInstance(map_2));
     }
 
     private static void runApplication(GameInstance gameInstance) throws InterruptedException {
@@ -51,26 +52,24 @@ public class Application {
 
         // 等待输入用户名
         // 选择难度和地图
-        for (;;){
+        for (; ; ) {
             System.out.println(isInput);
-            if(isInput){
+            if (isInput) {
                 System.out.println("w");
                 VIEW_CONTROL.selectPanel();
-                if( SelectPanel.allIsSelect){
-                    gameRun=true;
+                if (SelectPanel.allIsSelect) {
+                    gameRun = true;
                     break;
                 }
             }
         }
 
-        // 创建地图对象等
-        gameInstance.gameInitial();
-
-
         // 等待 gameRun  为 true
         for (; ; ) {
             System.out.print("");
             if (gameRun) {
+                // 创建地图对象等
+                gameInstance.gameInitial();
                 // 显示游戏面板并开始刷新,加入监听器
                 VIEW_CONTROL.gamePanelShow();
                 // 游戏开始,坦克动起来
@@ -102,10 +101,10 @@ public class Application {
                 gameRun = false;
                 restart = false;
                 isUpdate = false;
-                isInput=false;
-                SelectPanel.allIsSelect=false;
-                SelectPanel.difficulty=null;
-                SelectPanel.isTheSameType=true;
+                isInput = false;
+                SelectPanel.allIsSelect = false;
+                SelectPanel.difficulty = null;
+                SelectPanel.isTheSameType = true;
                 runApplication(new GameInstance(map_1));
             }
         }

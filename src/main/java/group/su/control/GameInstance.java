@@ -7,7 +7,6 @@ import group.su.map.Obstacle;
 
 import java.util.*;
 
-import static group.Application.gameRun;
 import static group.Application.tempStop;
 import static group.Attributes.*;
 import static group.su.control.Listener.moveByKeys;
@@ -28,6 +27,8 @@ public class GameInstance {
     private int time = 0;
     private int flashCount = 0;
 
+    private boolean EnemyClear = false;
+
     public GameInstance(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
@@ -44,19 +45,8 @@ public class GameInstance {
         buffList = new Vector<>();
         enemyTanksList = new Vector<>();
 
-        // 创建敌坦克
-        factory.createGameObject(Factory.GameObject.EnemyTank, 0, 0);
-        factory.createGameObject(Factory.GameObject.StrongEnemyTank, 80, 0);
-        factory.createGameObject(Factory.GameObject.FastEnemyTank, 240, 0);
-        factory.createGameObject(Factory.GameObject.EnemyTank, 400, 0);
-        // 创建我方坦克
-        factory.createGameObject(Factory.GameObject.MyTank, 240, 480);
         // 根据地图中的点阵以工厂方法实例化障碍物,存储在Map中
         obstacleMap = initialMap(map);
-        // 创建道具
-        factory.createGameObject(Factory.GameObject.RandomBuff);
-        factory.createGameObject(Factory.GameObject.RandomBuff);
-        factory.createGameObject(Factory.GameObject.RandomBuff);
 
         System.out.println("game init");
 
@@ -64,11 +54,9 @@ public class GameInstance {
 
     public void gameStart() {
 
-        // 开启坦克线程,开始移动
-        for (EnemyTank enemyTank : enemyTanksList
-        ) {
-            new Thread(enemyTank).start();
-        }
+        // 创建我方坦克
+        factory.createGameObject(Factory.GameObject.MyTank, 280, 320);
+
         new Thread(myTank).start();
 
         System.out.println("game start");
@@ -88,6 +76,22 @@ public class GameInstance {
         // 根据键盘输入移动
         moveByKeys();
 
+        if (time % 25 == 0 && flashCount == 0 && !tempStop) {
+            // 每 25s 刷敌方坦克
+            factory.createGameObject(Factory.GameObject.EnemyTank, 0, 0);
+            factory.createGameObject(Factory.GameObject.EnemyTank, 560, 0);
+            factory.createGameObject(Factory.GameObject.EnemyTank, 0, 560);
+            factory.createGameObject(Factory.GameObject.EnemyTank, 560, 560);
+            EnemyClear = false;
+        }
+
+        if (time % 15 == 0 && flashCount == 0 && !tempStop) {
+            // 每 15s 刷道具
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+        }
+
         // 计时
         if (!tempStop){
             flashCount++;
@@ -98,10 +102,12 @@ public class GameInstance {
             flashCount = 0;
         }
 
-        // 打光了所有敌方坦克,游戏结束
-        if (enemyTanksList.isEmpty()) {
-            gameRun = false;
-            System.out.println("win");
+        if (enemyTanksList.isEmpty() && !EnemyClear) {
+            // 打光了所有敌方坦克,刷道具
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+            factory.createGameObject(Factory.GameObject.RandomBuff);
+            EnemyClear = true;
         }
     }
 
@@ -126,14 +132,20 @@ public class GameInstance {
 
         int[] counts = new int[3];
 
-        for (EnemyTank e : enemyTanksList
-        ) {
-            if (e instanceof FastEnemyTank) {
-                counts[1]++;
-            } else if (e instanceof StrongEnemyTank) {
-                counts[2]++;
-            } else {
-                counts[0]++;
+        if (enemyTanksList.isEmpty()) {
+            return counts;
+        }
+
+        synchronized (enemyTanksList) {
+            for (EnemyTank e : enemyTanksList
+            ) {
+                if (e instanceof FastEnemyTank) {
+                    counts[1]++;
+                } else if (e instanceof StrongEnemyTank) {
+                    counts[2]++;
+                } else {
+                    counts[0]++;
+                }
             }
         }
 
