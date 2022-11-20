@@ -11,9 +11,9 @@ import java.util.Random;
 public class Factory {
 
     /*
-    * TODO
-    *  使用单例模式改进 Factory
-    * */
+     * TODO
+     *  使用单例模式改进 Factory
+     * */
 
     private GameInstance gameInstance;
 
@@ -32,23 +32,22 @@ public class Factory {
     public void createGameObject(GameObject gameObject, int... position) {
 
         if (gameObject.equals(GameObject.EnemyTank)) {
-            int i = new Random().nextInt(3); // 0,1,2
-            if (i == 0) {
+            int i = new Random().nextInt(6); // 0,1,2,3,4,5
+            if (i == 0 || i == 1 || i == 2) {
                 EnemyTank enemyTank = new EnemyTank(position[0], position[1]);
                 gameInstance.getEnemyTanksList().add(enemyTank);
                 new Thread(enemyTank).start();
             }
-            if (i == 1) {
+            if (i == 3) {
                 EnemyTank enemyTank = new StrongEnemyTank(position[0], position[1]);
                 gameInstance.getEnemyTanksList().add(enemyTank);
                 new Thread(enemyTank).start();
             }
-            if (i == 2) {
+            if (i == 4 || i == 5) {
                 EnemyTank enemyTank = new FastEnemyTank(position[0], position[1]);
                 gameInstance.getEnemyTanksList().add(enemyTank);
                 new Thread(enemyTank).start();
             }
-
         }
         else if (gameObject.equals(GameObject.MyTank)) {
             gameInstance.setMyTank(new MyTank(position[0], position[1]));

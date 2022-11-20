@@ -7,8 +7,7 @@ import group.su.view.OverMenuPanel;
 import group.su.view.SelectPanel;
 import group.su.view.WelMenuPanel;
 
-import static group.su.map.MapData.map_1;
-import static group.su.map.MapData.map_2;
+import static group.su.map.MapData.*;
 
 public class Application {
 
@@ -37,7 +36,7 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        runApplication(new GameInstance(map_2));
+        runApplication(new GameInstance(map_1));
     }
 
     private static void runApplication(GameInstance gameInstance) throws InterruptedException {
