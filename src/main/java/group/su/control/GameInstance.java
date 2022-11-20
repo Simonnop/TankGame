@@ -174,6 +174,19 @@ public class GameInstance {
         return newMap;
     }
 
+    public int calculateScore(){
+        int score = 0;
+
+        synchronized (destroySet) {
+            for (EnemyTank e : destroySet
+            ) {
+                score += e.getAddScore();
+            }
+        }
+
+        return score;
+    }
+
     public Factory getFactory() {
         return factory;
     }

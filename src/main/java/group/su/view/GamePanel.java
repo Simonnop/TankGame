@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
             g.drawImage(bullet, 630 + i * 15, 490, 10, 25, this);
         }
 
-        g.drawString("得分: " + gameInstance.getDestroySet().size(), 630, 560);
+        g.drawString("得分: " + gameInstance.calculateScore(), 630, 560);
 
 
         for (int i = 0; i < dotsLength / 2 + 1; i++) {

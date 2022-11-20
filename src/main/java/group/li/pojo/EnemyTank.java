@@ -27,12 +27,15 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     public static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
     public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
+
+
     public EnemyTank(int x, int y) {
         super(x, y);
         setImage(enemyTank_down);
         setDirection(Direction.DOWN);
     }
 
+    int addScore = 5;
     private int targetX;
     private int targetY;
 
@@ -405,6 +408,14 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         } else {
             DirectionUtil.ChangeImageAccordingDirection(this);
         }
+    }
+
+    public int getAddScore() {
+        return addScore;
+    }
+
+    public void setAddScore(int addScore) {
+        this.addScore = addScore;
     }
 }
 

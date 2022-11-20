@@ -59,7 +59,7 @@ public class OverMenuPanel extends JPanel {
 
         g.setColor(Color.black);
         g.setFont(new Font("幼圆", Font.BOLD, 45));
-        g.drawString(playerName + "的分数为" + gameInstance.getDestroySet().size(), 260, 180);
+        g.drawString(playerName + "的分数为" + gameInstance.calculateScore(), 260, 180);
 
 
         restartButton.setSize(260, 40);
@@ -112,7 +112,7 @@ public class OverMenuPanel extends JPanel {
         if (!WelMenuPanel.isLocal) {
             System.out.println("update");
 
-            User u = new User(playerName, gameInstance.getDestroySet().size(), difficulty);
+            User u = new User(playerName, gameInstance.calculateScore(), difficulty);
 
             if (UserMethod.getScore(u.getUsername(), difficulty) < u.getScore()) {
                 UserMethod.updateUser(u);

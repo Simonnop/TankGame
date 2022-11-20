@@ -177,10 +177,7 @@ public class Bullet implements Runnable, GetInfo {
             if (bullet.getImage().equals(myTankBullet) && t instanceof EnemyTank) {
                 // 直接加分容易出现重复加分,使用set来避免
                 if (((EnemyTank) t).getHp() == 1) {
-                    boolean add = gameInstance.getDestroySet().add((EnemyTank) t);
-                    if (add) {
-                        System.out.println("score: " + gameInstance.getDestroySet().size());
-                    }
+                    gameInstance.getDestroySet().add((EnemyTank) t);
                 }
             }
 

@@ -15,5 +15,7 @@ public class StrongEnemyTank extends EnemyTank {
         super(x, y);
         this.setHp(3);
         this.setSpeed(1.0);
+        setAddScore(15);
+
     }
 }
