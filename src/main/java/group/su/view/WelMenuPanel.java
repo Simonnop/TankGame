@@ -183,7 +183,8 @@ public class WelMenuPanel extends JPanel {
                         "您好老玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);
                 Application.isInput = true;
-            } else if (addUser(new User(playerName)) == 1) {
+            } else {
+                //添加新玩家 移到选择难度和地图
                 showMessageDialog(mainFrame,
                         "您好新玩家, " + playerName, "提示",
                         JOptionPane.INFORMATION_MESSAGE);

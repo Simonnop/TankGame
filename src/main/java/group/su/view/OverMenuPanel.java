@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 
 import static group.Application.*;
 import static group.Application.restart;
+import static group.su.view.SelectPanel.difficulty;
+import static group.su.view.SelectPanel.isTheSameType;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
@@ -46,7 +48,6 @@ public class OverMenuPanel extends JPanel {
         rankListButton.setBackground(new Color(1, 85, 157));
         rankListButton.addActionListener(new rankListButtonHandler());
         this.add(rankListButton);
-
 
     }
     @Override
@@ -107,12 +108,12 @@ public class OverMenuPanel extends JPanel {
     }
 
     public  void updateUser(GameInstance gameInstance){
-        if(!WelMenuPanel.isLocal) {
+        if(!WelMenuPanel.isLocal ) {
             System.out.println("update");
 
-           User u= new User(playerName, gameInstance.getDestroySet().size());
+           User u= new User(playerName, gameInstance.getDestroySet().size(), difficulty);
 
-            if( UserMethod.getScore(u.getUsername())< u.getScore()){
+            if( UserMethod.getScore(u.getUsername(),difficulty)< u.getScore()){
                 UserMethod.updateUser(u);
             }
            /* try {

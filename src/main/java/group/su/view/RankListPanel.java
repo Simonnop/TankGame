@@ -61,13 +61,14 @@ public class RankListPanel extends JPanel {
 
     public JTable getRankListTable(){
 
-        Vector<User> allUsers = UserMethod.getAllUsers();
-        String [] title ={"用户名","分数"};
-        String [][] usersInfo=new String[allUsers.size()][2];
+        Vector<User> allUsers = UserMethod.getAllUsersAccordingToType(SelectPanel.difficulty);
+        String [] title ={"用户名","分数","难度"};
+        String [][] usersInfo=new String[allUsers.size()][3];
 
         for(int i=0;i<allUsers.size();i++){
             usersInfo[i][0]=allUsers.get(i).getUsername();
             usersInfo[i][1]=Integer.toString(allUsers.get(i).getScore());
+            usersInfo[i][2]=allUsers.get(i).getType();
         }
 
         JTable jTable=new JTable(usersInfo,title){
@@ -101,8 +102,17 @@ public class RankListPanel extends JPanel {
                 return tableName2;//返回的是图片效果（可以干脆是组件）
             }
         };
+        JLabel tableName3= new JLabel("难度", JLabel.CENTER);
+        DefaultTableCellRenderer dtcr3 = new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table,Object value, boolean isSelected, boolean hasFocus,int row, int column)
+            {
+                tableName3.setFont(new Font("幼圆", Font.PLAIN, 25));
+                return tableName3;//返回的是图片效果（可以干脆是组件）
+            }
+        };
         RankListTable.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(dtcr1);
         RankListTable.getTableHeader().getColumnModel().getColumn(1).setHeaderRenderer(dtcr2);
+        RankListTable.getTableHeader().getColumnModel().getColumn(2).setHeaderRenderer(dtcr3);
         RankListTable.getTableHeader().setPreferredSize(new Dimension(100,50));
     }
 

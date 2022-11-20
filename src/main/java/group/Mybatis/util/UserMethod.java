@@ -2,6 +2,7 @@ package group.Mybatis.util;
 
 import group.Mybatis.dao.UserMapper;
 import group.Mybatis.pojo.User;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -20,15 +21,22 @@ public class UserMethod {
         return allUsers;
     }
 
+    public static Vector<User> getAllUsersAccordingToType(String type){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        Vector<User> allUsers = mapper.getAllUsersAccordingToType(type);
+        sqlSession.close();
+        return allUsers;
+    }
 
     ///通过用户名获取指定用户的分数
-    public static  int getScore(String username){
+    public static  int getScore(String username,String type){
         int score;
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         try {
-             score = mapper.getScore(username);
+             score = mapper.getScore(username,type);
         }catch (Exception e){
             //-1说明发生异常
             score=-1;
