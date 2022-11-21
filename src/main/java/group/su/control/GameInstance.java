@@ -122,7 +122,7 @@ public class GameInstance {
         if (!tempStop) {
             flashCount++;
         }
-        if (flashCount % (1000 / REFRESH_TIME) == 0) {
+        if (flashCount % (1000 / REFRESH_TIME) == 0 && !tempStop) {
             time++;
             createdObjects = false;
             System.out.println("test~~  " + time + "s");

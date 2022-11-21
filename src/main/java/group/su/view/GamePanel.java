@@ -28,8 +28,13 @@ public class GamePanel extends JPanel implements Runnable {
     public static Image bulletLimit = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bulletLimit.png"));
     public static Image floor = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/floor.png"));
 
+    public static JLabel label = new JLabel(new ImageIcon(
+            Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/intro.png"))));
+
     private final GameInstance gameInstance;
     private final MainFrame mainFrame;
+
+    static boolean introShow = false;
 
     Button helpButton = new Button("Help");
     Button exitButton = new Button("Exit");
@@ -114,35 +119,39 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString("x " + counts[2], 690, 280);
 
         g.drawString("剩余生命:", 630, 320);
-        for (int i = 0; i < gameInstance.getMyTank().getHpLimit(); i++) {
-            if (i < 5) {
-                g.drawImage(livesLimit, 630 + i * 30, 340, 25, 20, this);
-            } else {
-                g.drawImage(livesLimit, 630 + (i - 5) * 30, 370, 25, 20, this);
+
+        synchronized (gameInstance.getMyTank()) {
+
+            for (int i = 0; i < gameInstance.getMyTank().getHpLimit(); i++) {
+                if (i < 5) {
+                    g.drawImage(livesLimit, 630 + i * 30, 340, 25, 20, this);
+                } else {
+                    g.drawImage(livesLimit, 630 + (i - 5) * 30, 370, 25, 20, this);
+                }
+
+            }
+            for (int i = 0; i < gameInstance.getMyTank().getHp(); i++) {
+                if (i < 5) {
+                    g.drawImage(lives, 630 + i * 30, 340, 25, 20, this);
+                } else {
+                    g.drawImage(lives, 630 + (i - 5) * 30, 370, 25, 20, this);
+                }
             }
 
-        }
-        for (int i = 0; i < gameInstance.getMyTank().getHp(); i++) {
-            if (i < 5) {
-                g.drawImage(lives, 630 + i * 30, 340, 25, 20, this);
-            } else {
-                g.drawImage(lives, 630 + (i - 5) * 30, 370, 25, 20, this);
+            g.drawString("剩余弹药:", 630, 420);
+            for (int i = 0; i < gameInstance.getMyTank().getBulletNumLimit(); i++) {
+                if (i < 10) {
+                    g.drawImage(bulletLimit, 630 + i * 15, 440, 10, 25, this);
+                } else {
+                    g.drawImage(bulletLimit, 630 + (i - 10) * 15, 470, 10, 25, this);
+                }
             }
-        }
-
-        g.drawString("剩余弹药:", 630, 420);
-        for (int i = 0; i < gameInstance.getMyTank().getBulletNumLimit(); i++) {
-            if (i < 10) {
-                g.drawImage(bulletLimit, 630 + i * 15, 440, 10, 25, this);
-            } else {
-                g.drawImage(bulletLimit, 630 + (i - 10) * 15, 470, 10, 25, this);
-            }
-        }
-        for (int i = 0; i < gameInstance.getMyTank().getBulletNum(); i++) {
-            if (i < 10) {
-                g.drawImage(bullet, 630 + i * 15, 440, 10, 25, this);
-            } else {
-                g.drawImage(bullet, 630 + (i - 10) * 15, 470, 10, 25, this);
+            for (int i = 0; i < gameInstance.getMyTank().getBulletNum(); i++) {
+                if (i < 10) {
+                    g.drawImage(bullet, 630 + i * 15, 440, 10, 25, this);
+                } else {
+                    g.drawImage(bullet, 630 + (i - 10) * 15, 470, 10, 25, this);
+                }
             }
         }
 
@@ -154,6 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
                 g.drawImage(floor, i * 80 - 40, j * 80 - 40, 80, 80, this);
             }
         }
+
         // 绘制游戏内容
         // 先画底层的水
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.RIVER));
@@ -210,9 +220,14 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    class MyDialogDemo extends JDialog {
+    public class MyDialogDemo extends JDialog {
 
         public MyDialogDemo() {
+            if (introShow) {
+                return;
+            }
+
+            introShow = true;
             tempStop = true;
             this.setVisible(true);
             this.setBounds(800, 0, 800, 500);
@@ -220,8 +235,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             Container container = this.getContentPane();
 
-            JLabel label = new JLabel(new ImageIcon(
-                    Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/intro.png"))));
+
             label.setSize(800, 500);
             container.add(label);
 
@@ -233,6 +247,7 @@ public class GamePanel extends JPanel implements Runnable {
                     tempStop = false;
                     mainFrame.requestFocus();
                     System.out.println("go");
+                    introShow = false;
                 }
             });
         }

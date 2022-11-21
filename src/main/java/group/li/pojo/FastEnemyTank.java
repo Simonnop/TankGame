@@ -24,13 +24,11 @@ public class FastEnemyTank extends EnemyTank {
                 setSpeed(2);
                 break;
             case "普通":
-                setSpeed(2.5);
-                break;
             case "困难":
                 setSpeed(3);
                 break;
             case "地狱":
-                setSpeed(4.5);
+                setSpeed(4);
                 break;
         }
     }

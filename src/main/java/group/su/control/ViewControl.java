@@ -26,6 +26,7 @@ public class ViewControl {
     }
 
     public void selectPanel(){
+        gamePanel.new MyDialogDemo();
         mainFrame.getContentPane().removeAll();
         mainFrame.getContentPane().add(selectPanel);
         mainFrame.revalidate();

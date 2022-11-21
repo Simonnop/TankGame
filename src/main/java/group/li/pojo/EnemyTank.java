@@ -53,7 +53,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         switch (GameInstance.difficulty) {
             case "简单":
                 setHp(1);
-                setSpeed(1.5);
+                setSpeed(1);
                 timeSpanOfEnemyBullet = 10;
                 break;
             case "普通":
@@ -63,12 +63,12 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                 break;
             case "困难":
                 setHp(1);
-                setSpeed(2.5);
+                setSpeed(2);
                 timeSpanOfEnemyBullet = 6;
                 break;
             case "地狱":
                 setHp(2);
-                setSpeed(3.5);
+                setSpeed(3);
                 timeSpanOfEnemyBullet = 3;
                 break;
         }

@@ -21,11 +21,8 @@ public class StrongEnemyTank extends EnemyTank {
     public void setAttributes() {
         switch (GameInstance.difficulty) {
             case "简单":
-                setSpeed(1);
-                setHp(2);
-                break;
             case "普通":
-                setSpeed(1.5);
+                setSpeed(1);
                 setHp(2);
                 break;
             case "困难":
@@ -33,7 +30,7 @@ public class StrongEnemyTank extends EnemyTank {
                 setHp(3);
                 break;
             case "地狱":
-                setSpeed(2.5);
+                setSpeed(2);
                 setHp(4);
                 break;
         }
