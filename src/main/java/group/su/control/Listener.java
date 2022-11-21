@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import static group.Application.gameRun;
+import static group.Application.tempStop;
 import static group.li.pojo.Tank.bulletOut;
 
 public class Listener implements KeyListener{

@@ -2,12 +2,8 @@ package group;
 
 import group.su.control.ViewControl;
 import group.su.control.GameInstance;
-import group.su.view.MainFrame;
-import group.su.view.OverMenuPanel;
 import group.su.view.SelectPanel;
-import group.su.view.WelMenuPanel;
 
-import static group.su.map.MapData.*;
 import static group.su.view.SelectPanel.returnSelectedMap;
 
 public class Application {
@@ -19,16 +15,12 @@ public class Application {
     // 用户名,开始游戏,重新游戏
     // 可全局访问
 
-
     public static String playerName = null;
-
     public static boolean gameRun = false;
     public static boolean restart = false;
-
     public static boolean tempStop = false;
-
+    // 是否更新数据库
     public static boolean isUpdate = false;
-
     //菜单阶段是否结束
     public static boolean isInput = false;
 
@@ -48,7 +40,6 @@ public class Application {
 
         // 欢迎起始菜单页面
         VIEW_CONTROL.welcomeMenuShow();
-
 
         // 等待输入用户名
         // 选择难度和地图
@@ -85,7 +76,6 @@ public class Application {
             gameInstance.gameUpdate();
         }
 
-
         // 等待 gameRun 为 false,即上面循环执行结束
         // 游戏结束与结算
         gameInstance.gameOver();
@@ -102,9 +92,8 @@ public class Application {
                 gameRun = false;
                 restart = false;
                 isUpdate = false;
-                isInput = false;
                 SelectPanel.allIsSelect = false;
-                SelectPanel.difficulty = null;
+                GameInstance.difficulty = null;
                 SelectPanel.isTheSameType = true;
                 runApplication(new GameInstance());
             }

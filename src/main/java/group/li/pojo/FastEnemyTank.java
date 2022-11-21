@@ -1,7 +1,6 @@
 package group.li.pojo;
 
-import group.Application;
-import group.su.view.SelectPanel;
+import group.su.control.GameInstance;
 
 import java.awt.*;
 
@@ -15,17 +14,24 @@ public class FastEnemyTank extends EnemyTank {
 
     public FastEnemyTank(int x, int y) {
         super(x, y);
-        setSpeed(3.0);
         setAddScore(10);
         setAttributes();
     }
 
-    public void setAttributes(){
-        switch (SelectPanel.difficulty){
-            case "简单":  setSpeed(2);  break;
-            case "普通":  setSpeed(2.5); break;
-            case "困难":  setSpeed(3); break;
-            case "地狱":  setSpeed(4.5); break;
+    public void setAttributes() {
+        switch (GameInstance.difficulty) {
+            case "简单":
+                setSpeed(2);
+                break;
+            case "普通":
+                setSpeed(2.5);
+                break;
+            case "困难":
+                setSpeed(3);
+                break;
+            case "地狱":
+                setSpeed(4.5);
+                break;
         }
     }
 }

@@ -103,7 +103,7 @@ public class Buff implements GetInfo {
 
             @Override
             public void getBuff(Tank tank) {
-                if (tank instanceof MyTank && timeSpan > 0.1) {
+                if (tank instanceof MyTank && timeSpan > 0.3) {
                     timeSpan -= 0.05;
                 }
                 System.out.println("FASTER_FIRE_GAP");

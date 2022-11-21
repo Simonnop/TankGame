@@ -72,9 +72,11 @@ public class GamePanel extends JPanel implements Runnable {
                 if (tempStop == false) {
                     tempStop = true;
                     pauseButton.setLabel("Run");
+                    mainFrame.requestFocus();
                 } else {
                     tempStop = false;
                     pauseButton.setLabel("Pause");
+                    mainFrame.requestFocus();
                 }
             }
         });
@@ -116,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (i < 5) {
                 g.drawImage(livesLimit, 630 + i * 30, 340, 25, 20, this);
             } else {
-                g.drawImage(livesLimit, 630 + (i-5) * 30, 370, 25, 20, this);
+                g.drawImage(livesLimit, 630 + (i - 5) * 30, 370, 25, 20, this);
             }
 
         }
@@ -124,7 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (i < 5) {
                 g.drawImage(lives, 630 + i * 30, 340, 25, 20, this);
             } else {
-                g.drawImage(lives, 630 + (i-5) * 30, 370, 25, 20, this);
+                g.drawImage(lives, 630 + (i - 5) * 30, 370, 25, 20, this);
             }
         }
 
@@ -133,14 +135,14 @@ public class GamePanel extends JPanel implements Runnable {
             if (i < 10) {
                 g.drawImage(bulletLimit, 630 + i * 15, 440, 10, 25, this);
             } else {
-                g.drawImage(bulletLimit, 630 + (i-10) * 15, 470, 10, 25, this);
+                g.drawImage(bulletLimit, 630 + (i - 10) * 15, 470, 10, 25, this);
             }
         }
         for (int i = 0; i < gameInstance.getMyTank().getBulletNum(); i++) {
             if (i < 10) {
                 g.drawImage(bullet, 630 + i * 15, 440, 10, 25, this);
             } else {
-                g.drawImage(bullet, 630 + (i-10) * 15, 470, 10, 25, this);
+                g.drawImage(bullet, 630 + (i - 10) * 15, 470, 10, 25, this);
             }
         }
 
@@ -208,18 +210,19 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    class MyDialogDemo extends JDialog{
+    class MyDialogDemo extends JDialog {
 
-        public MyDialogDemo(){
+        public MyDialogDemo() {
+            tempStop = true;
             this.setVisible(true);
-            this.setBounds(800,0,800,500);
+            this.setBounds(800, 0, 800, 500);
             this.setTitle("游戏介绍");
 
             Container container = this.getContentPane();
 
-            JLabel label=new JLabel(new ImageIcon(
+            JLabel label = new JLabel(new ImageIcon(
                     Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/intro.png"))));
-            label.setSize(800,500);
+            label.setSize(800, 500);
             container.add(label);
 
             label.setHorizontalAlignment(SwingConstants.CENTER);

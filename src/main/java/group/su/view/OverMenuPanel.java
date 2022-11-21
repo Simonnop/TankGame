@@ -11,8 +11,7 @@ import java.awt.event.ActionListener;
 
 import static group.Application.*;
 import static group.Application.restart;
-import static group.su.view.SelectPanel.difficulty;
-import static group.su.view.SelectPanel.isTheSameType;
+import static group.su.control.GameInstance.difficulty;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
@@ -21,13 +20,21 @@ public class OverMenuPanel extends JPanel {
     private GameInstance gameInstance;
 
 
-    JButton restartButton = new JButton("回到菜单");
+    JButton menuButton = new JButton("回到菜单");
+
+    JButton restartButton = new JButton("重新游戏");
     JButton endGameButton = new JButton("结束游戏");
 
     JButton rankListButton = new JButton("查看排行榜");
 
     public OverMenuPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+
+        menuButton.setForeground(Color.WHITE);
+        menuButton.setFont(new Font("幼圆", Font.PLAIN, 20));
+        menuButton.setBackground(new Color(1, 85, 157));
+        menuButton.addActionListener(new menuButtonHandler());
+        this.add(menuButton);
 
         restartButton.setForeground(Color.WHITE);
         restartButton.setFont(new Font("幼圆", Font.PLAIN, 20));
@@ -41,8 +48,6 @@ public class OverMenuPanel extends JPanel {
         endGameButton.addActionListener(new endGameButtonHandler());
         this.add(endGameButton);
 
-        rankListButton.setSize(260, 40);
-        rankListButton.setLocation(250, 440);
         rankListButton.setForeground(Color.WHITE);
         rankListButton.setFont(new Font("幼圆", Font.PLAIN, 20));
         rankListButton.setBackground(new Color(1, 85, 157));
@@ -62,12 +67,15 @@ public class OverMenuPanel extends JPanel {
         g.drawString(playerName + "的分数为" + gameInstance.calculateScore(), 260, 180);
 
 
+        menuButton.setSize(260, 40);
+        menuButton.setLocation(250, 300);
         restartButton.setSize(260, 40);
-        restartButton.setLocation(250, 300);
+        restartButton.setLocation(250, 370);
         endGameButton.setSize(260, 40);
-        endGameButton.setLocation(250, 370);
+        endGameButton.setLocation(250, 440);
         rankListButton.setSize(260, 40);
-        rankListButton.setLocation(250, 440);
+        rankListButton.setLocation(250, 510);
+        menuButton.requestFocus();
         restartButton.requestFocus();
         endGameButton.requestFocus();
         rankListButton.requestFocus();
@@ -78,12 +86,21 @@ public class OverMenuPanel extends JPanel {
         }
 
     }
+    class menuButtonHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            isInput = false;
+            restart = true;
+        }
+    }
+
 
     class restartButtonHandler implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-
+            isInput = true;
             restart = true;
         }
     }
