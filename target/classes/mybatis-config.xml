@@ -24,6 +24,6 @@
     </environments>
 
 <mappers>
-    <mapper class="group.Mybatis.dao.UserMapper"></mapper>
+    <mapper class="group.database.dao.UserMapper"></mapper>
 </mappers>
 </configuration>

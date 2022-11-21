@@ -1,8 +1,5 @@
 package group;
 
-import group.su.view.GamePanel;
-import group.su.view.MainFrame;
-
 public class Attributes {
 
     // 描述文件: file/attributes_description.md

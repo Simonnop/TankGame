@@ -1,11 +1,9 @@
-import group.Mybatis.dao.UserMapper;
-import group.Mybatis.pojo.User;
-import group.Mybatis.util.MybatisUtils;
-import group.su.view.WelMenuPanel;
+import group.database.dao.UserMapper;
+import group.database.pojo.User;
+import group.database.util.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.util.Vector;
 
 public class test {
