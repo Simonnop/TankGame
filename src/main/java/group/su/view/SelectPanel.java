@@ -17,7 +17,7 @@ import java.util.Map;
 import static group.Application.playerName;
 import static group.Mybatis.util.UserMethod.getAllUsers;
 import static group.Mybatis.util.UserMethod.getAllUsersAccordingToType;
-import static group.su.map.MapData.map_1;
+import static group.su.map.MapData.*;
 
 public class SelectPanel extends JPanel {
     private final MainFrame mainFrame;
@@ -27,6 +27,7 @@ public class SelectPanel extends JPanel {
     public static boolean allIsSelect = false;
     public boolean difficultyIsSelect = false;
     public static boolean isTheSameType=true;
+    public static String mapSelectName;
 
     JRadioButton rb1;
     JRadioButton rb2;
@@ -41,9 +42,9 @@ public class SelectPanel extends JPanel {
     public SelectPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.setLayout(new GridBagLayout());
-        JLabel l1 = new JLabel("请选择挑战难度");
+        JLabel l1 = new JLabel("请选择难度");
         l1.setFont(new Font("幼圆", Font.PLAIN, 20));
-        setGridBagConstraints(l1,0,0,80,80);
+        setGridBagConstraints(l1,0,0,70,80);
 
         rb1 = new JRadioButton("简单模式");
         rb2 = new JRadioButton("普通模式");
@@ -55,10 +56,10 @@ public class SelectPanel extends JPanel {
         diffcultiesSelect.add(rb3);
         diffcultiesSelect.add(rb4);
 
-        setGridBagConstraints(rb1,2,0,80,80);
-        setGridBagConstraints(rb2,4,0,80,80);
-        setGridBagConstraints(rb3,6,0,80,80);
-        setGridBagConstraints(rb4,8,0,80,80);
+        setGridBagConstraints(rb1,2,0,70,80);
+        setGridBagConstraints(rb2,4,0,70,80);
+        setGridBagConstraints(rb3,6,0,70,80);
+        setGridBagConstraints(rb4,8,0,70,80);
 
         rb1.addActionListener(new difficultySelectHandler());
         rb2.addActionListener(new difficultySelectHandler());
@@ -68,9 +69,9 @@ public class SelectPanel extends JPanel {
 
 
 
-        JLabel l2 = new JLabel("请选择挑战地图");
+        JLabel l2 = new JLabel("请选择地图");
         l2.setFont(new Font("幼圆", Font.PLAIN, 20));
-        setGridBagConstraints(l2,0,2,80,80);
+        setGridBagConstraints(l2,0,2,70,80);
 
         Image map1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/map1.png"));
         Image map2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/map2.png"));
@@ -78,9 +79,9 @@ public class SelectPanel extends JPanel {
         ImageIcon imageIcon1 = new ImageIcon(map1);
         ImageIcon imageIcon2 = new ImageIcon(map2);
         ImageIcon imageIcon3 = new ImageIcon(map3);
-        mapSelect1 = new JButton(imageIcon1);
-        mapSelect2 = new JButton(imageIcon2);
-        mapSelect3 = new JButton(imageIcon3);
+        mapSelect1 = new JButton("map_1",imageIcon1);
+        mapSelect2 = new JButton("map_2",imageIcon2);
+        mapSelect3 = new JButton("map_3",imageIcon3);
         mapSelect1.setToolTipText("地图1");
         mapSelect2.setToolTipText("地图2");
         mapSelect3.setToolTipText("地图3");
@@ -89,11 +90,9 @@ public class SelectPanel extends JPanel {
         mapSelect2.addActionListener(new mapSelectHandler());
         mapSelect3.addActionListener(new mapSelectHandler());
 
-        setGridBagConstraints(mapSelect1,2,2,80,80);
-        setGridBagConstraints(mapSelect2,4,2,80,80);
-        setGridBagConstraints(mapSelect3,6,2,80,80);
-
-
+        setGridBagConstraints(mapSelect1,2,2,70,80);
+        setGridBagConstraints(mapSelect2,4,2,70,80);
+        setGridBagConstraints(mapSelect3,6,2,70,80);
     }
 
 
@@ -109,24 +108,22 @@ public class SelectPanel extends JPanel {
         gc.weightx=weightX;
         gc.weighty=weightY;
         gc.gridheight=2;
-        gc.insets = new Insets(0, 10, 0,0);
+        gc.insets = new Insets(0, 5, 0,0);
         gc.fill=GridBagConstraints.HORIZONTAL;
         this.add(component,gc);
     }
 
     class mapSelectHandler implements ActionListener {
-
-
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+
 
             if (difficultyIsSelect) {
                 //再次判断玩家类型，是否add
                 playerJudgement();
                 //根据难度修改
                 modifyAccordingTodifficulty();
-                //根据选择地图来加载地图，未写
-                loadMap();
+                mapSelectName=actionEvent.getActionCommand();
                 allIsSelect = true;
                 diffcultiesSelect.clearSelection();
             }
@@ -185,13 +182,17 @@ public class SelectPanel extends JPanel {
             case "地狱": GameInstance.timeOfGenerateTank=10; GameInstance.timeOfRefreshBuff=6; break;
         }
     }
-    public void loadMap(){
-
-    }
 
     public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> returnSelectedMap(){
 
         // Application 从这里拿地图
+        switch (mapSelectName){
+            case "map_1":  return map_1;
+            case "map_2":  return map_2;
+            case "map_3":  return map_3;
+            default:
+                System.out.println("return Map error!");
+        }
         return map_1;
     }
 

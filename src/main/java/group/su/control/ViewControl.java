@@ -1,10 +1,5 @@
 package group.su.control;
-
-import group.Mybatis.pojo.User;
-import group.Mybatis.util.UserMethod;
 import group.su.view.*;
-
-import static group.Application.playerName;
 import static group.su.control.Listener.getListener;
 
 public class ViewControl {
