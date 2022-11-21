@@ -18,12 +18,21 @@ public class MyTank extends Tank implements Runnable {
 
     private int hp;
 
+    private int hpLimit;
+
     //可以子弹数限制
     private int bulletNum;
+
+    private int bulletNumLimit;
 
     public MyTank(int x, int y) {
         super(x, y);
         setImage(myTank_up);
+        setHp(4);
+        setHpLimit(4);
+        setSpeed(3);
+        setBulletNum(6);
+        setBulletNumLimit(6);
         setAttributes();
         setDirection(Direction.UP);
     }
@@ -51,6 +60,22 @@ public class MyTank extends Tank implements Runnable {
 
     public void setBulletNum(int bulletNum) {
         this.bulletNum = bulletNum;
+    }
+
+    public int getHpLimit() {
+        return hpLimit;
+    }
+
+    public void setHpLimit(int hpLimit) {
+        this.hpLimit = hpLimit;
+    }
+
+    public int getBulletNumLimit() {
+        return bulletNumLimit;
+    }
+
+    public void setBulletNumLimit(int bulletNumLimit) {
+        this.bulletNumLimit = bulletNumLimit;
     }
 
     @Override

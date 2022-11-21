@@ -8,6 +8,7 @@ import group.su.view.SelectPanel;
 import group.su.view.WelMenuPanel;
 
 import static group.su.map.MapData.*;
+import static group.su.view.SelectPanel.returnSelectedMap;
 
 public class Application {
 
@@ -36,7 +37,7 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        runApplication(new GameInstance(map_1));
+        runApplication(new GameInstance());
     }
 
     private static void runApplication(GameInstance gameInstance) throws InterruptedException {
@@ -56,6 +57,8 @@ public class Application {
             if (isInput) {
                 VIEW_CONTROL.selectPanel();
                 if (SelectPanel.allIsSelect) {
+                    // 存放地图的位置
+                    gameInstance.setMap(returnSelectedMap());
                     gameRun = true;
                     break;
                 }
@@ -103,7 +106,7 @@ public class Application {
                 SelectPanel.allIsSelect = false;
                 SelectPanel.difficulty = null;
                 SelectPanel.isTheSameType = true;
-                runApplication(new GameInstance(map_1));
+                runApplication(new GameInstance());
             }
         }
     }

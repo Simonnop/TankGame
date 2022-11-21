@@ -4,16 +4,20 @@ import group.Mybatis.pojo.User;
 import group.Mybatis.util.UserMethod;
 import group.su.control.GameInstance;
 import group.su.control.Listener;
+import group.su.map.Obstacle;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map;
 
 import static group.Application.playerName;
 import static group.Mybatis.util.UserMethod.getAllUsers;
 import static group.Mybatis.util.UserMethod.getAllUsersAccordingToType;
+import static group.su.map.MapData.map_1;
 
 public class SelectPanel extends JPanel {
     private final MainFrame mainFrame;
@@ -163,6 +167,12 @@ public class SelectPanel extends JPanel {
     }
     public void loadMap(){
 
+    }
+
+    public static Map<Obstacle.ObstacleKind, ArrayList<int[]>> returnSelectedMap(){
+
+        // Application 从这里拿地图
+        return map_1;
     }
 
 
