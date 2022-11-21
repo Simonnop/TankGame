@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static Image lives = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/lives.png"));
     public static Image bullet = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bullet.png"));
+    public static Image livesLimit = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/livesLimit.png"));
+    public static Image bulletLimit = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bulletLimit.png"));
     public static Image floor = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/floor.png"));
 
     private final GameInstance gameInstance;
@@ -109,14 +111,37 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawImage(StrongEnemyTank_up, 630, 250, 40, 40, this);
         g.drawString("x " + counts[2], 690, 280);
 
-        g.drawString("剩余生命:", 630, 360);
+        g.drawString("剩余生命:", 630, 320);
+        for (int i = 0; i < gameInstance.getMyTank().getHpLimit(); i++) {
+            if (i < 5) {
+                g.drawImage(livesLimit, 630 + i * 30, 340, 25, 20, this);
+            } else {
+                g.drawImage(livesLimit, 630 + (i-5) * 30, 370, 25, 20, this);
+            }
+
+        }
         for (int i = 0; i < gameInstance.getMyTank().getHp(); i++) {
-            g.drawImage(lives, 630 + i * 30, 390, 25, 20, this);
+            if (i < 5) {
+                g.drawImage(lives, 630 + i * 30, 340, 25, 20, this);
+            } else {
+                g.drawImage(lives, 630 + (i-5) * 30, 370, 25, 20, this);
+            }
         }
 
-        g.drawString("剩余弹药:", 630, 460);
+        g.drawString("剩余弹药:", 630, 420);
+        for (int i = 0; i < gameInstance.getMyTank().getBulletNumLimit(); i++) {
+            if (i < 10) {
+                g.drawImage(bulletLimit, 630 + i * 15, 440, 10, 25, this);
+            } else {
+                g.drawImage(bulletLimit, 630 + (i-10) * 15, 470, 10, 25, this);
+            }
+        }
         for (int i = 0; i < gameInstance.getMyTank().getBulletNum(); i++) {
-            g.drawImage(bullet, 630 + i * 15, 490, 10, 25, this);
+            if (i < 10) {
+                g.drawImage(bullet, 630 + i * 15, 440, 10, 25, this);
+            } else {
+                g.drawImage(bullet, 630 + (i-10) * 15, 470, 10, 25, this);
+            }
         }
 
         g.drawString("得分: " + gameInstance.calculateScore(), 630, 560);

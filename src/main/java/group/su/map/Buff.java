@@ -26,11 +26,12 @@ public class Buff implements GetInfo {
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageBuff, ADD_BULLETS);
             }
+
             @Override
             public void getBuff(Tank tank) {
                 if (tank instanceof MyTank) {
-                    if (((MyTank) tank).getBulletNum() < 6) {
-                        ((MyTank) tank).setBulletNum(6);
+                    if (((MyTank) tank).getBulletNum() < ((MyTank) tank).getBulletNumLimit()) {
+                        ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());
                     }
                 }
                 System.out.println("ADD_BULLETS");
@@ -40,9 +41,10 @@ public class Buff implements GetInfo {
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageBuff, SWIFT_BULLETS);
             }
+
             @Override
             public void getBuff(Tank tank) {
-                tank.setBulletSpeed(12);
+                tank.setBulletSpeed(tank.getBulletSpeed() + 1);
                 System.out.println("SWIFT_BULLETS");
             }
         }, ADD_LIVES {
@@ -50,19 +52,52 @@ public class Buff implements GetInfo {
             protected Buff returnBuff(int x, int y) {
                 return new Buff(x, y, imageBuff, ADD_LIVES);
             }
+
             @Override
             public void getBuff(Tank tank) {
-                if (tank.getHp()<4) {
-                    tank.setHp(tank.getHp()+1);
+                if (tank instanceof MyTank) {
+                    if (tank.getHp() < ((MyTank) tank).getHpLimit()) {
+                        tank.setHp(tank.getHp() + 1);
+                    }
+                } else {
+                    tank.setHp(tank.getHp() + 1);
                 }
                 System.out.println("ADD_LIVES");
+            }
+        }, ADD_LIVES_LIMIT {
+            @Override
+            protected Buff returnBuff(int x, int y) {
+                return new Buff(x, y, imageBuff, ADD_LIVES_LIMIT);
+            }
+
+            @Override
+            public void getBuff(Tank tank) {
+                if (tank instanceof MyTank && ((MyTank) tank).getHpLimit() < 10) {
+                    ((MyTank) tank).setHpLimit(((MyTank) tank).getHpLimit() + 1);
+                }
+                System.out.println("ADD_LIVES_LIMIT");
+            }
+        }, ADD_BULLETS_LIMIT {
+            @Override
+            protected Buff returnBuff(int x, int y) {
+                return new Buff(x, y, imageBuff, ADD_BULLETS_LIMIT);
+            }
+
+            @Override
+            public void getBuff(Tank tank) {
+                if (tank instanceof MyTank && ((MyTank) tank).getBulletNumLimit() < 20) {
+                    ((MyTank) tank).setBulletNumLimit(((MyTank) tank).getBulletNumLimit() + 2);
+                }
+                System.out.println("ADD_BULLETS_LIMIT");
             }
         };
 
         protected Buff returnBuff(int x, int y) {
             return null;
         }
-        public void getBuff(Tank tank){}
+
+        public void getBuff(Tank tank) {
+        }
     }
 
     boolean isLive;
@@ -111,7 +146,7 @@ public class Buff implements GetInfo {
 
     public static Buff createBuff() {
 
-        BuffKind buffKind1 = BuffKind.values()[new Random().nextInt(3)];
+        BuffKind buffKind1 = BuffKind.values()[new Random().nextInt(BuffKind.values().length)];
         int[] position = getRandomPosition();
         return buffKind1.returnBuff(position[0], position[1]);
     }

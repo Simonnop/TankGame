@@ -22,7 +22,7 @@ public class GameInstance {
     private Vector<Bullet> allBulletList;
     private Vector<Buff> buffList;
     private Set<EnemyTank> destroySet;
-    private final Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
+    private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
 
     private int time = 0;
     private int flashCount = 0;
@@ -31,13 +31,11 @@ public class GameInstance {
 
     public static int timeOfGenerateTank=25;
     public static int timeOfRefreshBuff=15;
-
-    public GameInstance(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
+    public GameInstance() {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
         Buff.setGameInstance(this);
         this.factory = Factory.getFactoryInstance(this);
-        this.map = map;
     }
 
     public void gameInitial() {
@@ -90,8 +88,6 @@ public class GameInstance {
 
         if (time % timeOfRefreshBuff == 0 && flashCount == 0 && !tempStop) {
             // 每 timeOfRefreshBuff s 刷道具
-            factory.createGameObject(Factory.GameObject.RandomBuff);
-            factory.createGameObject(Factory.GameObject.RandomBuff);
             factory.createGameObject(Factory.GameObject.RandomBuff);
         }
 
@@ -188,6 +184,10 @@ public class GameInstance {
         }
 
         return score;
+    }
+
+    public void setMap(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
+        this.map = map;
     }
 
     public Factory getFactory() {

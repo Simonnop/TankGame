@@ -65,11 +65,8 @@ public class CollisionDetection {
                 for (int i = 0; i < obstacles.size(); i++) {
                     if (isCollision(tank, obstacles.get(i)) != null) {
                         tank.setDirectionLock(isCollision(tank, obstacles.get(i)));
-                        // 若是补给站,则每隔一秒加子弹
                         if (obstacles.get(i).getKind().equals(Obstacle.ObstacleKind.BASE) && tank instanceof MyTank) {
-                            if (((MyTank) tank).getBulletNum() < 6) {
-                                ((MyTank) tank).setBulletNum(6);
-                            }
+                            ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());
                         }
                     }
                 }
