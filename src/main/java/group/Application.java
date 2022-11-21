@@ -56,11 +56,12 @@ public class Application {
             System.out.print("");
             if (isInput) {
                 VIEW_CONTROL.selectPanel();
-                if (SelectPanel.allIsSelect) {
-                    gameInstance.setMap(returnSelectedMap());
-                    gameRun = true;
-                    break;
-                }
+                isInput = false;
+            }
+            if (SelectPanel.allIsSelect) {
+                gameInstance.setMap(returnSelectedMap());
+                gameRun = true;
+                break;
             }
         }
 
