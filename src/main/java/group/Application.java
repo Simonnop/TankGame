@@ -57,7 +57,6 @@ public class Application {
             if (isInput) {
                 VIEW_CONTROL.selectPanel();
                 if (SelectPanel.allIsSelect) {
-                    // 存放地图的位置
                     gameInstance.setMap(returnSelectedMap());
                     gameRun = true;
                     break;
