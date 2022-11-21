@@ -24,9 +24,8 @@ public class MyTank extends Tank implements Runnable {
     public MyTank(int x, int y) {
         super(x, y);
         setImage(myTank_up);
-        setHp(2);
-        setSpeed(3);
         setBulletNum(6);
+        setAttributes();
         setDirection(Direction.UP);
     }
 
@@ -38,6 +37,7 @@ public class MyTank extends Tank implements Runnable {
             case "地狱":  setSpeed(3.5); setHp(4); Listener.timeSpan=0.25; break;
         }
     }
+
     public int getHp() {
         return hp;
     }
