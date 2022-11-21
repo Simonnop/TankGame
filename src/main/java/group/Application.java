@@ -54,7 +54,6 @@ public class Application {
         for (; ; ) {
             System.out.println(isInput);
             if (isInput) {
-                System.out.println("w");
                 VIEW_CONTROL.selectPanel();
                 if (SelectPanel.allIsSelect) {
                     gameRun = true;

@@ -21,6 +21,7 @@ public class SelectPanel extends JPanel {
     public static boolean allIsSelect = false;
     public boolean difficultyIsSelect = false;
     public static boolean isTheSameType=true;
+
     JRadioButton rb1;
     JRadioButton rb2;
     JRadioButton rb3;
@@ -129,7 +130,7 @@ public class SelectPanel extends JPanel {
 
     }
 
-    //对选择难度后的玩家江西判断
+    //对选择难度后的玩家重新判断
     public void playerJudgement(){
         if(WelMenuPanel.isNew){
             UserMethod.addUser(new User(playerName,difficulty));

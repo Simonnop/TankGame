@@ -1,5 +1,8 @@
 package group.li.pojo;
 
+import group.su.control.Listener;
+import group.su.view.SelectPanel;
+
 import java.awt.*;
 import java.util.Vector;
 
@@ -25,6 +28,15 @@ public class MyTank extends Tank implements Runnable {
         setSpeed(3);
         setBulletNum(6);
         setDirection(Direction.UP);
+    }
+
+    public void setAttributes(){
+        switch (SelectPanel.difficulty){
+            case "简单":  setSpeed(3);  setHp(2); break;
+            case "普通":  setSpeed(3);   setHp(2);break;
+            case "困难":  setSpeed(3);    setHp(3); break;
+            case "地狱":  setSpeed(3.5); setHp(4); Listener.timeSpan=0.5; break;
+        }
     }
     public int getHp() {
         return hp;

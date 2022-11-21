@@ -7,6 +7,7 @@ import group.GetInfo;
 import group.li.util.DirectionUtil;
 import group.su.map.Dot;
 import group.su.map.Obstacle;
+import group.su.view.SelectPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,13 +28,11 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     public static Image enemyTank_left = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_left.png"));
     public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
+    //控制敌方坦克发子弹的一个间隔，timeSpanOfEnermyBullet+0~8 s
+    public static double timeSpanOfEnermyBullet=10;
+    //调用算法间隔
+    public static  int timeSpanOfFindRoad = 8;
 
-
-    public EnemyTank(int x, int y) {
-        super(x, y);
-        setImage(enemyTank_down);
-        setDirection(Direction.DOWN);
-    }
 
     int addScore = 5;
     private int targetX;
@@ -41,9 +40,25 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
     int changeDirectionTime = 0;
 
+    public EnemyTank(int x, int y) {
+        super(x, y);
+        setImage(enemyTank_down);
+        setDirection(Direction.DOWN);
+        setAttributes();
+    }
+
+
+    public void setAttributes(){
+        switch (SelectPanel.difficulty){
+            case "简单": setHp(1); setSpeed(1.5); timeSpanOfEnermyBullet=10; break;
+            case "普通": setHp(1); setSpeed(2); timeSpanOfEnermyBullet=8;break;
+            case "困难": setHp(1); setSpeed(2.5); timeSpanOfEnermyBullet=6;break;
+            case "地狱": setHp(2); setSpeed(3.5); timeSpanOfEnermyBullet=3;break;
+        }
+    }
     public void run() {
-        int randomTime = (int) (Math.random() * 2.0 + 3.0);
-        int randomTimeFindRoad = 6;
+        int randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnermyBullet);
+        int randomTimeFindRoad=timeSpanOfFindRoad;
         int followDotsIndex = 0;
         ArrayList<Dot> roadsDots = findRoadToTank(getGameInstance().getMyTank());
         while (Application.gameRun) {
@@ -55,11 +70,11 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             }
 
             if (!tempStop) {
-                //每6s调用一次算法
+                //每timeSpanOfFindRoads调用一次算法
                 --randomTimeFindRoad;
                 if (randomTimeFindRoad == 0 && this.isLive()) {
                     roadsDots = findRoadToTank(getGameInstance().getMyTank());
-                    randomTimeFindRoad = 6;
+                    randomTimeFindRoad = timeSpanOfFindRoad;
                     followDotsIndex = 0;
                 }
 
@@ -73,7 +88,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                             bulletOut(this);
                         }
                         //System.out.println("bullet");
-                        randomTime = (int) (Math.random() * 2.0 + 3.0);
+                        randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnermyBullet);
                     }
                 }
             }
@@ -240,16 +255,6 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             targetY = Dots.get(i).getSimpleY() * OBJECT_SIZE;
             int currentX = getX();
             int currentY = getY();
-
-//            int targetX=Dots.get(i).getSimpleX();
-//            int targetY=Dots.get(i).getSimpleY();
-//            int currentX=getX()/OBJECT_SIZE;
-//            int currentY=getY()/OBJECT_SIZE;
-//            System.out.println(currentY);
-//            System.out.println(targetY);
-//            System.out.println(currentX);
-//            System.out.println(targetX);
-
 
             if (targetX - currentX == 0 && targetY - currentY == 0) {
                 followDotsIndex++;

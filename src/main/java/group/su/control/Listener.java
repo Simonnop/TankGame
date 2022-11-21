@@ -26,6 +26,9 @@ public class Listener implements KeyListener{
     public int temp_time = 0;
     int time;
 
+    //子弹发射的时间间隔
+    public static double timeSpan=1.0;
+
     static MyTank myTank;
 
     static ArrayList<Character> keys = new ArrayList<>();
@@ -79,13 +82,13 @@ public class Listener implements KeyListener{
         }
 
         if (e.getKeyCode() == KeyEvent.VK_S) {
-            //坦克开火限制 ，暂时设置为1s内只能射击一次
+            //坦克开火限制 ，暂时设置为timeSpans内只能射击一次
             if (temp_time == 0 && myTank.getBulletNum() > 0) {
                 bulletOut(myTank);
                 myTank.setBulletNum(myTank.getBulletNum() - 1);
                 temp_time = time;
             }
-            if (time - temp_time > 1 && myTank.getBulletNum() > 0) {
+            if (time - temp_time > timeSpan && myTank.getBulletNum() > 0) {
                 bulletOut(myTank);
                 myTank.setBulletNum(myTank.getBulletNum() - 1);
                 temp_time = time;
