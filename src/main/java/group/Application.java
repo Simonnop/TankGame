@@ -36,7 +36,7 @@ public class Application {
 
     public static void main(String[] args) throws InterruptedException {
 
-        runApplication(new GameInstance(map_1));
+        runApplication(new GameInstance(map_3));
     }
 
     private static void runApplication(GameInstance gameInstance) throws InterruptedException {
