@@ -40,36 +40,41 @@ public class SelectPanel extends JPanel {
 
     public SelectPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.setLayout(new GridLayout(2,5));
+        this.setLayout(new GridBagLayout());
         JLabel l1 = new JLabel("请选择挑战难度");
-         l1.setFont(new Font("幼圆", Font.PLAIN, 20));
-        this.add(l1);
+        l1.setFont(new Font("幼圆", Font.PLAIN, 20));
+        setGridBagConstraints(l1,0,0,80,80);
 
         rb1 = new JRadioButton("简单模式");
         rb2 = new JRadioButton("普通模式");
         rb3 = new JRadioButton("困难模式");
         rb4 = new JRadioButton("地狱模式");
-        rb1.addActionListener(new difficultySelectHandler());
-        rb2.addActionListener(new difficultySelectHandler());
-        rb3.addActionListener(new difficultySelectHandler());
-        rb4.addActionListener(new difficultySelectHandler());
-
         diffcultiesSelect = new ButtonGroup();
         diffcultiesSelect.add(rb1);
         diffcultiesSelect.add(rb2);
         diffcultiesSelect.add(rb3);
         diffcultiesSelect.add(rb4);
-        this.add(rb1);
-        this.add(rb2);
-        this.add(rb3);
-        this.add(rb4);
+
+        setGridBagConstraints(rb1,2,0,80,80);
+        setGridBagConstraints(rb2,4,0,80,80);
+        setGridBagConstraints(rb3,6,0,80,80);
+        setGridBagConstraints(rb4,8,0,80,80);
+
+        rb1.addActionListener(new difficultySelectHandler());
+        rb2.addActionListener(new difficultySelectHandler());
+        rb3.addActionListener(new difficultySelectHandler());
+        rb4.addActionListener(new difficultySelectHandler());
+
+
+
 
         JLabel l2 = new JLabel("请选择挑战地图");
         l2.setFont(new Font("幼圆", Font.PLAIN, 20));
-        this.add(l2);
-        Image map1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/Tree.png"));
-        Image map2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/River.png"));
-        Image map3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bullet.png"));
+        setGridBagConstraints(l2,0,2,80,80);
+
+        Image map1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/map1.png"));
+        Image map2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/map2.png"));
+        Image map3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/map3.png"));
         ImageIcon imageIcon1 = new ImageIcon(map1);
         ImageIcon imageIcon2 = new ImageIcon(map2);
         ImageIcon imageIcon3 = new ImageIcon(map3);
@@ -79,20 +84,35 @@ public class SelectPanel extends JPanel {
         mapSelect1.setToolTipText("地图1");
         mapSelect2.setToolTipText("地图2");
         mapSelect3.setToolTipText("地图3");
+
         mapSelect1.addActionListener(new mapSelectHandler());
         mapSelect2.addActionListener(new mapSelectHandler());
         mapSelect3.addActionListener(new mapSelectHandler());
-        this.add(mapSelect1);
-        this.add(mapSelect2);
-        this.add(mapSelect3);
+
+        setGridBagConstraints(mapSelect1,2,2,80,80);
+        setGridBagConstraints(mapSelect2,4,2,80,80);
+        setGridBagConstraints(mapSelect3,6,2,80,80);
+
 
     }
 
 
-//    @Override
-//    public void paint(Graphics graphics) {
-//        super.paint(graphics);
-//    }
+    @Override
+    public void paint(Graphics graphics) {
+        super.paint(graphics);
+    }
+
+    public void setGridBagConstraints(Component component,int Gx,int Gy,int weightX,int weightY ){
+        GridBagConstraints gc=new GridBagConstraints();
+        gc.gridx=Gx;
+        gc.gridy=Gy;
+        gc.weightx=weightX;
+        gc.weighty=weightY;
+        gc.gridheight=2;
+        gc.insets = new Insets(0, 10, 0,0);
+        gc.fill=GridBagConstraints.HORIZONTAL;
+        this.add(component,gc);
+    }
 
     class mapSelectHandler implements ActionListener {
 
