@@ -2,6 +2,8 @@ package group.su.view;
 
 import group.Mybatis.pojo.User;
 import group.Mybatis.util.UserMethod;
+import group.su.control.GameInstance;
+import group.su.control.Listener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,8 +99,8 @@ public class SelectPanel extends JPanel {
             if (difficultyIsSelect) {
                 //再次判断玩家类型，是否add
                 playerJudgement();
-                //根据难度修改坦克属性,未写
-                modifyEnemyTankAccordingTodifficulty();
+                //根据难度修改
+                modifyAccordingTodifficulty();
                 //根据选择地图来加载地图，未写
                 loadMap();
                 allIsSelect = true;
@@ -151,8 +153,13 @@ public class SelectPanel extends JPanel {
         }
     }
 
-    public void modifyEnemyTankAccordingTodifficulty(){
-
+    public void modifyAccordingTodifficulty(){
+        switch (difficulty){
+            case "简单":  GameInstance.timeOfGenerateTank=25;  GameInstance.timeOfRefreshBuff=15;break;
+            case "普通": GameInstance.timeOfGenerateTank=20; GameInstance.timeOfRefreshBuff=15;break;
+            case "困难": GameInstance.timeOfGenerateTank=15; GameInstance.timeOfRefreshBuff=10;break;
+            case "地狱": GameInstance.timeOfGenerateTank=10; GameInstance.timeOfRefreshBuff=6; break;
+        }
     }
     public void loadMap(){
 

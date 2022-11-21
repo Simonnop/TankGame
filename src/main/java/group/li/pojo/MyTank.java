@@ -32,10 +32,10 @@ public class MyTank extends Tank implements Runnable {
 
     public void setAttributes(){
         switch (SelectPanel.difficulty){
-            case "简单":  setSpeed(3);  setHp(2); break;
-            case "普通":  setSpeed(3);   setHp(2);break;
-            case "困难":  setSpeed(3);    setHp(3); break;
-            case "地狱":  setSpeed(3.5); setHp(4); Listener.timeSpan=0.5; break;
+            case "简单":  setSpeed(3);  setHp(2);Listener.timeSpan=0.5; break;
+            case "普通":  setSpeed(3);   setHp(2);Listener.timeSpan=0.5;break;
+            case "困难":  setSpeed(3);    setHp(3);Listener.timeSpan=0.5; break;
+            case "地狱":  setSpeed(3.5); setHp(4); Listener.timeSpan=0.25; break;
         }
     }
     public int getHp() {

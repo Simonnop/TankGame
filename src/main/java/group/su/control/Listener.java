@@ -27,7 +27,7 @@ public class Listener implements KeyListener{
     int time;
 
     //子弹发射的时间间隔
-    public static double timeSpan=1.0;
+    public static double timeSpan=0.5;
 
     static MyTank myTank;
 
@@ -50,12 +50,6 @@ public class Listener implements KeyListener{
          *
          * 按下相应的键之后，变换方向并移动
          * */
-
-        //这个v代表默认速度的倍数，便于后期调整速度，可以放到其他类中变为静态
-        //int v = 5;
-
-
-
         myTank = gameInstance.getMyTank();
         //用于坦克开火限制，临时记录时间
         time = gameInstance.getTime();

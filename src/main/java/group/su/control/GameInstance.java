@@ -29,6 +29,9 @@ public class GameInstance {
 
     private boolean EnemyClear = false;
 
+    public static int timeOfGenerateTank=25;
+    public static int timeOfRefreshBuff=15;
+
     public GameInstance(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
@@ -76,8 +79,8 @@ public class GameInstance {
         // 根据键盘输入移动
         moveByKeys();
 
-        if (time % 25 == 0 && flashCount == 0 && !tempStop) {
-            // 每 25s 刷敌方坦克
+        if (time % timeOfGenerateTank == 0 && flashCount == 0 && !tempStop) {
+            // 每 timeOfGenerateTank s 刷敌方坦克
             factory.createGameObject(Factory.GameObject.EnemyTank, 0, 0);
             factory.createGameObject(Factory.GameObject.EnemyTank, 560, 0);
             factory.createGameObject(Factory.GameObject.EnemyTank, 0, 560);
@@ -85,8 +88,8 @@ public class GameInstance {
             EnemyClear = false;
         }
 
-        if (time % 15 == 0 && flashCount == 0 && !tempStop) {
-            // 每 15s 刷道具
+        if (time % timeOfRefreshBuff == 0 && flashCount == 0 && !tempStop) {
+            // 每 timeOfRefreshBuff s 刷道具
             factory.createGameObject(Factory.GameObject.RandomBuff);
             factory.createGameObject(Factory.GameObject.RandomBuff);
             factory.createGameObject(Factory.GameObject.RandomBuff);
