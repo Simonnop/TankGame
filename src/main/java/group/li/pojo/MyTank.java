@@ -37,12 +37,33 @@ public class MyTank extends Tank implements Runnable {
         setDirection(Direction.UP);
     }
 
-    public void setAttributes(){
-        switch (SelectPanel.difficulty){
-            case "简单":  setSpeed(3);  setHp(2);Listener.timeSpan=0.5; setBulletNum(6);break;
-            case "普通":  setSpeed(3);   setHp(2);Listener.timeSpan=0.5;setBulletNum(6);break;
-            case "困难":  setSpeed(3);    setHp(4);Listener.timeSpan=0.5; setBulletNum(8);break;
-            case "地狱":  setSpeed(3.5); setHp(5); Listener.timeSpan=0.25;setBulletNum(10); break;
+    public void setAttributes() {
+        switch (SelectPanel.difficulty) {
+            case "简单":
+            case "普通":
+                setSpeed(3);
+                setHp(2);
+                setHpLimit(2);
+                Listener.timeSpan = 0.5;
+                setBulletNum(6);
+                setBulletNumLimit(6);
+                break;
+            case "困难":
+                setSpeed(3);
+                setHp(4);
+                setHpLimit(4);
+                Listener.timeSpan = 0.5;
+                setBulletNum(8);
+                setBulletNumLimit(8);
+                break;
+            case "地狱":
+                setSpeed(4);
+                setHp(5);
+                setHpLimit(5);
+                Listener.timeSpan = 0.25;
+                setBulletNum(10);
+                setBulletNumLimit(10);
+                break;
         }
     }
 

@@ -27,10 +27,13 @@ public class GameInstance {
     private int time = 0;
     private int flashCount = 0;
 
+    private boolean createdObjects = false;
+
     private boolean EnemyClear = false;
 
-    public static int timeOfGenerateTank=25;
-    public static int timeOfRefreshBuff=15;
+    public static int timeOfGenerateTank = 25;
+    public static int timeOfRefreshBuff = 15;
+
     public GameInstance() {
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
@@ -77,28 +80,43 @@ public class GameInstance {
         // 根据键盘输入移动
         moveByKeys();
 
-        if (time % timeOfGenerateTank == 0 && flashCount == 0 && !tempStop) {
+        if (time % timeOfGenerateTank == 0 && !createdObjects && !tempStop) {
             // 每 timeOfGenerateTank s 刷敌方坦克
             factory.createGameObject(Factory.GameObject.EnemyTank, 0, 0);
             factory.createGameObject(Factory.GameObject.EnemyTank, 560, 0);
             factory.createGameObject(Factory.GameObject.EnemyTank, 0, 560);
             factory.createGameObject(Factory.GameObject.EnemyTank, 560, 560);
+            // 随着时间推移,每次刷的坦克变多
+            if (time > 60) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 0, 40);
+            }
+            if (time > 120) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 40, 560);
+            }
+            if (time > 180) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 520, 0);
+            }
+            if (time > 240) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 560, 520);
+            }
             EnemyClear = false;
+            createdObjects = true;
         }
 
-        if (time % timeOfRefreshBuff == 0 && flashCount == 0 && !tempStop) {
+        if (time % timeOfRefreshBuff == 0 && !createdObjects && !tempStop) {
             // 每 timeOfRefreshBuff s 刷道具
             factory.createGameObject(Factory.GameObject.RandomBuff);
+            createdObjects = true;
         }
 
         // 计时
-        if (!tempStop){
+        if (!tempStop) {
             flashCount++;
         }
-        if (flashCount == 1000 / REFRESH_TIME) {
+        if (flashCount % (1000 / REFRESH_TIME) == 0) {
             time++;
+            createdObjects = false;
             System.out.println("test~~  " + time + "s");
-            flashCount = 0;
         }
 
         if (enemyTanksList.isEmpty() && !EnemyClear) {
@@ -173,7 +191,7 @@ public class GameInstance {
         return newMap;
     }
 
-    public int calculateScore(){
+    public int calculateScore() {
         int score = 0;
 
         synchronized (destroySet) {
@@ -222,7 +240,7 @@ public class GameInstance {
         return destroySet;
     }
 
-    public int getTime() {
-        return time;
+    public double getTime() {
+        return flashCount * 25.0 / 1000;
     }
 }

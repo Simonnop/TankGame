@@ -214,7 +214,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
         reachedDots.add(beginDot);
 
-        System.out.println("Find way from " + targetDot + " to " + beginDot);
+        //System.out.println("Find way from " + targetDot + " to " + beginDot);
 
 
         loop:

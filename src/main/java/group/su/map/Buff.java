@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.Random;
 
 import static group.Attributes.OBJECT_SIZE;
+import static group.su.control.Listener.timeSpan;
 import static group.su.map.MapData.*;
 
 public class Buff implements GetInfo {
@@ -32,6 +33,8 @@ public class Buff implements GetInfo {
                 if (tank instanceof MyTank) {
                     if (((MyTank) tank).getBulletNum() < ((MyTank) tank).getBulletNumLimit()) {
                         ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());
+                    } else {
+                        ADD_BULLETS_LIMIT.getBuff(tank);
                     }
                 }
                 System.out.println("ADD_BULLETS");
@@ -58,6 +61,8 @@ public class Buff implements GetInfo {
                 if (tank instanceof MyTank) {
                     if (tank.getHp() < ((MyTank) tank).getHpLimit()) {
                         tank.setHp(tank.getHp() + 1);
+                    } else {
+                        ADD_LIVES_LIMIT.getBuff(tank);
                     }
                 } else {
                     tank.setHp(tank.getHp() + 1);
@@ -89,6 +94,19 @@ public class Buff implements GetInfo {
                     ((MyTank) tank).setBulletNumLimit(((MyTank) tank).getBulletNumLimit() + 2);
                 }
                 System.out.println("ADD_BULLETS_LIMIT");
+            }
+        }, FASTER_FIRE_GAP {
+            @Override
+            protected Buff returnBuff(int x, int y) {
+                return new Buff(x, y, imageBuff, FASTER_FIRE_GAP);
+            }
+
+            @Override
+            public void getBuff(Tank tank) {
+                if (tank instanceof MyTank && timeSpan > 0.1) {
+                    timeSpan -= 0.05;
+                }
+                System.out.println("FASTER_FIRE_GAP");
             }
         };
 

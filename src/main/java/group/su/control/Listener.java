@@ -19,12 +19,15 @@ public class Listener implements KeyListener{
 
     public static Listener getListener(GameInstance gameInstance) {
         listener.gameInstance = gameInstance;
+        if (!keys.isEmpty()) {
+            keys.clear();
+        }
         return listener;
     }
 
     GameInstance gameInstance;
-    public int temp_time = 0;
-    int time;
+    public double temp_time = 0;
+    double time;
 
     //子弹发射的时间间隔
     public static double timeSpan=0.5;
@@ -114,28 +117,31 @@ public class Listener implements KeyListener{
 
     public static void moveByKeys() {
 
-        if (keys.isEmpty()) {
-            return;
+        synchronized (keys) {
+            if (keys.isEmpty()) {
+                return;
+            }
+            if (keys.get(0) == 'D') {
+                myTank.setDirection(Tank.Direction.DOWN);
+                DirectionUtil.ChangeImageAccordingDirection(myTank);
+                myTank.moveDown();
+            }
+            if (keys.get(0) == 'U') {
+                myTank.setDirection(Tank.Direction.UP);
+                DirectionUtil.ChangeImageAccordingDirection(myTank);
+                myTank.moveUp();
+            }
+            if (keys.get(0) == 'R') {
+                myTank.setDirection(Tank.Direction.RIGHT);
+                DirectionUtil.ChangeImageAccordingDirection(myTank);
+                myTank.moveRight();
+            }
+            if (keys.get(0) == 'L') {
+                myTank.setDirection(Tank.Direction.LEFT);
+                DirectionUtil.ChangeImageAccordingDirection(myTank);
+                myTank.moveLeft();
+            }
         }
-        if (keys.get(0) == 'D') {
-            myTank.setDirection(Tank.Direction.DOWN);
-            DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveDown();
-        }
-        if (keys.get(0) == 'U') {
-            myTank.setDirection(Tank.Direction.UP);
-            DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveUp();
-        }
-        if (keys.get(0) == 'R') {
-            myTank.setDirection(Tank.Direction.RIGHT);
-            DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveRight();
-        }
-        if (keys.get(0) == 'L') {
-            myTank.setDirection(Tank.Direction.LEFT);
-            DirectionUtil.ChangeImageAccordingDirection(myTank);
-            myTank.moveLeft();
-        }
+
     }
 }

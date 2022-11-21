@@ -53,7 +53,7 @@ public class Application {
         // 等待输入用户名
         // 选择难度和地图
         for (; ; ) {
-            System.out.println(isInput);
+            System.out.print("");
             if (isInput) {
                 VIEW_CONTROL.selectPanel();
                 if (SelectPanel.allIsSelect) {
