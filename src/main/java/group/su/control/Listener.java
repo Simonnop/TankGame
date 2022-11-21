@@ -79,6 +79,7 @@ public class Listener implements KeyListener{
         }
 
         if (e.getKeyCode() == KeyEvent.VK_S) {
+            System.out.println("fire");
             //坦克开火限制 ，暂时设置为timeSpans内只能射击一次
             if (temp_time == 0 && myTank.getBulletNum() > 0) {
                 bulletOut(myTank);

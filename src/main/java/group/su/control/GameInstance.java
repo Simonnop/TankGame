@@ -14,8 +14,8 @@ import static group.su.control.Listener.moveByKeys;
 
 public class GameInstance {
 
+    public static String difficulty;
     private final Factory factory;
-
     private MyTank myTank;
     private Vector<EnemyTank> enemyTanksList;
     private Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap;
@@ -26,11 +26,8 @@ public class GameInstance {
 
     private int time = 0;
     private int flashCount = 0;
-
     private boolean createdObjects = false;
-
-    private boolean EnemyClear = false;
-
+    private boolean enemyClear = false;
     public static int timeOfGenerateTank = 25;
     public static int timeOfRefreshBuff = 15;
 
@@ -91,15 +88,27 @@ public class GameInstance {
                 factory.createGameObject(Factory.GameObject.EnemyTank, 0, 40);
             }
             if (time > 120) {
-                factory.createGameObject(Factory.GameObject.EnemyTank, 40, 560);
+                factory.createGameObject(Factory.GameObject.StrongEnemyTank, 40, 560);
             }
             if (time > 180) {
                 factory.createGameObject(Factory.GameObject.EnemyTank, 520, 0);
             }
             if (time > 240) {
-                factory.createGameObject(Factory.GameObject.EnemyTank, 560, 520);
+                factory.createGameObject(Factory.GameObject.StrongEnemyTank, 560, 520);
             }
-            EnemyClear = false;
+            if (time > 300) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 40, 0);
+            }
+            if (time > 360) {
+                factory.createGameObject(Factory.GameObject.StrongEnemyTank, 0, 520);
+            }
+            if (time > 420) {
+                factory.createGameObject(Factory.GameObject.EnemyTank, 560, 40);
+            }
+            if (time > 480) {
+                factory.createGameObject(Factory.GameObject.StrongEnemyTank, 520, 560);
+            }
+            enemyClear = false;
             createdObjects = true;
         }
 
@@ -119,12 +128,11 @@ public class GameInstance {
             System.out.println("test~~  " + time + "s");
         }
 
-        if (enemyTanksList.isEmpty() && !EnemyClear) {
+        if (enemyTanksList.isEmpty() && !enemyClear) {
             // 打光了所有敌方坦克,刷道具
             factory.createGameObject(Factory.GameObject.RandomBuff);
             factory.createGameObject(Factory.GameObject.RandomBuff);
-            factory.createGameObject(Factory.GameObject.RandomBuff);
-            EnemyClear = true;
+            enemyClear = true;
         }
     }
 

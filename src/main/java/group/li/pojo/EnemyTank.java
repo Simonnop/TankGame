@@ -1,13 +1,12 @@
 package group.li.pojo;
 
-import com.alibaba.druid.sql.visitor.functions.Right;
 import group.Application;
 import group.Attributes;
 import group.GetInfo;
 import group.li.util.DirectionUtil;
+import group.su.control.GameInstance;
 import group.su.map.Dot;
 import group.su.map.Obstacle;
-import group.su.view.SelectPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,8 +15,6 @@ import java.util.Random;
 import static group.Application.tempStop;
 import static group.Attributes.OBJECT_SIZE;
 import static group.li.pojo.Tank.Direction.*;
-import static group.su.map.MapData.dotsLength;
-import static group.su.map.MapData.dotsWidth;
 
 
 //每个敌方坦克也是一个线程
@@ -29,9 +26,9 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     public static Image enemyTank_right = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/EnemyTank_right.png"));
 
     //控制敌方坦克发子弹的一个间隔，timeSpanOfEnermyBullet+0~8 s
-    public static double timeSpanOfEnermyBullet=10;
+    public static double timeSpanOfEnemyBullet = 10;
     //调用算法间隔
-    public static  int timeSpanOfFindRoad = 8;
+    public static int timeSpanOfFindRoad = 8;
 
 
     int addScore = 5;
@@ -45,20 +42,41 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         setImage(enemyTank_down);
         setDirection(Direction.DOWN);
         setAttributes();
-    }
-
-
-    public void setAttributes(){
-        switch (SelectPanel.difficulty){
-            case "简单": setHp(1); setSpeed(1.5); timeSpanOfEnermyBullet=10; break;
-            case "普通": setHp(1); setSpeed(2); timeSpanOfEnermyBullet=8;break;
-            case "困难": setHp(1); setSpeed(2.5); timeSpanOfEnermyBullet=6;break;
-            case "地狱": setHp(2); setSpeed(3.5); timeSpanOfEnermyBullet=3;break;
+        timeSpanOfEnemyBullet -= (int) (gameInstance.getTime() / 60);
+        if (timeSpanOfEnemyBullet < 0) {
+            timeSpanOfEnemyBullet = 0;
         }
     }
+
+
+    public void setAttributes() {
+        switch (GameInstance.difficulty) {
+            case "简单":
+                setHp(1);
+                setSpeed(1.5);
+                timeSpanOfEnemyBullet = 10;
+                break;
+            case "普通":
+                setHp(1);
+                setSpeed(2);
+                timeSpanOfEnemyBullet = 8;
+                break;
+            case "困难":
+                setHp(1);
+                setSpeed(2.5);
+                timeSpanOfEnemyBullet = 6;
+                break;
+            case "地狱":
+                setHp(2);
+                setSpeed(3.5);
+                timeSpanOfEnemyBullet = 3;
+                break;
+        }
+    }
+
     public void run() {
-        int randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnermyBullet);
-        int randomTimeFindRoad=timeSpanOfFindRoad;
+        int randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnemyBullet);
+        int randomTimeFindRoad = timeSpanOfFindRoad;
         int followDotsIndex = 0;
         ArrayList<Dot> roadsDots = findRoadToTank(getGameInstance().getMyTank());
         while (Application.gameRun) {
@@ -88,7 +106,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
                             bulletOut(this);
                         }
                         //System.out.println("bullet");
-                        randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnermyBullet);
+                        randomTime = (int) (Math.random() * 2.0 + timeSpanOfEnemyBullet);
                     }
                 }
             }
@@ -258,7 +276,6 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
 
             if (targetX - currentX == 0 && targetY - currentY == 0) {
                 followDotsIndex++;
-                System.out.println(followDotsIndex);
                 changeDirectionTime = 0;
                 return followDotsIndex;
             }
@@ -357,19 +374,19 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         ) {
             if (!this.equals(e)) {
                 if (this.getDirection().equals(UP) && e.getY() < this.getY() &&
-                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0],2) <= 4) {
+                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0], 2) <= 4) {
                     return true;
                 }
                 if (this.getDirection().equals(DOWN) && e.getY() > this.getY() &&
-                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0],2) <= 4) {
+                    Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0], 2) <= 4) {
                     return true;
                 }
                 if (this.getDirection().equals(RIGHT) && e.getX() > this.getX() &&
-                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1],2) <= 4) {
+                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1], 2) <= 4) {
                     return true;
                 }
                 if (this.getDirection().equals(LEFT) && e.getX() < this.getX() &&
-                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1],2) <= 4) {
+                    Math.pow(e.toSimpleDot()[1] - this.toSimpleDot()[1], 2) <= 4) {
                     return true;
                 }
             }
@@ -384,17 +401,16 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         return false;
     }
 
-    private void smoothMoveToSimpleDot(){
+    private void smoothMoveToSimpleDot() {
         while (true) {
             setDirectionLock(null);
             if (!(getX() == toSimpleDot()[0] * OBJECT_SIZE)) {
                 setDirection(LEFT);
                 moveLeft();
-            }
-            else if (!(getY() == toSimpleDot()[1] * OBJECT_SIZE)) {
+            } else if (!(getY() == toSimpleDot()[1] * OBJECT_SIZE)) {
                 setDirection(UP);
                 moveUp();
-            }else break;
+            } else break;
             try {
                 Thread.sleep(Attributes.REFRESH_TIME);
             } catch (InterruptedException e) {

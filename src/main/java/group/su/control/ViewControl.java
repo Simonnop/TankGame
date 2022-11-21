@@ -7,13 +7,13 @@ public class ViewControl {
     private final MainFrame mainFrame = new MainFrame();
     private final WelMenuPanel welMenuPanel = new WelMenuPanel(mainFrame);
     private final OverMenuPanel overMenuPanel = new OverMenuPanel(mainFrame);
-
     private final SelectPanel selectPanel =new SelectPanel(mainFrame);
+
+
     public void createGamePanel(GameInstance gameInstance) {
         // 根据游戏实例建立游戏面板
         this.gamePanel = new GamePanel(gameInstance,mainFrame);
         overMenuPanel.setGameInstance(gameInstance);
-
     }
 
     public void welcomeMenuShow() {

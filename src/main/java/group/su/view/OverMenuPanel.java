@@ -11,8 +11,7 @@ import java.awt.event.ActionListener;
 
 import static group.Application.*;
 import static group.Application.restart;
-import static group.su.view.SelectPanel.difficulty;
-import static group.su.view.SelectPanel.isTheSameType;
+import static group.su.control.GameInstance.difficulty;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 

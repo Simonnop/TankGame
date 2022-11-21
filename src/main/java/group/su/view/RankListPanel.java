@@ -2,19 +2,16 @@ package group.su.view;
 
 import group.Mybatis.pojo.User;
 import group.Mybatis.util.UserMethod;
-import lombok.ToString;
-import net.miginfocom.swing.MigLayout;
+import group.su.control.GameInstance;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import static group.Application.VIEW_CONTROL;
-import static group.Application.playerName;
 
 public class RankListPanel extends JPanel {
 
@@ -61,7 +58,7 @@ public class RankListPanel extends JPanel {
 
     public JTable getRankListTable(){
 
-        Vector<User> allUsers = UserMethod.getAllUsersAccordingToType(SelectPanel.difficulty);
+        Vector<User> allUsers = UserMethod.getAllUsersAccordingToType(GameInstance.difficulty);
         String [] title ={"用户名","分数","难度"};
         String [][] usersInfo=new String[allUsers.size()][3];
 

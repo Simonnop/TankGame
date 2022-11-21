@@ -1,10 +1,9 @@
 package group.li.pojo;
 
+import group.su.control.GameInstance;
 import group.su.control.Listener;
-import group.su.view.SelectPanel;
 
 import java.awt.*;
-import java.util.Vector;
 
 import static group.Application.gameRun;
 
@@ -28,28 +27,23 @@ public class MyTank extends Tank implements Runnable {
     public MyTank(int x, int y) {
         super(x, y);
         setImage(myTank_up);
-        setHp(4);
-        setHpLimit(4);
-        setSpeed(3);
-        setBulletNum(6);
-        setBulletNumLimit(6);
         setAttributes();
         setDirection(Direction.UP);
     }
 
     public void setAttributes() {
-        switch (SelectPanel.difficulty) {
+        switch (GameInstance.difficulty) {
             case "简单":
             case "普通":
-                setSpeed(3);
-                setHp(2);
-                setHpLimit(2);
-                Listener.timeSpan = 0.5;
-                setBulletNum(6);
-                setBulletNumLimit(6);
+                setSpeed(5);
+                setHp(5);
+                setHpLimit(5);
+                Listener.timeSpan = 0.6;
+                setBulletNum(10);
+                setBulletNumLimit(10);
                 break;
             case "困难":
-                setSpeed(3);
+                setSpeed(4);
                 setHp(4);
                 setHpLimit(4);
                 Listener.timeSpan = 0.5;
@@ -57,12 +51,12 @@ public class MyTank extends Tank implements Runnable {
                 setBulletNumLimit(8);
                 break;
             case "地狱":
-                setSpeed(4);
-                setHp(5);
-                setHpLimit(5);
-                Listener.timeSpan = 0.25;
-                setBulletNum(10);
-                setBulletNumLimit(10);
+                setSpeed(3);
+                setHp(3);
+                setHpLimit(3);
+                Listener.timeSpan = 0.4;
+                setBulletNum(6);
+                setBulletNumLimit(6);
                 break;
         }
     }
