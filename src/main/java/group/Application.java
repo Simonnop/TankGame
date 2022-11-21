@@ -1,10 +1,10 @@
 package group;
 
-import group.su.control.ViewControl;
-import group.su.control.GameInstance;
-import group.su.view.SelectPanel;
+import group.control.ViewControl;
+import group.control.GameInstance;
+import group.view.SelectPanel;
 
-import static group.su.view.SelectPanel.returnSelectedMap;
+import static group.view.SelectPanel.returnSelectedMap;
 
 public class Application {
 
