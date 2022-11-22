@@ -241,13 +241,13 @@ public class GamePanel extends JPanel implements Runnable {
             introShow = true;
             tempStop = true;
             this.setVisible(true);
-            this.setBounds(800, 0, 800, 500);
+            this.setBounds(800, 0, 920, 550);
             this.setTitle("游戏介绍 (显示时游戏暂停)");
 
             Container container = this.getContentPane();
 
 
-            label.setSize(800, 500);
+            label.setSize(900, 500);
             container.add(label);
 
             label.setHorizontalAlignment(SwingConstants.CENTER);
