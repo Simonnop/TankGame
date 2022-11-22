@@ -1,4 +1,4 @@
-package group.model;
+package group.model.pojo;
 
 import group.Attributes;
 import group.GetInfo;
@@ -8,8 +8,8 @@ import java.awt.*;
 import java.util.Vector;
 
 import static group.Attributes.*;
-import static group.model.Bullet.enemyTankBullet;
-import static group.model.Bullet.myTankBullet;
+import static group.model.pojo.Bullet.enemyTankBullet;
+import static group.model.pojo.Bullet.myTankBullet;
 import static group.model.util.CollisionDetection.isAboutTouchForTank;
 
 public class Tank implements GetInfo {

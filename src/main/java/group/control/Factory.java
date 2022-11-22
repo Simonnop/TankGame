@@ -1,9 +1,9 @@
 package group.control;
 
-import group.model.EnemyTank;
-import group.model.FastEnemyTank;
-import group.model.MyTank;
-import group.model.StrongEnemyTank;
+import group.model.pojo.EnemyTank;
+import group.model.pojo.FastEnemyTank;
+import group.model.pojo.MyTank;
+import group.model.pojo.StrongEnemyTank;
 import group.map.Buff;
 
 import java.util.Random;

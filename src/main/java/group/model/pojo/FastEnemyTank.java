@@ -1,4 +1,4 @@
-package group.model;
+package group.model.pojo;
 
 import group.control.GameInstance;
 

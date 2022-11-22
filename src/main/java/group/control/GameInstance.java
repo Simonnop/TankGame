@@ -2,8 +2,8 @@ package group.control;
 
 import group.GetInfo;
 import group.map.Obstacle;
-import group.model.*;
 import group.map.Buff;
+import group.model.pojo.*;
 
 import java.util.*;
 

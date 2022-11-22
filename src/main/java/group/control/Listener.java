@@ -1,7 +1,7 @@
 package group.control;
 
-import group.model.MyTank;
-import group.model.Tank;
+import group.model.pojo.MyTank;
+import group.model.pojo.Tank;
 import group.model.util.DirectionUtil;
 
 import java.awt.event.KeyEvent;
@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import static group.Application.tempStop;
-import static group.model.Tank.bulletOut;
+import static group.model.pojo.Tank.bulletOut;
 
 public class Listener implements KeyListener{
 

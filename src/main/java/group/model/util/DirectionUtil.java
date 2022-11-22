@@ -1,13 +1,13 @@
 package group.model.util;
 
-import group.model.EnemyTank;
-import group.model.FastEnemyTank;
-import group.model.MyTank;
-import group.model.StrongEnemyTank;
+import group.model.pojo.EnemyTank;
+import group.model.pojo.FastEnemyTank;
+import group.model.pojo.MyTank;
+import group.model.pojo.StrongEnemyTank;
 
-import static group.model.EnemyTank.*;
-import static group.model.FastEnemyTank.*;
-import static group.model.StrongEnemyTank.*;
+import static group.model.pojo.EnemyTank.*;
+import static group.model.pojo.FastEnemyTank.*;
+import static group.model.pojo.StrongEnemyTank.*;
 
 public class DirectionUtil {
     //敌方坦克根据方向改变图片

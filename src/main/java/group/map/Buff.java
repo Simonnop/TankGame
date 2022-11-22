@@ -3,8 +3,8 @@ package group.map;
 import group.GetInfo;
 import group.control.GameInstance;
 import group.control.Listener;
-import group.model.MyTank;
-import group.model.Tank;
+import group.model.pojo.MyTank;
+import group.model.pojo.Tank;
 
 import java.awt.*;
 import java.util.Random;

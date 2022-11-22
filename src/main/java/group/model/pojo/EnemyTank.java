@@ -1,4 +1,4 @@
-package group.model;
+package group.model.pojo;
 
 import group.Application;
 import group.Attributes;
@@ -14,7 +14,7 @@ import java.util.Random;
 
 import static group.Application.tempStop;
 import static group.Attributes.OBJECT_SIZE;
-import static group.model.Tank.Direction.*;
+import static group.model.pojo.Tank.Direction.*;
 
 
 //每个敌方坦克也是一个线程

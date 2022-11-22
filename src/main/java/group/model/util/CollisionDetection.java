@@ -1,9 +1,9 @@
 package group.model.util;
 
 import group.GetInfo;
-import group.model.EnemyTank;
-import group.model.MyTank;
-import group.model.Tank;
+import group.model.pojo.EnemyTank;
+import group.model.pojo.MyTank;
+import group.model.pojo.Tank;
 import group.map.Buff;
 import group.map.Obstacle;
 

@@ -3,7 +3,7 @@ package group.view;
 import group.GetInfo;
 import group.map.MapData;
 import group.map.Obstacle;
-import group.model.Bullet;
+import group.model.pojo.Bullet;
 import group.control.GameInstance;
 
 import javax.swing.*;
@@ -14,9 +14,9 @@ import java.util.Vector;
 import static group.Application.gameRun;
 import static group.Application.tempStop;
 import static group.Attributes.*;
-import static group.model.EnemyTank.enemyTank_up;
-import static group.model.FastEnemyTank.fastEnemyTank_up;
-import static group.model.StrongEnemyTank.StrongEnemyTank_up;
+import static group.model.pojo.EnemyTank.enemyTank_up;
+import static group.model.pojo.FastEnemyTank.fastEnemyTank_up;
+import static group.model.pojo.StrongEnemyTank.StrongEnemyTank_up;
 
 public class GamePanel extends JPanel implements Runnable {
 
