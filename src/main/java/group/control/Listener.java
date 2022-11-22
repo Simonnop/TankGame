@@ -20,11 +20,12 @@ public class Listener implements KeyListener{
         if (!keys.isEmpty()) {
             keys.clear();
         }
+        temp_time = 0;
         return listener;
     }
 
     GameInstance gameInstance;
-    public double temp_time = 0;
+    public static double temp_time = 0;
     double time;
 
     //子弹发射的时间间隔
