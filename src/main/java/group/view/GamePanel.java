@@ -109,14 +109,21 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString("剩余敌人:", 630, 100);
 
         int[] counts = gameInstance.countKind();
-        g.drawImage(enemyTank_up, 630, 130, 40, 40, this);
-        g.drawString("x " + counts[0], 690, 160);
-        g.drawImage(fastEnemyTank_up, 630, 190, 40, 40, this);
-        g.drawString("x " + counts[1], 690, 220);
-        g.drawImage(StrongEnemyTank_up, 630, 250, 40, 40, this);
-        g.drawString("x " + counts[2], 690, 280);
+        g.drawImage(enemyTank_up, 630, 120, 40, 40, this);
+        g.drawString("x " + counts[0], 690, 150);
+        g.drawImage(fastEnemyTank_up, 630, 180, 40, 40, this);
+        g.drawString("x " + counts[1], 690, 210);
+        g.drawImage(StrongEnemyTank_up, 630, 240, 40, 40, this);
+        g.drawString("x " + counts[2], 690, 270);
 
         g.drawString("剩余生命:", 630, 320);
+
+        g.drawString("难度: " + GameInstance.difficulty, 630, 540);
+        g.drawString("得分: " + gameInstance.calculateScore(), 630, 580);
+
+        if (gameInstance.getMyTank() == null) {
+            return;
+        }
 
         synchronized (gameInstance.getMyTank()) {
 
@@ -153,8 +160,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-        g.drawString("得分: " + gameInstance.calculateScore(), 630, 560);
-
 
         for (int i = 0; i < MapData.dotsLength / 2 + 1; i++) {
             for (int j = 0; j < MapData.dotsWidth / 2 + 1; j++) {
@@ -190,6 +195,8 @@ public class GamePanel extends JPanel implements Runnable {
             String str = gameInstance.getInfoMap().get(times[i]);
             g.drawString(str, 300 - str.length()*5, 30 + i * 20);
         }
+
+
     }
 
     private <T extends GetInfo> void drawObjects(Graphics g, Vector<T> list) {

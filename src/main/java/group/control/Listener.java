@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import static group.Application.tempStop;
 import static group.model.Tank.bulletOut;
 
 public class Listener implements KeyListener{
@@ -46,6 +47,9 @@ public class Listener implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
 
+        if (tempStop) {
+            return;
+        }
         /*
          *
          *  控制坦克移动,与攻击
