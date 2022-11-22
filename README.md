@@ -2,10 +2,9 @@
 
 ## 示例图片
 
-![20221122191802](../../../../tankgame.assets/20221122191802-16691160248533.png)![20221122191802](../../../../tankgame.assets/20221122191647.png)
-
-![20221122191936](../../../../tankgame.assets/20221122191936.png)
-
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 ## 项目介绍
 
 ### 项目结构
@@ -82,7 +81,10 @@
 
 >  本项目的压缩包自带 JRE 环境，无需额外配置
 
-- [下载最新版文件](https://github.com/SCNU-A225/CrazyArcade/releases)，并解压缩
+- 链接：https://pan.baidu.com/s/1AjXn_bwx2hmNUvrwgez_SA?pwd=1234
+  提取码：1234
+
+![img_3.png](img_3.png)
 - 运行TankGame.exe文件
 
 ### 项目文件
