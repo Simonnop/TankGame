@@ -65,8 +65,10 @@ public class CollisionDetection {
                 for (int i = 0; i < obstacles.size(); i++) {
                     if (isCollision(tank, obstacles.get(i)) != null) {
                         tank.setDirectionLock(isCollision(tank, obstacles.get(i)));
-                        if (obstacles.get(i).getKind().equals(Obstacle.ObstacleKind.BASE) && tank instanceof MyTank) {
+                        if (obstacles.get(i).getKind().equals(Obstacle.ObstacleKind.BASE)
+                            && tank instanceof MyTank && ((MyTank) tank).getBulletNum() != ((MyTank) tank).getBulletNumLimit()) {
                             ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());
+                            Tank.gameInstance.addInfoMap("Game: 获得弹药补给");
                         }
                     }
                 }
@@ -82,6 +84,9 @@ public class CollisionDetection {
             isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());
             isTouchBuff(tank, Tank.getGameInstance().getBuffList());
         } else {
+            if (!Tank.getGameInstance().getMyTank().isLive()) {
+                return;
+            }
             isTouchMyTank((EnemyTank) tank, Tank.getGameInstance().getMyTank());
             isTouchObstacles(tank, Tank.getGameInstance().getObstacleMap());
             isTouchEnemyTanks(tank, Tank.getGameInstance().getEnemyTanksList());

@@ -1,6 +1,7 @@
 package group.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
 
@@ -12,5 +13,6 @@ public class MainFrame extends JFrame {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/MyTank_up.png")));
     }
 }

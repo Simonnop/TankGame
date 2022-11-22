@@ -32,6 +32,7 @@ public class Buff implements GetInfo {
                 if (tank instanceof MyTank) {
                     if (((MyTank) tank).getBulletNum() < ((MyTank) tank).getBulletNumLimit()) {
                         ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());
+                        gameInstance.addInfoMap("Buff: 获得弹药补给");
                     } else {
                         ADD_BULLETS_LIMIT.getBuff(tank);
                     }
@@ -47,6 +48,9 @@ public class Buff implements GetInfo {
             @Override
             public void getBuff(Tank tank) {
                 tank.setBulletSpeed(tank.getBulletSpeed() + 1);
+                if (tank instanceof MyTank) {
+                    gameInstance.addInfoMap("Buff: 炮弹加速");
+                }
                 System.out.println("SWIFT_BULLETS");
             }
         }, ADD_LIVES {
@@ -60,6 +64,7 @@ public class Buff implements GetInfo {
                 if (tank instanceof MyTank) {
                     if (tank.getHp() < ((MyTank) tank).getHpLimit()) {
                         tank.setHp(tank.getHp() + 1);
+                        gameInstance.addInfoMap("Buff: 回复血量");
                     } else {
                         ADD_LIVES_LIMIT.getBuff(tank);
                     }
@@ -81,6 +86,7 @@ public class Buff implements GetInfo {
                         ADD_LIVES.getBuff(tank);
                     } else if (((MyTank) tank).getHpLimit() < 10) {
                         ((MyTank) tank).setHpLimit(((MyTank) tank).getHpLimit() + 1);
+                        gameInstance.addInfoMap("Buff: 增加血量上限");
                     }
                 }
                 System.out.println("ADD_LIVES_LIMIT");
@@ -95,6 +101,7 @@ public class Buff implements GetInfo {
             public void getBuff(Tank tank) {
                 if (tank instanceof MyTank && ((MyTank) tank).getBulletNumLimit() < 20) {
                     ((MyTank) tank).setBulletNumLimit(((MyTank) tank).getBulletNumLimit() + 2);
+                    gameInstance.addInfoMap("Buff: 增加备弹上限");
                 }
                 System.out.println("ADD_BULLETS_LIMIT");
             }
@@ -108,6 +115,7 @@ public class Buff implements GetInfo {
             public void getBuff(Tank tank) {
                 if (tank instanceof MyTank && Listener.timeSpan > 0.3) {
                     Listener.timeSpan -= 0.05;
+                    gameInstance.addInfoMap("Buff: 减小弹药装填时间");
                 }
                 System.out.println("FASTER_FIRE_GAP");
             }

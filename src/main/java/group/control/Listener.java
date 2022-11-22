@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-import static group.Application.gameRun;
 import static group.model.Tank.bulletOut;
 
 public class Listener implements KeyListener{
@@ -90,12 +89,6 @@ public class Listener implements KeyListener{
                 myTank.setBulletNum(myTank.getBulletNum() - 1);
                 temp_time = time;
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            // 测试其他功能用
-            gameRun = false;
-            System.out.println("get");
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            myTank.setHp(100);
         }
     }
 

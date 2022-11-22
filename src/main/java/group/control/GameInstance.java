@@ -10,7 +10,6 @@ import java.util.*;
 import static group.Application.tempStop;
 import static group.Attributes.*;
 
-
 public class GameInstance {
 
     public static String difficulty;
@@ -23,12 +22,16 @@ public class GameInstance {
     private Set<EnemyTank> destroySet;
     private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
 
+    private TreeMap<Integer,String> infoMap = new TreeMap<>();
+
     private int time = 0;
     private int flashCount = 0;
     private boolean createdObjects = false;
     private boolean enemyClear = false;
     public static int timeOfGenerateTank = 25;
     public static int timeOfRefreshBuff = 15;
+
+    private int lastAddInfoTime = 0;
 
     public GameInstance() {
         Tank.setGameInstance(this);
@@ -73,6 +76,8 @@ public class GameInstance {
         tryRecycle(allBulletList);
         tryRecycle(buffList);
 
+        tryRecycleInfoMap();
+
         // 根据键盘输入移动
         Listener.moveByKeys();
 
@@ -109,12 +114,17 @@ public class GameInstance {
             }
             enemyClear = false;
             createdObjects = true;
+
+            addInfoMap("Game: 新一波敌人来袭");
         }
 
         if (time % timeOfRefreshBuff == 0 && !createdObjects && !tempStop) {
+
             // 每 timeOfRefreshBuff s 刷道具
             factory.createGameObject(Factory.GameObject.RandomBuff);
             createdObjects = true;
+
+            addInfoMap("Game: 补给箱已到达");
         }
 
         // 计时
@@ -127,11 +137,12 @@ public class GameInstance {
             System.out.println("test~~  " + time + "s");
         }
 
-        if (enemyTanksList.isEmpty() && !enemyClear) {
+        if (enemyTanksList.isEmpty() && !enemyClear && time > 5) {
             // 打光了所有敌方坦克,刷道具
             factory.createGameObject(Factory.GameObject.RandomBuff);
             factory.createGameObject(Factory.GameObject.RandomBuff);
             enemyClear = true;
+            addInfoMap("Game: 清空敌人奖励--补给箱已到达");
         }
     }
 
@@ -209,6 +220,34 @@ public class GameInstance {
         }
 
         return score;
+    }
+
+    public TreeMap<Integer, String> getInfoMap() {
+        return infoMap;
+    }
+
+    public void addInfoMap(String str) {
+        int currentTime = time;
+        if (time == lastAddInfoTime) {
+            currentTime++;
+        }
+        infoMap.put(currentTime,str);
+        lastAddInfoTime = currentTime;
+    }
+
+    private void tryRecycleInfoMap() {
+        if (infoMap.isEmpty()) {
+            return;
+        }
+        synchronized (infoMap) {
+            int size = infoMap.size();
+            Integer[] times = infoMap.keySet().toArray(new Integer[0]);
+            for (int i = 0; i < size; i++) {
+                if (time - times[i] > 3) {
+                    infoMap.remove(times[i]);
+                }
+            }
+        }
     }
 
     public void setMap(Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {

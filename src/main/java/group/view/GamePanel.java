@@ -177,6 +177,19 @@ public class GamePanel extends JPanel implements Runnable {
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.TREE));
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BASE));
+
+        // 绘制信息栏
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("幼圆", Font.BOLD, 15));
+        if (gameInstance.getInfoMap().isEmpty()) {
+            return;
+        }
+        int size = gameInstance.getInfoMap().size();
+        Integer[] times = gameInstance.getInfoMap().keySet().toArray(new Integer[0]);
+        for (int i = 0; i < size; i++) {
+            String str = gameInstance.getInfoMap().get(times[i]);
+            g.drawString(str, 300 - str.length()*5, 30 + i * 20);
+        }
     }
 
     private <T extends GetInfo> void drawObjects(Graphics g, Vector<T> list) {
@@ -229,7 +242,7 @@ public class GamePanel extends JPanel implements Runnable {
             tempStop = true;
             this.setVisible(true);
             this.setBounds(800, 0, 800, 500);
-            this.setTitle("游戏介绍");
+            this.setTitle("游戏介绍 (显示时游戏暂停)");
 
             Container container = this.getContentPane();
 
