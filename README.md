@@ -2,9 +2,9 @@
 
 ## 示例图片
 
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![start.png](src/main/resources/img/start.png)
+![game.png](src/main/resources/img/game.png)
+![end.png](src/main/resources/img/end.png)
 ## 项目介绍
 
 ### 项目结构
@@ -73,7 +73,7 @@
 
 ### 项目架构图
 
-![TankGame架构图](../../../../tankgame.assets/TankGame架构图.png)
+![TankGame架构图](src/main/resources/img/TankGame架构图.png)
 
 ## 使用
 
@@ -84,7 +84,7 @@
 - 链接：https://pan.baidu.com/s/1AjXn_bwx2hmNUvrwgez_SA?pwd=1234
   提取码：1234
 
-![img_3.png](img_3.png)
+![exe.png](src/main/resources/img/exe.png)
 - 运行TankGame.exe文件
 
 ### 项目文件
