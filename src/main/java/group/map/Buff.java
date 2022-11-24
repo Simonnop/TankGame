@@ -1,8 +1,8 @@
 package group.map;
 
 import group.GetInfo;
-import group.control.GameInstance;
-import group.control.Listener;
+import group.database.control.GameInstance;
+import group.database.control.Listener;
 import group.model.pojo.MyTank;
 import group.model.pojo.Tank;
 

@@ -2,7 +2,7 @@ package group.view;
 
 import group.database.pojo.User;
 import group.database.util.UserMethod;
-import group.control.GameInstance;
+import group.database.control.GameInstance;
 
 import javax.swing.*;
 import javax.swing.table.*;

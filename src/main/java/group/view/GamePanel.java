@@ -4,7 +4,7 @@ import group.GetInfo;
 import group.map.MapData;
 import group.map.Obstacle;
 import group.model.pojo.Bullet;
-import group.control.GameInstance;
+import group.database.control.GameInstance;
 
 import javax.swing.*;
 import java.awt.*;

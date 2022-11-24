@@ -1,4 +1,4 @@
-package group.control;
+package group.database.control;
 
 import group.model.pojo.MyTank;
 import group.model.pojo.Tank;

@@ -1,4 +1,4 @@
-package group.control;
+package group.database.control;
 
 import group.model.pojo.EnemyTank;
 import group.model.pojo.FastEnemyTank;

@@ -1,4 +1,4 @@
-package group.control;
+package group.database.control;
 import group.view.*;
 
 public class ViewControl {

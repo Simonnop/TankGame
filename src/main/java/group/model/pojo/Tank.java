@@ -2,7 +2,7 @@ package group.model.pojo;
 
 import group.Attributes;
 import group.GetInfo;
-import group.control.GameInstance;
+import group.database.control.GameInstance;
 
 import java.awt.*;
 import java.util.Vector;

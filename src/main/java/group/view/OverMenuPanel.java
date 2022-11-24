@@ -1,6 +1,6 @@
 package group.view;
 
-import group.control.GameInstance;
+import group.database.control.GameInstance;
 import group.database.pojo.User;
 import group.database.util.UserMethod;
 
