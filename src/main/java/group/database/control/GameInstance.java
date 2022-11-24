@@ -12,31 +12,32 @@ import static group.Attributes.*;
 
 public class GameInstance {
 
-    public static String difficulty;
-    private final Factory factory;
-    private MyTank myTank;
-    private Vector<EnemyTank> enemyTanksList;
-    private Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap;
-    private Vector<Bullet> allBulletList;
-    private Vector<Buff> buffList;
-    private Set<EnemyTank> destroySet;
-    private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map;
+    public static String difficulty; // 游戏难度
+    private final Factory factory; // 工厂
+    private MyTank myTank; // 我方坦克
+    private Vector<EnemyTank> enemyTanksList; // 敌方坦克集(所有种类)
+    private Map<Obstacle.ObstacleKind, Vector<Obstacle>> obstacleMap; // 可调用的游戏地图  K:障碍物种类 V:障碍物实例
+    private Vector<Bullet> allBulletList; // 所有子弹集
+    private Vector<Buff> buffList; // Buff集
+    private Set<EnemyTank> destroySet; // 摧毁的坦克集
+    private Map<Obstacle.ObstacleKind, ArrayList<int[]>> map; // MapData 传过来的地图点集:用于地图生成
+    private TreeMap<Integer,String> infoMap = new TreeMap<>(); // 游戏信息图  K:创建时间 V:信息
 
-    private TreeMap<Integer,String> infoMap = new TreeMap<>();
-
-    private int time = 0;
-    private int flashCount = 0;
-    private boolean createdObjects = false;
-    private boolean enemyClear = false;
-    public static int timeOfGenerateTank = 25;
-    public static int timeOfRefreshBuff = 15;
-
-    private int lastAddInfoTime = 0;
+    private int time = 0; // 游戏进行时间
+    private int flashCount = 0; // 刷新的帧数: 用于计时
+    private boolean createdObjects = false; // 该秒内是否刷新了下一波物体
+    private boolean enemyClear = false; // 敌人是否清空
+    public static int timeOfGenerateTank = 25; // 刷新敌人坦克间隔时间
+    public static int timeOfRefreshBuff = 15; // 刷新 buff 的时间间隔
+    private int lastAddInfoTime = 0; // 上一个游戏信息的添加时间
 
     public GameInstance() {
+        // 设置类指向的游戏实例,方便碰撞监测等
+        // 非常不安全,但是方便与高效是真
         Tank.setGameInstance(this);
         Bullet.setGameInstance(this);
         Buff.setGameInstance(this);
+        // 设置工厂
         this.factory = Factory.getFactoryInstance(this);
     }
 
@@ -59,7 +60,7 @@ public class GameInstance {
 
         // 创建我方坦克
         factory.createGameObject(Factory.GameObject.MyTank, 280, 320);
-
+        // 开启我方坦克线程
         new Thread(myTank).start();
 
         System.out.println("game start");
@@ -75,7 +76,7 @@ public class GameInstance {
         tryRecycle(enemyTanksList);
         tryRecycle(allBulletList);
         tryRecycle(buffList);
-
+        // 回收显示一定时间的信息栏消息
         tryRecycleInfoMap();
 
         // 根据键盘输入移动
@@ -113,6 +114,7 @@ public class GameInstance {
                 factory.createGameObject(Factory.GameObject.StrongEnemyTank, 520, 560);
             }
             enemyClear = false;
+            // 防止一秒内多次刷新
             createdObjects = true;
 
             addInfoMap("Game: 新一波敌人来袭");
@@ -132,6 +134,7 @@ public class GameInstance {
             flashCount++;
         }
         if (flashCount % (1000 / REFRESH_TIME) == 0 && !tempStop) {
+            // 刷新的帧数乘上一帧的时间正好满一秒,游戏时间+1
             time++;
             createdObjects = false;
             System.out.println("test~~  " + time + "s");
@@ -151,6 +154,7 @@ public class GameInstance {
     }
 
     private <T extends GetInfo> void tryRecycle(Vector<T> list) {
+        // 集成回收死亡物体函数: 通过 GetInfo 的 isLive 方法监测
         synchronized (list) {
             Iterator<T> iterator = list.iterator();
             while (iterator.hasNext()) {
@@ -163,7 +167,7 @@ public class GameInstance {
     }
 
     public int[] countKind() {
-        // 统计敌方每种 tank 的数量
+        // 统计敌方每种 tank 的数量,供面板显示
 
         int[] counts = new int[3];
 
@@ -190,6 +194,8 @@ public class GameInstance {
     private Map<Obstacle.ObstacleKind, Vector<Obstacle>> initialMap(
             Map<Obstacle.ObstacleKind, ArrayList<int[]>> map) {
 
+        // 将原始的点图转化为实例化的障碍物图
+
         Map<Obstacle.ObstacleKind, Vector<Obstacle>> newMap = new HashMap<>();
 
         for (Obstacle.ObstacleKind obstacleKind : Obstacle.ObstacleKind.values()
@@ -211,7 +217,7 @@ public class GameInstance {
 
     public int calculateScore() {
         int score = 0;
-
+        // 计分,通过读取每种被摧毁坦克的对应分数
         synchronized (destroySet) {
             for (EnemyTank e : destroySet
             ) {
@@ -227,8 +233,10 @@ public class GameInstance {
     }
 
     public void addInfoMap(String str) {
+        // 添加游戏信息
         int currentTime = time;
         if (time == lastAddInfoTime) {
+            // 如果该秒内添加了信息,顺延到下一秒
             currentTime++;
         }
         infoMap.put(currentTime,str);
@@ -236,6 +244,7 @@ public class GameInstance {
     }
 
     private void tryRecycleInfoMap() {
+        // 回收信息
         if (infoMap.isEmpty()) {
             return;
         }
@@ -243,6 +252,7 @@ public class GameInstance {
             int size = infoMap.size();
             Integer[] times = infoMap.keySet().toArray(new Integer[0]);
             for (int i = 0; i < size; i++) {
+                // 显示时间达到三秒,就移除
                 if (time - times[i] > 3) {
                     infoMap.remove(times[i]);
                 }

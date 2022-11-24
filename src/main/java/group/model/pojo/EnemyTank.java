@@ -42,6 +42,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         setImage(enemyTank_down);
         setDirection(Direction.DOWN);
         setAttributes();
+        // 根据游戏时间的增加减小坦克开火间隔
         timeSpanOfEnemyBullet -= (int) (gameInstance.getTime() / 60);
         if (timeSpanOfEnemyBullet < 0) {
             timeSpanOfEnemyBullet = 0;
@@ -202,9 +203,13 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     // 通过 A* 算法查找路径
     public ArrayList<Dot> findRoadToTank(Tank targetTank) {
 
+        // 不可到达点集
         ArrayList<Dot> banDots = new ArrayList<>();
+        // 以遍历到的点集
         ArrayList<Dot> reachedDots = new ArrayList<>();
+        // 查找到的路径的所有点
         ArrayList<Dot> routeDots = new ArrayList<>();
+        // 下一个点
         Dot followDot;
 
         // 根据地图设置不可到达点
@@ -231,9 +236,6 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
         Dot beginDot = new Dot(targetTank.toSimpleDot(), null);
 
         reachedDots.add(beginDot);
-
-        //System.out.println("Find way from " + targetDot + " to " + beginDot);
-
 
         loop:
         // 开始扩展
@@ -370,8 +372,10 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
             Math.pow(myTank.toSimpleDot()[1] - this.toSimpleDot()[1], 2) <= 1) {
             return false;
         }
+        // 判断对应方向上是否有敌方友军
         for (GetInfo e : gameInstance.getEnemyTanksList()
         ) {
+            // 非我方坦克
             if (!this.equals(e)) {
                 if (this.getDirection().equals(UP) && e.getY() < this.getY() &&
                     Math.pow(e.toSimpleDot()[0] - this.toSimpleDot()[0], 2) <= 4) {
@@ -395,6 +399,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     }
 
     public boolean arriveTargetDot() {
+        // 到达目标点判断
         if (getX() == targetX && getY() == targetY) {
             return true;
         }
@@ -402,6 +407,7 @@ public class EnemyTank extends Tank implements Runnable, GetInfo {
     }
 
     private void smoothMoveToSimpleDot() {
+        // 如果敌方坦克卡在了非整点,则移动到整点
         while (true) {
             setDirectionLock(null);
             if (!(getX() == toSimpleDot()[0] * OBJECT_SIZE)) {

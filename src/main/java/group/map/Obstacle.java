@@ -43,22 +43,6 @@ public class Obstacle implements GetInfo {
             }
         };
 
-        /*, MyTank {
-            @Override
-            public Object returnObject(int x, int y) {
-                return new MyTank(x, y);
-            }
-        }, EnemyTank {
-            @Override
-            public Object returnObject(int x, int y) {
-                return new EnemyTank(x, y);
-            }
-        }, Bullet {
-            @Override
-            public Object returnObject(int x, int y) {
-                return new Bullet(x, y, 0);
-            }
-        }*/
         public Obstacle returnObject(int x, int y) {
             return null;
         }

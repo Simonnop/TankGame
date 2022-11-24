@@ -65,6 +65,7 @@ public class CollisionDetection {
                 for (int i = 0; i < obstacles.size(); i++) {
                     if (isCollision(tank, obstacles.get(i)) != null) {
                         tank.setDirectionLock(isCollision(tank, obstacles.get(i)));
+                        // 碰撞到了补给站,则补给
                         if (obstacles.get(i).getKind().equals(Obstacle.ObstacleKind.BASE)
                             && tank instanceof MyTank && ((MyTank) tank).getBulletNum() != ((MyTank) tank).getBulletNumLimit()) {
                             ((MyTank) tank).setBulletNum(((MyTank) tank).getBulletNumLimit());

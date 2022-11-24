@@ -20,22 +20,32 @@ import static group.model.pojo.StrongEnemyTank.StrongEnemyTank_up;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    // 生命值贴图
     public static Image lives = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/lives.png"));
+    // 子弹数贴图
     public static Image bullet = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bullet.png"));
+    // 生命值限制贴图
     public static Image livesLimit = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/livesLimit.png"));
+    // 子弹数限制贴图
     public static Image bulletLimit = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/bulletLimit.png"));
+    // 游戏背景贴图
     public static Image floor = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/floor.png"));
-
+    // 游戏介绍图片
     public static JLabel label = new JLabel(new ImageIcon(
             Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/img/intro.png"))));
 
+    // 唯一游戏实例: 一个 GamePanel 对应一个 GameInstance
     private final GameInstance gameInstance;
+    // 唯一应用画框
     private final MainFrame mainFrame;
-
+    // 游戏介绍显示: 一个游戏面板内只能显示一个游戏介绍窗口
     static boolean introShow = false;
 
+    // 帮助按钮
     Button helpButton = new Button("Help");
+    // 结束游戏按钮
     Button exitButton = new Button("Exit");
+    // 游戏暂停按钮
     Button pauseButton = new Button("Pause");
 
     public GamePanel(GameInstance gameInstance, MainFrame mainFrame) {
@@ -49,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // 弹出游戏介绍窗口并暂停
                 new MyDialogDemo();
                 tempStop = true;
             }
@@ -73,10 +84,12 @@ public class GamePanel extends JPanel implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (tempStop == false) {
+                    // 如果没有暂停,则暂停,并把按钮文本设置为 run
                     tempStop = true;
                     pauseButton.setLabel("Run");
                     mainFrame.requestFocus();
                 } else {
+                    // 如果暂停了,则运行,并把按钮文本设置为 pause
                     tempStop = false;
                     pauseButton.setLabel("Pause");
                     mainFrame.requestFocus();
@@ -108,6 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.setFont(new Font("幼圆", Font.BOLD, 20));
         g.drawString("剩余敌人:", 630, 100);
 
+        // 剩余敌人统计
         int[] counts = gameInstance.countKind();
         g.drawImage(enemyTank_up, 630, 120, 40, 40, this);
         g.drawString("x " + counts[0], 690, 150);
@@ -121,6 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString("难度: " + GameInstance.difficulty, 630, 540);
         g.drawString("得分: " + gameInstance.calculateScore(), 630, 580);
 
+        // 如果我方坦克未加载完,先不执行下面的绘制
         if (gameInstance.getMyTank() == null) {
             return;
         }
@@ -183,7 +198,7 @@ public class GamePanel extends JPanel implements Runnable {
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BRICK));
         drawObjects(g, gameInstance.getObstacleMap().get(Obstacle.ObstacleKind.BASE));
 
-        // 绘制信息栏
+        // 绘制滚动信息栏
         g.setColor(Color.WHITE);
         g.setFont(new Font("幼圆", Font.BOLD, 15));
         if (gameInstance.getInfoMap().isEmpty()) {
@@ -200,6 +215,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private <T extends GetInfo> void drawObjects(Graphics g, Vector<T> list) {
+        // 集成绘制游戏物体方法,通过 GetInfo 接口获取位置与贴图
         int size;
         if (list.isEmpty()) {
             return;
@@ -227,6 +243,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        // 刷新游戏面板线程
         while (gameRun) {
             try {
                 // 线程休息,控制刷新率
@@ -253,18 +270,17 @@ public class GamePanel extends JPanel implements Runnable {
 
             Container container = this.getContentPane();
 
-
             label.setSize(900, 500);
             container.add(label);
-
+            // 设置图片在中心
             label.setHorizontalAlignment(SwingConstants.CENTER);
 
             this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
+                    // 关闭窗口,结束暂停
                     tempStop = false;
                     mainFrame.requestFocus();
-                    System.out.println("go");
                     introShow = false;
                 }
             });

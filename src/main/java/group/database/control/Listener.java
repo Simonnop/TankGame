@@ -13,11 +13,19 @@ import static group.model.pojo.Tank.bulletOut;
 
 public class Listener implements KeyListener{
 
+    // 监听器
 
+    /*
+     * 使用饿汉单例模式
+     * - 防止未及时初始化而添加失败
+     * - 防止重复添加
+     * */
     private static Listener listener = new Listener();
 
     public static Listener getListener(GameInstance gameInstance) {
+        // 设置对应的游戏实例
         listener.gameInstance = gameInstance;
+        // 清空现有的输入字符集
         if (!keys.isEmpty()) {
             keys.clear();
         }
@@ -26,6 +34,7 @@ public class Listener implements KeyListener{
     }
 
     GameInstance gameInstance;
+    // 储存开火间隔
     public static double temp_time = 0;
     double time;
 
@@ -34,6 +43,7 @@ public class Listener implements KeyListener{
 
     static MyTank myTank;
 
+    // 储存键盘输入的字符: 用于改善控制手感
     static ArrayList<Character> keys = new ArrayList<>();
 
     public Listener() {
@@ -47,6 +57,7 @@ public class Listener implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
 
+        // 游戏暂停,则监听器失效
         if (tempStop) {
             return;
         }
@@ -60,6 +71,7 @@ public class Listener implements KeyListener{
         //用于坦克开火限制，临时记录时间
         time = gameInstance.getTime();
 
+        // 监听上下左右键,并添加键入至列表首个
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             if (!keys.contains('D')) {
                 keys.add(0,'D');
@@ -99,6 +111,7 @@ public class Listener implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // 按键松开则移除
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             keys.remove((Object)'D');
         }
@@ -114,6 +127,10 @@ public class Listener implements KeyListener{
     }
 
     public static void moveByKeys() {
+
+        // 按下相应的键之后，变换方向并移动
+        // 读取 列表中的第一个字符 来进行移动
+        // 会灵敏的读取所有的键入,避免原有监听器键入的覆盖
 
         synchronized (keys) {
             if (keys.isEmpty()) {

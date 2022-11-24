@@ -121,10 +121,12 @@ public class Buff implements GetInfo {
             }
         };
 
+        // 根据位置创建 buff 并返回
         protected Buff returnBuff(int x, int y) {
             return null;
         }
 
+        // 坦克获得 buff 内容
         public void getBuff(Tank tank) {
         }
     }
@@ -145,6 +147,7 @@ public class Buff implements GetInfo {
     }
 
     private static int[] getRandomPosition() {
+        // 获得随机位置
 
         int[] position = new int[2];
 
@@ -153,12 +156,15 @@ public class Buff implements GetInfo {
             position[0] = new Random().nextInt(MapData.dotsLength) * OBJECT_SIZE;
             // y 坐标
             position[1] = new Random().nextInt(MapData.dotsWidth) * OBJECT_SIZE;
+
         } while (checkRandomPosition(position));
 
         return position;
     }
 
     private static boolean checkRandomPosition(int[] position) {
+
+        // 检查位置是否与现有障碍物重叠
 
         for (Obstacle.ObstacleKind kind : gameInstance.getObstacleMap().keySet()
         ) {
@@ -174,6 +180,8 @@ public class Buff implements GetInfo {
     }
 
     public static Buff createBuff() {
+
+        // 集成化随机生成 buff
 
         BuffKind buffKind1 = BuffKind.values()[new Random().nextInt(BuffKind.values().length)];
         int[] position = getRandomPosition();

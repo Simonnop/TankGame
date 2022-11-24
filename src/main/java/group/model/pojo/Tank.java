@@ -41,6 +41,120 @@ public class Tank implements GetInfo {
         this.y = y;
     }
 
+
+    // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面
+    // speed的作用机制,以speed倍移动一小步,每一次运动前都要进行碰撞检测
+    // speed若为分数,则循环 speed向下取整 +1 次
+    public void moveUp() {
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
+            if (y > 0 && getDirectionLock() != Direction.UP) {
+                y -= 1;
+            }
+        }
+    }
+
+    public void moveRight() {
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
+            if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getDirectionLock() != Direction.RIGHT) {
+                x += 1;
+            }
+        }
+    }
+
+    public void moveDown() {
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
+            if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getDirectionLock() != Direction.DOWN) {
+                y += 1;
+            }
+        }
+    }
+
+    public void moveLeft() {
+        for (int i = 0; i < speed; i++) {
+            isAboutTouchForTank(this);
+            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
+                break;
+            }
+            if (x > 0 && getDirectionLock() != Direction.LEFT) {
+                x -= 1;
+            }
+        }
+    }
+
+    public static void bulletOut(Tank tank) {
+
+        // 根据坦克方向来打出子弹
+
+        Bullet bullet;
+
+        switch (tank.getDirection()) {
+            case UP:  // 上
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() - BULLET_SIZE / 2,
+                        tank);
+                break;
+            case RIGHT:  // 右
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank);
+                break;
+            case DOWN:  // 下
+                bullet = new Bullet(
+                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
+                        tank);
+                break;
+            case LEFT:  // 左
+                bullet = new Bullet(
+                        tank.getX() - BULLET_SIZE / 2,
+                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
+                        tank);
+                break;
+            default:
+                bullet = new Bullet(tank.getX(), tank.getY(), tank);
+        }
+
+        if (tank instanceof MyTank) {
+            bullet.setImage(myTankBullet);
+        } else if (tank instanceof EnemyTank) {
+            bullet.setImage(enemyTankBullet);
+        }
+
+        new Thread(bullet).start();
+
+        gameInstance.getAllBulletList().add(bullet);
+    }
+
+    public Vector<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(Vector<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
+    public static GameInstance getGameInstance() {
+        return gameInstance;
+    }
+
+    public static void setGameInstance(GameInstance gameInstance) {
+        Tank.gameInstance = gameInstance;
+    }
+
     public int getX() {
         return x;
     }
@@ -122,143 +236,4 @@ public class Tank implements GetInfo {
         this.directionLock = directionLock;
     }
 
-    // 坦克上右下左移动方法  由于所有坦克都要遵守，直接把地图边界限制也写在里面
-    // speed的作用机制,以speed倍移动一小步,每一次运动前都要进行碰撞检测
-    // speed若为分数,则循环 speed向下取整 +1 次
-    public void moveUp() {
-        for (int i = 0; i < speed; i++) {
-            isAboutTouchForTank(this);
-            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
-                break;
-            }
-            if (y > 0 && getDirectionLock() != Direction.UP) {
-                y -= 1;
-            }
-        }
-    }
-
-    public void moveRight() {
-        for (int i = 0; i < speed; i++) {
-            isAboutTouchForTank(this);
-            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
-                break;
-            }
-            if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH && getDirectionLock() != Direction.RIGHT) {
-                x += 1;
-            }
-        }
-    }
-
-    public void moveDown() {
-        for (int i = 0; i < speed; i++) {
-            isAboutTouchForTank(this);
-            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
-                break;
-            }
-            if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH && getDirectionLock() != Direction.DOWN) {
-                y += 1;
-            }
-        }
-    }
-
-    public void moveLeft() {
-        for (int i = 0; i < speed; i++) {
-            isAboutTouchForTank(this);
-            if (this instanceof EnemyTank && ((EnemyTank) this).arriveTargetDot()) {
-                break;
-            }
-            if (x > 0 && getDirectionLock() != Direction.LEFT) {
-                x -= 1;
-            }
-        }
-    }
-
-    public static void bulletOut(Tank tank) {
-
-        Bullet bullet;
-
-        switch (tank.getDirection()) {
-            case UP:  // 上
-                bullet = new Bullet(
-                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank.getY() - BULLET_SIZE / 2,
-                        tank);
-                break;
-            case RIGHT:  // 右
-                bullet = new Bullet(
-                        tank.getX() + OBJECT_SIZE + BULLET_SIZE / 2,
-                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank);
-                break;
-            case DOWN:  // 下
-                bullet = new Bullet(
-                        tank.getX() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank.getY() + OBJECT_SIZE + BULLET_SIZE / 2,
-                        tank);
-                break;
-            case LEFT:  // 左
-                bullet = new Bullet(
-                        tank.getX() - BULLET_SIZE / 2,
-                        tank.getY() + OBJECT_SIZE / 2 - BULLET_SIZE / 2,
-                        tank);
-                break;
-            default:
-                bullet = new Bullet(tank.getX(), tank.getY(), tank);
-        }
-
-
-        if (tank instanceof MyTank) {
-            bullet.setImage(myTankBullet);
-        } else if (tank instanceof EnemyTank) {
-            bullet.setImage(enemyTankBullet);
-        }
-
-        //System.out.println("bullet out");
-
-        new Thread(bullet).start();
-
-        gameInstance.getAllBulletList().add(bullet);
-    }
-
-
- /*   重载坦克移动方法，便于我方坦克进行速度调整
-    public void moveUp(double v) {
-        if (y > 0) {
-            y -= speed * v;
-        }
-    }
-
-    public void moveRight(double v) {
-        if (x + Attributes.OBJECT_SIZE < Attributes.WINDOW_WIDTH) {
-            x += speed * v;
-        }
-    }
-
-    public void moveDown(double v) {
-        if (y + Attributes.OBJECT_SIZE < Attributes.WINDOW_LENGTH) {
-            y += speed * v;
-        }
-    }
-
-    public void moveLeft(double v) {
-        if (x > 0) {
-            x -= speed * v;
-        }
-    }*/
-
-    public Vector<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(Vector<Bullet> bullets) {
-        this.bullets = bullets;
-    }
-
-    public static GameInstance getGameInstance() {
-        return gameInstance;
-    }
-
-    public static void setGameInstance(GameInstance gameInstance) {
-        Tank.gameInstance = gameInstance;
-    }
 }
