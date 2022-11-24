@@ -19,7 +19,7 @@ public class Application {
     public static boolean gameRun = false;
     public static boolean restart = false;
     public static boolean tempStop = false;
-    // 是否更新数据库
+    // 是否更新了数据库
     public static boolean isUpdate = false;
     //菜单阶段是否结束
     public static boolean isInput = false;

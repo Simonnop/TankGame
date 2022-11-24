@@ -21,12 +21,14 @@ public class WelMenuPanel extends JPanel {
     JButton loginButton = new JButton("进入游戏");
     JButton localButton = new JButton("离线游戏(无需用户名)");
 
-    static  boolean isNew ;
-    public static  boolean isLocal ;
-    public WelMenuPanel(MainFrame mainFrame){
+    static boolean isNew;
+    public static boolean isLocal;
+
+    public WelMenuPanel(MainFrame mainFrame) {
 
         this.mainFrame = mainFrame;
 
+        // 用户名输入框
         accountEnterField = new TextField("用户名");
         accountEnterField.addMouseListener(new TextFieldHandler());
         this.add(accountEnterField);
@@ -38,7 +40,9 @@ public class WelMenuPanel extends JPanel {
         this.add(loginButton);
         localButton.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -50,8 +54,10 @@ public class WelMenuPanel extends JPanel {
                     Application.isInput = true;
                 }
             }
+
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
 
         localButton.setForeground(Color.WHITE);
@@ -70,7 +76,7 @@ public class WelMenuPanel extends JPanel {
         g.drawImage(background, 0, 0, 800, 700, this);
 
         g.setColor(Color.WHITE);
-        g.fillRoundRect(220, 70, 350, 400,20,20);
+        g.fillRoundRect(220, 70, 350, 400, 20, 20);
 
         g.setColor(new Color(87, 152, 203));
         g.setFont(new Font("幼圆", Font.BOLD, 40));
@@ -83,6 +89,7 @@ public class WelMenuPanel extends JPanel {
         accountEnterField.setSize(260, 40);
         accountEnterField.setLocation(265, 220);
         if (playerName != null) {
+            // 记忆输入过的用户名
             accountEnterField.setText(playerName);
         }
         if (Objects.equals(playerName, "您")) {
@@ -103,7 +110,7 @@ public class WelMenuPanel extends JPanel {
 
         String errorInfo = "";
         if (Objects.equals(accountEnterField.getText(), "") ||
-            Objects.equals(accountEnterField.getText(), "用户名")) {
+                Objects.equals(accountEnterField.getText(), "用户名")) {
             accountEnterField.setText("用户名");
             errorInfo += "账号不能为空\n";
         }
@@ -119,7 +126,7 @@ public class WelMenuPanel extends JPanel {
             checkNull();
 
             if (e.getSource().equals(accountEnterField) &&
-                Objects.equals(accountEnterField.getText(), "用户名")) {
+                    Objects.equals(accountEnterField.getText(), "用户名")) {
                 accountEnterField.setText("");
             }
         }

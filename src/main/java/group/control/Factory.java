@@ -11,8 +11,8 @@ import java.util.Random;
 public class Factory {
 
     /*
-     * TODO
-     *  使用单例模式改进 Factory
+     * 为 GameInstance动态创建游戏物体
+     * 为 单例模式
      * */
 
     private GameInstance gameInstance;
@@ -25,10 +25,16 @@ public class Factory {
     }
 
     enum GameObject {
-        EnemyTank, MyTank, RandomBuff, StrongEnemyTank
+        EnemyTank, MyTank, RandomBuff, StrongEnemyTank,
+        // EnemyTank: 敌方坦克类(三种坦克都会刷),实例化并添加进入列表
+        // MyTank: 我方坦克
+        // RandomBuff: 随机Buff,调用 Buff 的 createBuff 方法
+        // StrongEnemyTank: 敌方重型坦克,实例化并添加进入列表
     }
 
     public void createGameObject(GameObject gameObject, int... position) {
+        // 第一个参数: 物体种类
+        // 第二个可变参数: 位置(randomBuff不需要)
         if (gameObject.equals(GameObject.StrongEnemyTank)) {
             EnemyTank enemyTank = new StrongEnemyTank(position[0], position[1]);
             gameInstance.getEnemyTanksList().add(enemyTank);
@@ -36,6 +42,7 @@ public class Factory {
         }
         else if (gameObject.equals(GameObject.EnemyTank)) {
             int i = new Random().nextInt(6); // 0,1,2,3,4,5
+            // 随机刷新坦克种类: 3:2:1
             if (i == 0 || i == 1 || i == 2) {
                 EnemyTank enemyTank = new EnemyTank(position[0], position[1]);
                 gameInstance.getEnemyTanksList().add(enemyTank);
