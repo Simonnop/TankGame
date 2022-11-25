@@ -1,7 +1,7 @@
 package group;
 
-import group.database.control.ViewControl;
-import group.database.control.GameInstance;
+import group.control.ViewControl;
+import group.control.GameInstance;
 import group.view.SelectPanel;
 
 import static group.view.SelectPanel.returnSelectedMap;

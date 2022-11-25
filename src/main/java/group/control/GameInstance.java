@@ -1,4 +1,4 @@
-package group.database.control;
+package group.control;
 
 import group.GetInfo;
 import group.map.Obstacle;

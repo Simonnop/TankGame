@@ -1,6 +1,6 @@
 package group.view;
 
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 import group.database.pojo.User;
 import group.database.util.UserMethod;
 
@@ -17,6 +17,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class OverMenuPanel extends JPanel {
     private final MainFrame mainFrame;
     private GameInstance gameInstance;
+
+    int isGetscore=0;
 
 
     JButton menuButton = new JButton("回到菜单");
@@ -63,7 +65,10 @@ public class OverMenuPanel extends JPanel {
 
         g.setColor(Color.black);
         g.setFont(new Font("幼圆", Font.BOLD, 45));
-        g.drawString(playerName + "的分数为" + gameInstance.calculateScore(), 260, 180);
+        if(isGetscore==-1){
+            g.drawString("网络异常无法上传分数", 180, 100);
+        }
+        g.drawString(playerName + "的分数为" + gameInstance.calculateScore(), 240, 180);
 
 
         menuButton.setSize(260, 40);
@@ -80,7 +85,7 @@ public class OverMenuPanel extends JPanel {
         rankListButton.requestFocus();
         System.out.println("repaint");
         if (!isUpdate) {
-            updateUser(gameInstance);
+            isGetscore = updateUser(gameInstance);
             isUpdate = true;
         }
 
@@ -114,26 +119,37 @@ public class OverMenuPanel extends JPanel {
     class rankListButtonHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if (WelMenuPanel.isLocal) {
+            if (WelMenuPanel.isLocal ) {
                 showMessageDialog(mainFrame,
                         "离线游戏\n无法查看排行榜", "提示",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
-                VIEW_CONTROL.rankListShow(new RankListPanel(mainFrame));
+                RankListPanel rankListPanel = new RankListPanel(mainFrame);
+                if(rankListPanel.getRankListTable()==null){
+                    showMessageDialog(mainFrame,
+                            "网络异常\n无法查看排行榜", "提示",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }else {
+                    VIEW_CONTROL.rankListShow(rankListPanel);
+                }
+
             }
         }
     }
 
-    public void updateUser(GameInstance gameInstance) {
+    public int updateUser(GameInstance gameInstance) {
         if (!WelMenuPanel.isLocal) {
             System.out.println("update");
 
             User u = new User(playerName, gameInstance.calculateScore(), GameInstance.difficulty);
 
-            if (UserMethod.getScore(u.getUsername(), GameInstance.difficulty) < u.getScore()) {
+            if(UserMethod.getScore(u.getUsername(), GameInstance.difficulty)==-1){
+                return -1;
+            } else if (UserMethod.getScore(u.getUsername(), GameInstance.difficulty) < u.getScore()) {
                 UserMethod.updateUser(u);
             }
         }
+        return 0;
     }
 
     public GameInstance getGameInstance() {

@@ -13,17 +13,30 @@ public class UserMethod {
     public static Vector<User> getAllUsers(){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        Vector<User> allUsers = mapper.getAllUsers();
 
-        sqlSession.close();
+
+        Vector<User> allUsers ;
+        try {
+            allUsers = mapper.getAllUsers();
+        }catch (Exception e){
+            allUsers=null;
+        }finally {
+            sqlSession.close();
+        }
         return allUsers;
     }
 
     public static Vector<User> getAllUsersAccordingToType(String type){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        Vector<User> allUsers = mapper.getAllUsersAccordingToType(type);
-        sqlSession.close();
+        Vector<User> allUsers ;
+        try {
+            allUsers = mapper.getAllUsersAccordingToType(type);
+        }catch (Exception e){
+            allUsers=null;
+        }finally {
+            sqlSession.close();
+        }
         return allUsers;
     }
 
@@ -38,8 +51,10 @@ public class UserMethod {
         }catch (Exception e){
             //-1说明发生异常
             score=-1;
+        }finally {
+            sqlSession.close();
         }
-        sqlSession.close();
+
         return score;
     }
 
@@ -47,9 +62,18 @@ public class UserMethod {
     public static int addUser(User user){
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        int result;
 
-        int result = mapper.addUser(user);
-        sqlSession.close();
+        try{
+            result = mapper.addUser(user);
+        }catch (Exception e){
+            //-1说明发生异常
+            result=-1;
+        }finally {
+            sqlSession.close();
+        }
+
+
 
         //1 代表成功
         return result;
@@ -60,8 +84,16 @@ public class UserMethod {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        int result = mapper.updateUser(user);
-        sqlSession.close();
+        int result;
+
+        try{
+            result = mapper.updateUser(user);
+        }catch (Exception e){
+            //-1说明发生异常
+            result=-1;
+        }finally {
+            sqlSession.close();
+        }
 
         //1 成功
         //0 失败

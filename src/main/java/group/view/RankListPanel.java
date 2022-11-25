@@ -2,7 +2,7 @@ package group.view;
 
 import group.database.pojo.User;
 import group.database.util.UserMethod;
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -59,6 +59,9 @@ public class RankListPanel extends JPanel {
     public JTable getRankListTable(){
 
         Vector<User> allUsers = UserMethod.getAllUsersAccordingToType(GameInstance.difficulty);
+        if(allUsers==null){
+            return null;
+        }
         String [] title ={"用户名","分数","难度"};
         String [][] usersInfo=new String[allUsers.size()][3];
 

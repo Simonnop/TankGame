@@ -1,6 +1,6 @@
 package group.model.pojo;
 
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 
 import java.awt.*;
 

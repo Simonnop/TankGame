@@ -3,7 +3,7 @@ package group.view;
 import group.database.pojo.User;
 import group.database.util.UserMethod;
 import group.map.MapData;
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 import group.map.Obstacle;
 
 import javax.swing.*;
@@ -153,10 +153,16 @@ public class SelectPanel extends JPanel {
     public void playerJudgement() {
         if (!WelMenuPanel.isLocal) {
             if (WelMenuPanel.isNew) {
-                UserMethod.addUser(new User(playerName, GameInstance.difficulty));
+                if(UserMethod.addUser(new User(playerName, GameInstance.difficulty))==-1){
+                    return;
+                }
             }
             // 判断了是老玩家之后，还要判断他选定的难度里面是否有他
             else {
+
+                if (getAllUsersAccordingToType(GameInstance.difficulty)==null){
+                    return;
+                }
                 for (User user : getAllUsersAccordingToType(GameInstance.difficulty)) {
                     if (!user.getUsername().equals(playerName)) {
                         isTheSameType = false;
@@ -165,6 +171,7 @@ public class SelectPanel extends JPanel {
                         break;
                     }
                 }
+
                 if (!isTheSameType) {
                     UserMethod.addUser(new User(playerName, GameInstance.difficulty));
                 }

@@ -2,7 +2,7 @@ package group.model.pojo;
 
 import group.Application;
 import group.GetInfo;
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 import group.map.Obstacle;
 
 import java.awt.*;

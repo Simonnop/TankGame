@@ -4,7 +4,7 @@ import group.Application;
 import group.Attributes;
 import group.GetInfo;
 import group.model.util.DirectionUtil;
-import group.database.control.GameInstance;
+import group.control.GameInstance;
 import group.map.Dot;
 import group.map.Obstacle;
 
